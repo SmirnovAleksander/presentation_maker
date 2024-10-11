@@ -15,15 +15,6 @@ const PresentationList = () => {
             slides: [],
         };
         dispatch(addPresentation(newPresentation));
-        // const checkNewStatePresentation = () => {
-        //     const updatedPresentations = presentations.find(p => p.id === newPresentation.id);
-        //     if (updatedPresentations) {
-        //         navigate(`/presentation/${newPresentation.id}`);
-        //     } else {
-        //         setTimeout(checkNewStatePresentation, 100);
-        //     }
-        // }
-        // checkNewStatePresentation();
         navigate(`/presentation/${newPresentation.id}`);
     };
 
@@ -34,6 +25,7 @@ const PresentationList = () => {
                 <div key={presentation.id}>
                     <h3>{presentation.title}</h3>
                     <button onClick={() => navigate(`/presentation/${presentation.id}`)}>Редактировать</button>
+                    <p>{presentation.slides.length} слайдов</p>
                 </div>
             ))}
         </div>

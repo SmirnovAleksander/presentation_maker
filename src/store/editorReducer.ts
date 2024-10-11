@@ -33,7 +33,14 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                     }
                     return presentation;
                 }),
+                selectedSlideId: action.payload.slide.id,
             }
+        }
+        case 'SELECT_SLIDE': {
+            return {
+                ...state,
+                selectedSlideId: action.payload.slideId,
+            };
         }
         case 'ADD_ELEMENT': {
             return {

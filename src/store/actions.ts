@@ -1,4 +1,4 @@
-import {ImageElement, Presentation, ShapeElement, Slide, TextElement} from "./types.ts";
+import {ElementProps, ImageElement, Presentation, ShapeElement, Slide, TextElement} from "./types.ts";
 
 export const ADD_PRESENTATION = 'ADD_PRESENTATION';
 export const ADD_SLIDE = 'ADD_SLIDE';
@@ -7,6 +7,7 @@ export const DELETE_ELEMENT = 'DELETE_ELEMENT';
 export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
+export const SELECT_SLIDE = 'SELECT_SLIDE';
 
 export interface AddPresentationAction {
     type: typeof ADD_PRESENTATION;
@@ -18,6 +19,11 @@ export interface AddSlideAction {
     payload: { presentationId: number, slide: Slide };
 }
 
+export interface SelectSlideAction {
+    type: typeof SELECT_SLIDE;
+    payload: { slideId: number, presentationId: number };
+}
+
 export interface AddElementAction {
     type: typeof ADD_ELEMENT;
     payload: TextElement | ImageElement | ShapeElement;
@@ -25,12 +31,12 @@ export interface AddElementAction {
 
 export interface DeleteElementAction {
     type: typeof DELETE_ELEMENT;
-    payload: number; // ID элемента
+    payload: number;
 }
 
 export interface SelectElementAction {
     type: typeof SELECT_ELEMENT;
-    payload: number | null; // ID выбранного элемента
+    payload: number | null;
 }
 
 interface DeselectElementAction {
@@ -40,8 +46,8 @@ interface DeselectElementAction {
 export interface UpdateElementAction {
     type: typeof UPDATE_ELEMENT;
     payload: {
-        id: number; // ID элемента
-        updates: Partial<TextElement | ImageElement | ShapeElement>; // Поля для обновления
+        id: number;
+        updates: Partial<TextElement | ImageElement | ShapeElement>;
     };
 }
 export type ElementActions =
@@ -51,7 +57,8 @@ export type ElementActions =
     | UpdateElementAction
     | DeselectElementAction
     | AddPresentationAction
-    | AddSlideAction;
+    | AddSlideAction
+    | SelectSlideAction;
 
 // Действия для презентаций и слайдов
 export const addPresentation = (presentation: Presentation): AddPresentationAction => ({
@@ -67,8 +74,13 @@ export const addSlide = (presentationId: number, slide: Slide): AddSlideAction =
     },
 });
 
+export const selectSlide = (presentationId: number, slideId: number): SelectSlideAction => ({
+    type: SELECT_SLIDE,
+    payload: { presentationId, slideId }
+});
+
 // Действия для элементов
-export const addElement = (element: TextElement | ImageElement | ShapeElement): AddElementAction => ({
+export const addElement = (element: ElementProps): AddElementAction => ({
     type: ADD_ELEMENT,
     payload: element,
 });

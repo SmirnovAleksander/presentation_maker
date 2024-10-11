@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import {Link, useParams} from "react-router-dom";
 import {AppDispatch, appState} from "../../store/store.ts";
-import {addSlide} from "../../store/actions.ts";
-import {Slide} from "../../store/types.ts";
+import { addSlide, selectSlide} from "../../store/actions.ts";
+import { Slide} from "../../store/types.ts";
 
 const PresentationEditor = () => {
     const { id } = useParams();
@@ -10,6 +10,7 @@ const PresentationEditor = () => {
     const selectedPresentation = useSelector((state: appState) =>
         state.presentations.find(p => p.id === Number(id))
     );
+    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
 
     const addNewSlide = () => {
         const newSlide: Slide = {
@@ -19,6 +20,7 @@ const PresentationEditor = () => {
         };
         if (selectedPresentation) {
             dispatch(addSlide(selectedPresentation.id, newSlide));
+            dispatch(selectSlide(selectedPresentation.id, newSlide.id))
         }
     };
 
@@ -34,7 +36,12 @@ const PresentationEditor = () => {
                 <div>
                     <h2>{selectedPresentation.title}</h2>
                     {selectedPresentation.slides.map(slide => (
-                        <div key={slide.id} style={{ backgroundColor: slide.backgroundColor }}>
+                        <div
+                            key={slide.id}
+                            style={{
+                                backgroundColor: slide.backgroundColor,
+                                border: slide.id === selectedSlideId ? '2px solid blue' : 'none'
+                            }}>
                             <h4>Слайд ID: {slide.id}</h4>
                         </div>
                     ))}
