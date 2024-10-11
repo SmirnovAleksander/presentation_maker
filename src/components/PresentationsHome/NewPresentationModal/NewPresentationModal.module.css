@@ -1,0 +1,34 @@
+.createPresentationSection {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 5%;
+}
+.presentationCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    height: calc(240px * 9 / 16);
+    background-color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    border: #EDEDED solid 1px;
+    transition: border 0.3s, background-color 0.3s, transform 0.3s;
+}
+.presentationCard:hover {
+    background: #bcbcbc;
+}
+.plusIcon {
+    font-size: 60px;
+    color: #4CAF50;
+}
+.presentationTitle {
+    font-size: 20px;
+    text-align: center;
+}
+.cardTitle {
+    font-size: 20px;
+    text-align: center;
+}

@@ -46,14 +46,14 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
             return {
                 ...state,
                 presentations: state.presentations.map(presentation => {
-                    if (presentation.id === state.selectedPresentationId) {
+                    if (presentation.id === action.payload.presentationId) {
                         return {
                             ...presentation,
                             slides: presentation.slides.map(slide => {
-                                if (slide.id === state.selectedSlideId) {
+                                if (slide.id === action.payload.slideId) {
                                     return {
                                         ...slide,
-                                        elements: [...slide.elements, action.payload],
+                                        elements: [...slide.elements, action.payload.element],
                                     };
                                 }
                                 return slide;

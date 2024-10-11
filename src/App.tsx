@@ -1,6 +1,6 @@
 import PresentationEditor from "./pages/PresentationEditor/PresentationEditor.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import PresentationList from "./pages/PresentationList/PresentationList.tsx";
+import PresentationsHome from "./pages/PresentationsHome/PresentationsHome.tsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.tsx";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
@@ -15,7 +15,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="*" element={<ErrorPage />} />
-                <Route path="/" element={<PresentationList />} />
+                <Route path="/" element={<PresentationsHome />} />
                 <Route path="/presentation/:id" element={<PresentationEditor />} />
             </Routes>
         </BrowserRouter>

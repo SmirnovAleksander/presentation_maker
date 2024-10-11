@@ -26,7 +26,7 @@ export interface SelectSlideAction {
 
 export interface AddElementAction {
     type: typeof ADD_ELEMENT;
-    payload: TextElement | ImageElement | ShapeElement;
+    payload: {presentationId: number, slideId: number, element: ElementProps};
 }
 
 export interface DeleteElementAction {
@@ -80,9 +80,13 @@ export const selectSlide = (presentationId: number, slideId: number): SelectSlid
 });
 
 // Действия для элементов
-export const addElement = (element: ElementProps): AddElementAction => ({
+export const addElement = (presentationId: number, slideId: number, element: ElementProps): AddElementAction => ({
     type: ADD_ELEMENT,
-    payload: element,
+    payload: {
+        presentationId,
+        slideId,
+        element
+    },
 });
 
 export const deleteElement = (id: number): DeleteElementAction => ({
