@@ -1,35 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import PresentationEditor from "./pages/PresentationEditor/PresentationEditor.tsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import PresentationList from "./pages/PresentationList/PresentationList.tsx";
+import ErrorPage from "./pages/ErrorPage/ErrorPage.tsx";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
+import {appState} from "./store/store.ts";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    const state = useSelector((state: appState) => state);
+    useEffect(() => {
+        console.log('Общий стейт:', state);
+    }, [state]);
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="*" element={<ErrorPage />} />
+                <Route path="/" element={<PresentationList />} />
+                <Route path="/presentation/:id" element={<PresentationEditor />} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+export default App;

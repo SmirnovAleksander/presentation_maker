@@ -1,0 +1,133 @@
+import {ImageElement, Presentation, ShapeElement, TextElement} from "./types.ts";
+import {ElementActions} from "./actions.ts";
+
+export interface EditorState {
+    presentations: Presentation[];
+    selectedPresentationId: number | null;
+    selectedSlideId: number | null;
+    selectedElementId: number | null;
+}
+const initialState: EditorState = {
+    presentations: [],
+    selectedPresentationId: null,
+    selectedSlideId: null,
+    selectedElementId: null,
+};
+const editorReducer = (state = initialState, action: ElementActions): EditorState  => {
+    switch (action.type) {
+        case 'ADD_PRESENTATION': {
+            return {
+                ...state,
+                presentations: [...state.presentations, action.payload],
+            };
+        }
+        case 'ADD_SLIDE' : {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === action.payload.presentationId) {
+                        return {
+                            ...presentation,
+                            slides: [...presentation.slides, action.payload.slide],
+                        };
+                    }
+                    return presentation;
+                }),
+            }
+        }
+        case 'ADD_ELEMENT': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => {
+                                if (slide.id === state.selectedSlideId) {
+                                    return {
+                                        ...slide,
+                                        elements: [...slide.elements, action.payload],
+                                    };
+                                }
+                                return slide;
+                            }),
+                        };
+                    }
+                    return presentation;
+                }),
+            };
+        }
+        case 'SELECT_ELEMENT':
+            console.log('Выбранный элемент:', action.payload);
+            return {
+                ...state,
+                selectedElementId: action.payload,
+            };
+        case 'DESELECT_ELEMENT':
+            console.log('Сброшено выделение');
+            return {
+                ...state,
+                selectedElementId: null,
+            };
+        case 'UPDATE_ELEMENT': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => {
+                                if (slide.id === state.selectedSlideId) {
+                                    return {
+                                        ...slide,
+                                        elements: slide.elements.map(el => {
+                                            if (el.id === action.payload.id) {
+                                                if (el.type === 'text') {
+                                                    return { ...el, ...action.payload.updates as Partial<TextElement> };
+                                                } else if (el.type === 'image') {
+                                                    return { ...el, ...action.payload.updates as Partial<ImageElement> };
+                                                } else if (el.type === 'rectangle' || el.type === 'circle' || el.type === 'line') {
+                                                    return { ...el, ...action.payload.updates as Partial<ShapeElement> };
+                                                }
+                                            }
+                                            return el;
+                                        }),
+                                    };
+                                }
+                                return slide;
+                            }),
+                        };
+                    }
+                    return presentation;
+                }),
+            };
+        }
+        case 'DELETE_ELEMENT': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => {
+                                if (slide.id === state.selectedSlideId) {
+                                    return {
+                                        ...slide,
+                                        elements: slide.elements.filter(el => el.id !== action.payload),
+                                    };
+                                }
+                                return slide;
+                            }),
+                        };
+                    }
+                    return presentation;
+                }),
+                selectedElementId: state.selectedElementId === action.payload ? null : state.selectedElementId,
+            };
+        }
+        default:
+            return state;
+    }
+}
+
+export default editorReducer;
