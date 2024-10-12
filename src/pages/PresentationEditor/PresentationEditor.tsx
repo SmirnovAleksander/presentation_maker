@@ -9,8 +9,20 @@ import SlideEditor from "../../components/PresentationEditor/SlideEditor/SlideEd
 import SlideList from "../../components/PresentationEditor/SlidesList/SlideList.tsx";
 import PresentationEditorHeader
     from "../../components/PresentationEditor/PresentationEditorHeader/PresentationEditorHeader.tsx";
+import {useSelector} from "react-redux";
+import {appState} from "../../store/store.ts";
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 const PresentationEditor = () => {
+    const navigate = useNavigate();
+    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
+    useEffect(() => {
+        if (!selectedPresentationId) {
+            navigate("/");
+        }
+    }, [selectedPresentationId, navigate]);
+
     // const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
     // console.log(selectedSlideId)
     //

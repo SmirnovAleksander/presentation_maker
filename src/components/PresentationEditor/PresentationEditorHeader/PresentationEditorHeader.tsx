@@ -1,4 +1,3 @@
-import {useParams} from "react-router-dom";
 import {AppDispatch, appState} from "../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
@@ -8,14 +7,21 @@ import PresentationIcon from "../../../assets/PresentationsLogo.svg";
 import editIcon from "../../../assets/Edit.svg";
 
 const PresentationEditorHeader = () => {
-    const { id } = useParams();
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === Number(id))
+    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
+    const selectedPresentation  = useSelector((state: appState) =>
+        state.presentations.find(p => p.id === selectedPresentationId)
     );
 
     const [isEditing, setIsEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
+    // useEffect(() => {
+    //     if (selectedPresentation) {
+    //         setNewTitle(selectedPresentation.title);
+    //     } else {
+    //         setNewTitle(''); // Сбрасываем заголовок, если выбранная презентация не найдена
+    //     }
+    // }, [selectedPresentation]);
     const handleEditClick = () => {
         setIsEditing(true);
     };
@@ -34,6 +40,9 @@ const PresentationEditorHeader = () => {
         }
         setIsEditing(false);
     };
+    if (!selectedPresentation) {
+        return <div className={styles.header}>Презентация не найдена</div>;
+    }
 
     return (
         <div className={styles.header}>
@@ -55,7 +64,7 @@ const PresentationEditorHeader = () => {
                 )
                 : (
                     <h3 className={styles.cardTitle}>
-                        {selectedPresentation!.title}
+                        {selectedPresentation.title}
                     </h3>)
             }
             {isEditing

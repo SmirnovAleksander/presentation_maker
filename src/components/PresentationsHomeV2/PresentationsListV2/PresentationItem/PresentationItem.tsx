@@ -1,4 +1,4 @@
-import {deletePresentation, updatePresentationTitle} from "../../../../store/actions.ts";
+import {deletePresentation, selectPresentation, updatePresentationTitle} from "../../../../store/actions.ts";
 import {AppDispatch} from "../../../../store/store.ts";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -31,12 +31,16 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             setNewTitle('');
         }
     };
+    const navigateToEditPresentation = () => {
+        dispatch(selectPresentation(presentation.id));
+        navigate(`/presentation/${presentation.id}`);
+    }
 
     return (
         <div key={presentation.id} className={styles.presentationCardWrapper}>
             <div
                 className={styles.presentationCard}
-                onClick={() => navigate(`/presentation/${presentation.id}`)}
+                onClick={navigateToEditPresentation}
             ></div>
             <div className={styles.presentationUnder}>
                 {/*<h3 className={styles.cardTitle}>{presentation.title}</h3>*/}

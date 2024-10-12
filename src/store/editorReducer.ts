@@ -38,6 +38,14 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                 ),
             };
         }
+        case 'SELECT_PRESENTATION': {
+            return {
+                ...state,
+                selectedPresentationId: action.payload,
+                selectedSlideId: null,
+                selectedElementId: null,
+            };
+        }
         case 'ADD_SLIDE' : {
             return {
                 ...state,

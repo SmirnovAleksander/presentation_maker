@@ -1,4 +1,4 @@
-import {addPresentation} from "../../../store/actions.ts";
+import {addPresentation, selectPresentation} from "../../../store/actions.ts";
 import {AppDispatch} from "../../../store/store.ts";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -11,10 +11,11 @@ const NewPresentationModalV2 = () => {
     const createNewPresentation  = () => {
         const newPresentation = {
             id: Date.now(),
-            title: String(Date.now()+ String(Date.now())),
+            title: "Новая презентация",
             slides: [],
         };
         dispatch(addPresentation(newPresentation));
+        dispatch(selectPresentation(newPresentation.id));
         navigate(`/presentation/${newPresentation.id}`);
     };
     return (
