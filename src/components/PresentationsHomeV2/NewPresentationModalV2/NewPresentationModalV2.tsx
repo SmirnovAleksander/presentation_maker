@@ -11,7 +11,7 @@ const NewPresentationModalV2 = () => {
     const createNewPresentation  = () => {
         const newPresentation = {
             id: Date.now(),
-            title: String(Date.now()),
+            title: String(Date.now()+ String(Date.now())),
             slides: [],
         };
         dispatch(addPresentation(newPresentation));

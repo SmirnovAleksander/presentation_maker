@@ -1,0 +1,53 @@
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #ffffff;
+    gap: 10px;
+}
+
+.editIconContainer {
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.editIcon {
+    z-index: 1;
+}
+.editIconContainer:hover {
+    transform: scale(1.1);
+}
+/*.editIconContainer:hover::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: -5px;*/
+/*    left: -5px;*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*    border-radius: 50%;*/
+/*    background-color: rgba(175, 175, 175, 0.5);*/
+/*    opacity: 1;*/
+/*    transition: opacity 0.2s ease;*/
+/*    z-index: 0;*/
+/*}*/
+/*.editIconContainer:active::after {*/
+/*    top: -5px;*/
+/*    left: -5px;*/
+/*    background-color: rgba(140, 139, 139, 0.5);*/
+/*    transition: opacity 0.2s ease;*/
+/*}*/
+
+.presentationTitleInput {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+    font-weight: bold;
+    width: 300px;
+}
+.cardTitle {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+}
+

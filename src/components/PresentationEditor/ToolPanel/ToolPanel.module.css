@@ -1,0 +1,6 @@
+.toolPanelWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    background-color: #F1F3F4;
+}

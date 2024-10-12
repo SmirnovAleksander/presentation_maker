@@ -1,0 +1,10 @@
+.slideListWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+    border: 5px solid #4CAF50;
+    gap: 10px;
+}
