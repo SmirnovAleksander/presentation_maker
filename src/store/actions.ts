@@ -1,17 +1,31 @@
 import {ElementProps, ImageElement, Presentation, ShapeElement, Slide, TextElement} from "./types.ts";
 
 export const ADD_PRESENTATION = 'ADD_PRESENTATION';
+export const DELETE_PRESENTATION = 'DELETE_PRESENTATION';
+export const UPDATE_PRESENTATION_TITLE = 'UPDATE_PRESENTATION_TITLE';
+
 export const ADD_SLIDE = 'ADD_SLIDE';
+export const SELECT_SLIDE = 'SELECT_SLIDE';
+
 export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
 export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
-export const SELECT_SLIDE = 'SELECT_SLIDE';
 
 export interface AddPresentationAction {
     type: typeof ADD_PRESENTATION;
     payload: Presentation;
+}
+
+export interface DeletePresentationAction {
+    type: typeof DELETE_PRESENTATION;
+    payload: number;
+}
+
+export interface UpdatePresentationTitleAction {
+    type: typeof UPDATE_PRESENTATION_TITLE;
+    payload: { id: number; title: string };
 }
 
 export interface AddSlideAction {
@@ -58,12 +72,23 @@ export type ElementActions =
     | DeselectElementAction
     | AddPresentationAction
     | AddSlideAction
-    | SelectSlideAction;
+    | SelectSlideAction
+    | DeletePresentationAction
+    | UpdatePresentationTitleAction;
 
 // Действия для презентаций и слайдов
 export const addPresentation = (presentation: Presentation): AddPresentationAction => ({
     type: ADD_PRESENTATION,
     payload: presentation,
+});
+
+export const deletePresentation = (id: number) => ({
+    type: 'DELETE_PRESENTATION',
+    payload: id,
+});
+export const updatePresentationTitle = (id: number, title: string): UpdatePresentationTitleAction => ({
+    type: UPDATE_PRESENTATION_TITLE,
+    payload: { id, title },
 });
 
 export const addSlide = (presentationId: number, slide: Slide): AddSlideAction => ({

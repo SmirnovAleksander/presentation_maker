@@ -1,0 +1,23 @@
+.presentationsHome {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #ffffff;
+}
+.logo {
+    margin-left: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+}

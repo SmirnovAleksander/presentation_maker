@@ -1,0 +1,111 @@
+.presentationContainer {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    background-color: #ffffff;
+}
+.presentationContainer::-webkit-scrollbar {
+    display: none;
+}
+.presentationList {
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: center;*/
+    gap: 10px;
+    justify-content: flex-start;
+}
+.presentationListWrapper {
+    width: 67%;
+}
+
+.presentationListTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-size: 20px;
+}
+.presentationCard {
+    /*flex: 0 0 240px;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    height: calc(240px * 9 / 16);
+    background-color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    border: #EDEDED solid 1px;
+    transition: border 0.3s, background-color 0.3s, transform 0.3s;
+}
+.presentationCard:hover {
+    background: #bcbcbc;
+}
+.presentationCardWrapper {
+    height: 180px;
+    /*background-color: #EDEDED;*/
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(to bottom, #EDEDED, #f1f1f1);
+    position: relative;
+}
+.cardTitle {
+    padding: 10px 0;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+    padding-left: 10px;
+    padding-right: 30px;
+}
+
+.errorMasage {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding-top: 5vw;
+    font-size: 20px;
+    width: 100%;
+}
+
+.deleteIconContainer {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.deleteIcon {
+    z-index: 1;
+}
+.deleteIconContainer:hover {
+    transform: scale(1.1);
+}
+.deleteIconContainer:hover::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(175, 175, 175, 0.5);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    z-index: 0;
+}
+.deleteIconContainer:active::after {
+    top: -5px;
+    left: -5px;
+    background-color: rgba(140, 139, 139, 0.5);
+    transition: opacity 0.2s ease;
+}
+

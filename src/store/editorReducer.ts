@@ -21,6 +21,23 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                 presentations: [...state.presentations, action.payload],
             };
         }
+        case 'DELETE_PRESENTATION': {
+            const updatedPresentations = state.presentations.filter(presentation => presentation.id !== action.payload);
+            return {
+                ...state,
+                presentations: updatedPresentations,
+            };
+        }
+        case 'UPDATE_PRESENTATION_TITLE': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation =>
+                    presentation.id === action.payload.id
+                        ? { ...presentation, title: action.payload.title }
+                        : presentation
+                ),
+            };
+        }
         case 'ADD_SLIDE' : {
             return {
                 ...state,

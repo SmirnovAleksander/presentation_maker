@@ -1,28 +1,28 @@
 .presentationContainer {
-    border: 2px solid #ccc; /* Рамка вокруг компонента */
-    border-radius: 10px; /* Радиус для скругленных углов */
+    border: 2px solid #ccc;
+    border-radius: 10px;
     padding: 10px;
-    min-height: 200px; /* Минимальная высота, чтобы рамка была видна даже при пустом контенте */
+    min-height: 200px;
     display: flex;
-    width: 100%; /* Задаем ширину 100% */
-    box-sizing: border-box; /* Включаем рамку в ширину */
+    width: 100%;
+    box-sizing: border-box;
     overflow-x: auto;
 }
 .presentationContainer::-webkit-scrollbar {
-    display: none; /* Скрываем скроллбар */
+    display: none;
 }
 .presentationList {
     display: flex;
-    flex-direction: row; /* Расположение элементов в строку */
-    gap: 10px; /* Отступ между карточками */
-    /*overflow-x: auto; !* Горизонтальный скролл *!*/
+    flex-direction: row;
+    gap: 10px;
+    /*overflow-x: auto;*/
     scroll-snap-type: x mandatory;
     align-items: center;
     scrollbar-width: none;
 
 }
 .presentationCard {
-    flex: 0 0 240px; /* Задаем фиксированную ширину карточек */
+    flex: 0 0 240px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,10 +43,10 @@
     color: #333;
     margin: 0;
     text-align: center;
-    white-space: nowrap; /* Запрещаем перенос текста */
-    overflow: hidden; /* Обрезаем текст, если он не помещается */
-    text-overflow: ellipsis; /* Добавляем многоточие */
-    max-width: 240px; /* Ограничиваем ширину заголовка */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
     padding-left: 10px;
     padding-right: 10px;
 }
