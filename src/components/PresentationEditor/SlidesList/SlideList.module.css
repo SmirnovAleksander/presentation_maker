@@ -1,7 +1,7 @@
 .slideListWrapper {
     display: flex;
     flex-direction: column;
-    width: 260px;
+    width: 280px;
     padding: 10px;
     overflow-y: auto;
     max-height: 100%;

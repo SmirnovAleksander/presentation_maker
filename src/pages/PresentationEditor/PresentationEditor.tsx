@@ -13,6 +13,7 @@ import {useSelector} from "react-redux";
 import {appState} from "../../store/store.ts";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
+import ElementsList from "../../components/PresentationEditor/ElementsList/ElementsList.tsx";
 
 const PresentationEditor = () => {
     const navigate = useNavigate();
@@ -161,6 +162,7 @@ const PresentationEditor = () => {
             <div className={styles.wrapper}>
                 <SlideList/>
                 <SlideEditor/>
+                <ElementsList/>
             </div>
         </div>
     );
