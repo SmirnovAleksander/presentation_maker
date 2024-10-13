@@ -67,6 +67,21 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                 selectedSlideId: action.payload.slideId,
             };
         }
+        case 'DELETE_SLIDE': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === action.payload.presentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.filter(slide => slide.id !== action.payload.slideId),
+                        };
+                    }
+                    return presentation;
+                }),
+                selectedSlideId: state.selectedSlideId === action.payload.slideId ? null : state.selectedSlideId,
+            };
+        }
         case 'ADD_ELEMENT': {
             return {
                 ...state,

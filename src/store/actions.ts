@@ -7,6 +7,7 @@ export const SELECT_PRESENTATION = 'SELECT_PRESENTATION';
 
 export const ADD_SLIDE = 'ADD_SLIDE';
 export const SELECT_SLIDE = 'SELECT_SLIDE';
+export const DELETE_SLIDE = 'DELETE_SLIDE';
 
 export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
@@ -30,16 +31,22 @@ export interface SelectPresentationAction {
     type: typeof SELECT_PRESENTATION;
     payload: number;
 }
+/////////////////////////////
 
 export interface AddSlideAction {
     type: typeof ADD_SLIDE;
     payload: { presentationId: number, slide: Slide };
 }
-
 export interface SelectSlideAction {
     type: typeof SELECT_SLIDE;
     payload: { slideId: number, presentationId: number };
 }
+export interface DeleteSlideAction {
+    type: typeof DELETE_SLIDE;
+    payload: { presentationId: number, slideId: number };
+}
+
+//////////////////////////////////
 
 export interface AddElementAction {
     type: typeof ADD_ELEMENT;
@@ -78,9 +85,9 @@ export type ElementActions =
     | SelectSlideAction
     | DeletePresentationAction
     | UpdatePresentationTitleAction
-    | SelectPresentationAction;
+    | SelectPresentationAction
+    | DeleteSlideAction;
 
-// Действия для презентаций и слайдов
 export const addPresentation = (presentation: Presentation): AddPresentationAction => ({
     type: ADD_PRESENTATION,
     payload: presentation,
@@ -98,6 +105,7 @@ export const selectPresentation = (presentationId: number): SelectPresentationAc
     payload: presentationId,
 });
 
+/////////////////////////////////
 
 export const addSlide = (presentationId: number, slide: Slide): AddSlideAction => ({
     type: ADD_SLIDE,
@@ -106,11 +114,15 @@ export const addSlide = (presentationId: number, slide: Slide): AddSlideAction =
         slide
     },
 });
-
 export const selectSlide = (presentationId: number, slideId: number): SelectSlideAction => ({
     type: SELECT_SLIDE,
     payload: { presentationId, slideId }
 });
+export const deleteSlide = (presentationId: number, slideId: number): DeleteSlideAction => ({
+    type: DELETE_SLIDE,
+    payload: { presentationId, slideId },
+});
+//////////////////////////////////////////
 
 // Действия для элементов
 export const addElement = (presentationId: number, slideId: number, element: ElementProps): AddElementAction => ({
