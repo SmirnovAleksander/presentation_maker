@@ -9,6 +9,8 @@ import ImageEditPanel from "./ImageEditPanel/ImageEditPanel.tsx";
 import ShapeEditPanel from "./ShapeEditPanel/ShapeEditPanel.tsx";
 import CreateElementButtons from "./CreateElementButtons/CreateElementButtons.tsx";
 import CustomButton from "../../UI/CustomButton/CustomButton.tsx";
+import RotationEditPanel from "./RotationEditPanel/RotationEditPanel.tsx";
+import ColorEditPanel from "./ColorEditPanel/ColorEditPanel.tsx";
 
 const ToolPanel = () => {
     const navigate = useNavigate();
@@ -39,6 +41,8 @@ const ToolPanel = () => {
                     <TextEditPanel/>
                     <ImageEditPanel/>
                     <ShapeEditPanel/>
+                    <RotationEditPanel/>
+                    <ColorEditPanel/>
                 </div>
                 <CreateElementButtons/>
             </div>

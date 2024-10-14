@@ -14,6 +14,7 @@ const SlideEditor = () => {
         state.presentations.find(p => p.id === selectedPresentationId)
     );
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
+
     const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const clickedOnElement = (e.target as HTMLElement).closest('.element');
         if (!clickedOnElement) {

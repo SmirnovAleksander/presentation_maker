@@ -1,0 +1,29 @@
+.colorEditWrapper {
+    background-color: #f3c5c5;
+}
+
+.colorsScrollWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    padding: 10px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    width: 300px;
+}
+.colorBlock {
+    min-width: 50px;
+    min-height: 50px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 1px 1px 1px #D9D9D9;
+}
+.colorBlock:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid #757575;
+}
+.colorBlockSelected {
+    border: 2px solid #757575;
+}

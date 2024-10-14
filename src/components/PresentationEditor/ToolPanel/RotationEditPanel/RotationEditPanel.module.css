@@ -1,0 +1,16 @@
+.rotationEditWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+.rotationButtons {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+}
+.rotationEditRange {
+    display: flex;
+    gap: 6px;
+}

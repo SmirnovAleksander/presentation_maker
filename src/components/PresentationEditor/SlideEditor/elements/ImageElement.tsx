@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {selectElement, updateElement} from "../../../../store/actions.ts";
+import {selectElement} from "../../../../store/actions.ts";
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {ImageElement} from "../../../../store/types.ts";
 
 interface ImageProps {
     element: ImageElement
+    onUpdate: (id: number, position: { x: number; y: number }, size: { width: number; height: number }) => void;
 }
 
 const ImageElement: React.FC<ImageProps> = ({element}) => {
@@ -20,6 +21,11 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
     const [isResizing, setIsResizing] = useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [resizeStart, setResizeStart] = useState({ width: 0, height: 0, direction: '' });
+
+    const { rotation, position, size, content} = element;
+
+    const [localPosition, setLocalPosition] = useState(position);
+    const [localSize, setLocalSize] = useState(size);
 
     useEffect(() => {
         if (isDragging || isResizing) {
@@ -35,20 +41,18 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
 
     if (!element) return null;
     if (element.type !== 'image') return null;
-    const { rotation, position, size, content} = element;
-
 
     const slideWidth = 1200;
     const slideHeight = 675;
     const updatePosition = (x: number, y: number) => {
         const newX = Math.max(0, Math.min(x, slideWidth - element.size.width));
         const newY = Math.max(0, Math.min(y, slideHeight - element.size.height));
-        dispatch(updateElement(element.id, { position: { x: newX, y: newY }}));
+        setLocalPosition({ x: newX, y: newY });
     }
     const updateSize = (width: number, height: number) => {
         const newWidth = Math.min(Math.max(50, width), slideWidth - element.position.x);
         const newHeight = Math.min(Math.max(20, height), slideHeight - element.position.y);
-        dispatch(updateElement(element.id, { size: { width: newWidth, height: newHeight } }));
+        setLocalSize({ width: newWidth, height: newHeight });
     };
 
     const handleMouseDown = (e: React.MouseEvent) => {
@@ -78,7 +82,6 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
             } else if (resizeStart.direction.includes('bottom')) {
                 newHeight = Math.max(20, resizeStart.height + (e.clientY - dragStart.y));
             }
-
             updateSize(newWidth, newHeight);
         }
     };
@@ -95,18 +98,17 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         setDragStart({ x: e.clientX, y: e.clientY });
         setResizeStart({ width: size.width, height: size.height, direction });
     };
-
     return (
         <div
             className={`image-element ${isSelected ? 'selected' : ''}`}
             style={{
-                top: position.y,
-                left: position.x,
-                width: size.width,
-                height: size.height,
+                top: localPosition.y,
+                left: localPosition.x,
+                width: localSize.width,
+                height: localSize.height,
                 position: 'absolute',
                 border: isSelected ? '1px solid blue' : 'none',
-                cursor: isDragging ? 'move' : 'default',
+                cursor: isDragging ? 'move' : 'move',
                 transform: `rotate(${rotation}deg)`,
                 userSelect: 'none',
             }}

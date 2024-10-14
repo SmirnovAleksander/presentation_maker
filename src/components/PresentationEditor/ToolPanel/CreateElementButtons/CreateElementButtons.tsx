@@ -1,7 +1,7 @@
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {ImageElement, ShapeElement, TextElement} from "../../../../store/types.ts";
-import {addElement} from "../../../../store/actions.ts";
+import {addElement, selectElement} from "../../../../store/actions.ts";
 import styles from './CreateElementButtons.module.css'
 import CustomButton from "../../../UI/CustomButton/CustomButton.tsx";
 
@@ -28,6 +28,7 @@ const CreateElementButtons = () => {
 
         if (selectedSlideId && selectedPresentation) {
             dispatch(addElement(selectedPresentation.id, selectedSlideId, newTextElement));
+            dispatch(selectElement(newTextElement.id))
         }
     };
     const addImageElement = () => {
@@ -43,6 +44,7 @@ const CreateElementButtons = () => {
 
         if (selectedSlideId && selectedPresentation) {
             dispatch(addElement(selectedPresentation.id, selectedSlideId, newImageElement));
+            dispatch(selectElement(newImageElement.id))
         }
     };
     const addShapeElement = (type: 'rectangle' | 'circle' | 'line') => {
@@ -59,6 +61,7 @@ const CreateElementButtons = () => {
 
         if (selectedSlideId && selectedPresentation) {
             dispatch(addElement(selectedPresentation.id, selectedSlideId, newShapeElement));
+            dispatch(selectElement(newShapeElement.id))
         }
     };
     return (

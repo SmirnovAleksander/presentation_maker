@@ -1,0 +1,8 @@
+.imageEditWrapper {
+    display: flex;
+    flex-direction: column;
+    /*width: 240px;*/
+    height: 100%;
+    background-color: #fdcdd1;
+    /*min-width: 300px;*/
+}
