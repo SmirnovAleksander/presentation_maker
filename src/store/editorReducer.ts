@@ -105,13 +105,11 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
             };
         }
         case 'SELECT_ELEMENT':
-            console.log('Выбранный элемент:', action.payload);
             return {
                 ...state,
                 selectedElementId: action.payload,
             };
         case 'DESELECT_ELEMENT':
-            console.log('Сброшено выделение');
             return {
                 ...state,
                 selectedElementId: null,

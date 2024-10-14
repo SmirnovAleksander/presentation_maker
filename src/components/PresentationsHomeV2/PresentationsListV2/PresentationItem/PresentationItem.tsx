@@ -6,6 +6,7 @@ import styles from './PresentationItem.module.css'
 import deleteIcon from '../../../../assets/delete.svg'
 import {Presentation} from "../../../../store/types.ts";
 import React, {useState} from "react";
+import RenderSlideItemElements from "../../../PresentationEditor/SlidesList/RenderSlideItemElements.tsx";
 
 interface PresentationItemProps {
     presentation: Presentation;
@@ -14,6 +15,7 @@ interface PresentationItemProps {
 const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
+    const firstSlide = presentation.slides[0]
     const handleDeletePresentation = (id: number) => {
         dispatch(deletePresentation(id));
     };
@@ -41,9 +43,10 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             <div
                 className={styles.presentationCard}
                 onClick={navigateToEditPresentation}
-            ></div>
+            >
+                <RenderSlideItemElements slide={firstSlide} multiplier={5} />
+            </div>
             <div className={styles.presentationUnder}>
-                {/*<h3 className={styles.cardTitle}>{presentation.title}</h3>*/}
                 {editingId === presentation.id ? (
                     <input
                         type="text"

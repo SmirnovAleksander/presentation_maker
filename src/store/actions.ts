@@ -15,6 +15,7 @@ export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
 
+////////////////////////
 export interface AddPresentationAction {
     type: typeof ADD_PRESENTATION;
     payload: Presentation;
@@ -88,6 +89,8 @@ export type ElementActions =
     | SelectPresentationAction
     | DeleteSlideAction;
 
+//Экшены
+///////////////////////////
 export const addPresentation = (presentation: Presentation): AddPresentationAction => ({
     type: ADD_PRESENTATION,
     payload: presentation,

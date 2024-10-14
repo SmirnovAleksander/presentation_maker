@@ -20,6 +20,11 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [resizeStart, setResizeStart] = useState({ width: 0, height: 0, direction: '' });
 
+    const { color, rotation, position, size, lineWidth, borderRadius} = element;
+
+    const [localPosition, setLocalPosition] = useState(position);
+    const [localSize, setLocalSize] = useState(size);
+    const [myTimer, setMyTimer] = useState(0);
 
     useEffect(() => {
         if (isDragging || isResizing) {
@@ -33,28 +38,46 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
         };
     }, [isDragging, isResizing]);
 
+    useEffect(() => {
+        if (!isSelected) {
+            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+        } else {
+            if (myTimer) {
+                clearTimeout(myTimer);
+            }
+            const newTime = window.setTimeout(() => {
+                dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+            }, 5000);
+            setMyTimer(newTime);
+        }
+        return () => {
+            if (myTimer) {
+                clearTimeout(myTimer); // Очищаем таймер при размонтировании
+            }
+        };
+    }, [localPosition, localSize, isSelected]);
+
     if (!element) return null;
     if (!['rectangle', 'circle', 'line'].includes(element.type)) return null;
-    const { color, rotation, position, size, lineWidth, borderRadius} = element;
 
     const slideWidth = 1200;
-    const slideHeight = 675;
+    const slideHeight = 672;
     const updatePosition = (x: number, y: number) => {
-        const newX = Math.max(0, Math.min(x, slideWidth - element.size.width));
-        const newY = Math.max(0, Math.min(y, slideHeight - element.size.height));
-        dispatch(updateElement(element.id, { position: { x: newX, y: newY }}));
+        const newX = Math.max(0, Math.min(x, slideWidth - localSize.width));
+        const newY = Math.max(0, Math.min(y, slideHeight - localSize.height));
+        setLocalPosition({ x: newX, y: newY });
     }
     const updateSize = (width: number, height: number) => {
-        const newWidth = Math.min(Math.max(50, width), slideWidth - element.position.x);
-        const newHeight = Math.min(Math.max(20, height), slideHeight - element.position.y);
-        dispatch(updateElement(element.id, { size: { width: newWidth, height: newHeight } }));
+        const newWidth = Math.min(Math.max(50, width), slideWidth - localPosition.x);
+        const newHeight = Math.min(Math.max(20, height), slideHeight - localPosition.y);
+        setLocalSize({ width: newWidth, height: newHeight });
     };
 
     const handleMouseDown = (e: React.MouseEvent) => {
         e.stopPropagation();
-        e.preventDefault(); // Отключаем выделение
+        e.preventDefault();
         setIsDragging(true);
-        setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+        setDragStart({ x: e.clientX - localPosition.x, y: e.clientY - localPosition.y });
         dispatch(selectElement(element.id))
     };
 
@@ -63,10 +86,8 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
             updatePosition(e.clientX - dragStart.x, e.clientY - dragStart.y);
         }
         if (isResizing) {
-            let newWidth = size.width;
-            let newHeight = size.height;
-
-            // Изменяем размеры в зависимости от направления
+            let newWidth = localSize.width;
+            let newHeight = localSize.height;
             if (resizeStart.direction.includes('right')) {
                 newWidth = Math.max(50, resizeStart.width + (e.clientX - dragStart.x));
             } else if (resizeStart.direction.includes('left')) {
@@ -88,10 +109,10 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
 
     const handleResizeMouseDown = (e: React.MouseEvent, direction: string) => {
         e.stopPropagation();
-        e.preventDefault(); // Отключаем выделение
+        e.preventDefault();
         setIsResizing(true);
         setDragStart({ x: e.clientX, y: e.clientY });
-        setResizeStart({ width: size.width, height: size.height, direction });
+        setResizeStart({ width: localSize.width, height: localSize.height, direction });
     };
 
     return (
@@ -100,10 +121,10 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
                 onMouseDown={handleMouseDown}
                 style={{
                     position: 'absolute',
-                    top: position.y,
-                    left: position.x,
-                    width: size.width,
-                    height: size.height,
+                    top: localPosition.y,
+                    left: localPosition.x,
+                    width: localSize.width,
+                    height: localSize.height,
                     backgroundColor: isSelected ? 'rgba(0, 0, 255, 0.3)' : 'transparent',
                     border: isSelected ? `2px solid blue` : 'none',
                     cursor: isDragging ? 'move' : 'default',

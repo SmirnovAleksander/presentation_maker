@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {selectElement} from "../../../../store/actions.ts";
+import {selectElement, updateElement} from "../../../../store/actions.ts";
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {ImageElement} from "../../../../store/types.ts";
 
 interface ImageProps {
     element: ImageElement
-    onUpdate: (id: number, position: { x: number; y: number }, size: { width: number; height: number }) => void;
 }
 
 const ImageElement: React.FC<ImageProps> = ({element}) => {
-
     const dispatch : AppDispatch = useDispatch();
 
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);  // Получаем ID выделенного элемента
-    const isSelected = selectedElementId === element.id;  // Проверяем, выбран ли текущий элемент
+    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const isSelected = selectedElementId === element.id;
 
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
@@ -26,6 +24,26 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
 
     const [localPosition, setLocalPosition] = useState(position);
     const [localSize, setLocalSize] = useState(size);
+    const [myTimer, setMyTimer] = useState(0);
+
+    useEffect(() => {
+        if (!isSelected) {
+            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+        } else {
+            if (myTimer) {
+                clearTimeout(myTimer);
+            }
+            const newTime = window.setTimeout(() => {
+                dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+            }, 5000);
+            setMyTimer(newTime);
+        }
+        return () => {
+            if (myTimer) {
+                clearTimeout(myTimer); // Очищаем таймер при размонтировании
+            }
+        };
+    }, [localPosition, localSize, isSelected]);
 
     useEffect(() => {
         if (isDragging || isResizing) {
@@ -39,19 +57,20 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         };
     }, [isDragging, isResizing]);
 
+
     if (!element) return null;
     if (element.type !== 'image') return null;
 
     const slideWidth = 1200;
-    const slideHeight = 675;
+    const slideHeight = 672;
     const updatePosition = (x: number, y: number) => {
-        const newX = Math.max(0, Math.min(x, slideWidth - element.size.width));
-        const newY = Math.max(0, Math.min(y, slideHeight - element.size.height));
+        const newX = Math.max(0, Math.min(x, slideWidth - localSize.width));
+        const newY = Math.max(0, Math.min(y, slideHeight - localSize.height));
         setLocalPosition({ x: newX, y: newY });
     }
     const updateSize = (width: number, height: number) => {
-        const newWidth = Math.min(Math.max(50, width), slideWidth - element.position.x);
-        const newHeight = Math.min(Math.max(20, height), slideHeight - element.position.y);
+        const newWidth = Math.min(Math.max(50, width), slideWidth - localPosition.x);
+        const newHeight = Math.min(Math.max(20, height), slideHeight - localPosition.y);
         setLocalSize({ width: newWidth, height: newHeight });
     };
 
@@ -59,7 +78,7 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         e.stopPropagation();
         e.preventDefault();
         setIsDragging(true);
-        setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+        setDragStart({ x: e.clientX - localPosition.x, y: e.clientY - localPosition.y });
         dispatch(selectElement(element.id))
     };
 
@@ -68,10 +87,8 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
             updatePosition(e.clientX - dragStart.x, e.clientY - dragStart.y);
         }
         if (isResizing) {
-            let newWidth = size.width;
-            let newHeight = size.height;
-
-            // Adjust size based on direction of resize
+            let newWidth = localSize.width;
+            let newHeight = localSize.height;
             if (resizeStart.direction.includes('left')) {
                 newWidth = Math.max(50, resizeStart.width - (e.clientX - dragStart.x));
             } else if (resizeStart.direction.includes('right')) {
@@ -96,7 +113,7 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         e.preventDefault();
         setIsResizing(true);
         setDragStart({ x: e.clientX, y: e.clientY });
-        setResizeStart({ width: size.width, height: size.height, direction });
+        setResizeStart({ width: localSize.width, height: localSize.height, direction });
     };
     return (
         <div

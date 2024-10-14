@@ -10,7 +10,7 @@
 
 .slideEditor {
     width: 1200px;
-    height: calc(1200px * 9 / 16); /*675px*/
-    background-color: #4CAF50;
+    height: 672px;
     position: relative;
+    overflow: hidden;
 }

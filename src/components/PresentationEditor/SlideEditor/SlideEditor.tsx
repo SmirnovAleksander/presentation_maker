@@ -21,9 +21,14 @@ const SlideEditor = () => {
             dispatch(deselectElement());
         }
     };
+
     return (
         <div className={styles.slideEditorWrapper}>
-            <div className={styles.slideEditor} onMouseDown={handleEditorClick}>
+            <div
+                className={styles.slideEditor}
+                onMouseDown={handleEditorClick}
+                style={{backgroundColor: `${selectedSlide ? selectedSlide.backgroundColor : '#ffffff'}`}}
+            >
                 {selectedSlide && selectedSlide.elements.map(el => {
                     switch (el.type) {
                         case 'text':

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {deleteSlide, selectSlide} from "../../../../store/actions.ts";
 import deleteIcon from "../../../../assets/delete.svg";
+import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
 
 interface SlideItemProps {
     slide: Slide,
@@ -14,8 +15,9 @@ interface SlideItemProps {
 const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
     const dispatch: AppDispatch = useDispatch();
     const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId)
+    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
     const isSelected = selectedSlideId === slide.id;
+
 
     const handleSlideClick = () => {
         if (selectedPresentationId) {
@@ -27,6 +29,7 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
             dispatch(deleteSlide(selectedPresentationId, slideId));
         }
     };
+
     return (
         <div
             className={styles.slideItemWrapper}
@@ -51,7 +54,7 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
                 className={`${styles.slideItem} ${isSelected && styles.slideItemSelected}`}
                 style={{backgroundColor: `${slide.backgroundColor}`,}}
             >
-                <div className={styles.slideItemPlaceholder}>{slide.id}</div>
+                <RenderSlideItemElements key={slide.id} slide={slide} multiplier={8} />
             </div>
         </div>
     );

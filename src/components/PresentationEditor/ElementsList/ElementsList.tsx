@@ -24,21 +24,20 @@ const ElementsList = () => {
             <div className={styles.elementsCardWrapper}>
                 {selectedSlide && selectedSlide.elements.length > 0
                     ? selectedSlide.elements.map(el => (
-                    <div
-                        key={el.id}
-                        onClick={() => handleSelectElement(el.id)}
-                        className={`${styles.elementsCard} ${el.id === selectedElementId && styles.elementsCardSelected}`}
-                    >
-                        <p>{el.type}</p>
-                        <button onClick={() => handleDeleteElement(el.id)}>
-                            Удалить
-                        </button>
-                    </div>
-
-                )) : (
-                    <div className={styles.noElementsMessage}>
-                        Элементов нет
-                    </div>
+                        <div
+                            key={el.id}
+                            onClick={() => handleSelectElement(el.id)}
+                            className={`${styles.elementsCard} ${el.id === selectedElementId && styles.elementsCardSelected}`}
+                        >
+                            <p>{el.type}</p>
+                            <button onClick={() => handleDeleteElement(el.id)}>
+                                Удалить
+                            </button>
+                        </div>
+                    )) : (
+                        <div className={styles.noElementsMessage}>
+                            Элементов нет
+                        </div>
                     )}
             </div>
         </div>
