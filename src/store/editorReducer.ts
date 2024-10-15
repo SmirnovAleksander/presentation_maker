@@ -67,6 +67,25 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                 selectedSlideId: action.payload.slideId,
             };
         }
+        case 'UPDATE_SLIDE': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => {
+                                if (slide.id === action.payload.id) {
+                                    return {...slide, backgroundColor: action.payload.backgroundColor};
+                                }
+                                return slide;
+                            }),
+                        };
+                    }
+                    return presentation;
+                }),
+            };
+        }
         case 'DELETE_SLIDE': {
             return {
                 ...state,

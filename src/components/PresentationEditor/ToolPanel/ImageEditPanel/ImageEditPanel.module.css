@@ -6,3 +6,40 @@
     background-color: #fdcdd1;
     /*min-width: 300px;*/
 }
+
+.imageEditTitle {
+    padding: 3px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.imageDownloadWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.imageDownload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.imageDownload label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.imageDownload input[type="file"] {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 70%;
+}
+
+.imageDownload input[type="file"]:hover {
+    background-color: #e0e0e0;
+}

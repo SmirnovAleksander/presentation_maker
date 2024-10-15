@@ -1,23 +1,13 @@
-.colorEditWrapper {
+.backgroundEditWrapper {
     background-color: #f3c5c5;
 }
-
-.colorsScrollWrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 7px;
-    padding: 10px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    width: 300px;
-}
-
-.colorEditTitle {
+.backgroundEditTitle {
     padding: 3px 0;
     width: 100%;
     display: flex;
     justify-content: center;
 }
+
 .colorPickerWrapper {
     display: flex;
     flex-direction: row;
@@ -31,6 +21,15 @@
     cursor: pointer;
 }
 
+.colorsScrollWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    padding: 10px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    width: 300px;
+}
 .colorBlock {
     min-width: 50px;
     min-height: 50px;
@@ -44,6 +43,7 @@
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid #757575;
 }
+
 .colorBlockSelected {
     border: 2px solid #757575;
 }

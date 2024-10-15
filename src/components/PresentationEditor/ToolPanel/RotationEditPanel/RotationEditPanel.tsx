@@ -24,7 +24,7 @@ const RotationEditPanel = () => {
     const rotation = selectedElement ? selectedElement.rotation : 0;
     return (
         <div className={styles.rotationEditWrapper}>
-            <p>Rotation</p>
+            <p className={styles.rotationButtonsTitle}>Rotation</p>
             <div className={styles.rotationButtons}>
                 {rotationAngles.map((angle) => (
                     <CustomButton
@@ -38,19 +38,19 @@ const RotationEditPanel = () => {
                     </CustomButton>
                 ))}
             </div>
-            <div className={styles.rotationEditRange}>
-                <label>Поворот:</label>
-                <input
-                    type="range"
-                    min="0"
-                    max="360"
-                    value={rotation || 0}
-                    onChange={(e) => {
-                        updateRotation(Number(e.target.value))
-                    }}
-                />
-                <span>{rotation || 0}°</span>
-            </div>
+            {/*<div className={styles.rotationEditRange}>*/}
+            {/*    <label>Поворот:</label>*/}
+            {/*    <input*/}
+            {/*        type="range"*/}
+            {/*        min="0"*/}
+            {/*        max="360"*/}
+            {/*        value={rotation || 0}*/}
+            {/*        onChange={(e) => {*/}
+            {/*            updateRotation(Number(e.target.value))*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*    <span>{rotation || 0}°</span>*/}
+            {/*</div>*/}
         </div>
     );
 };

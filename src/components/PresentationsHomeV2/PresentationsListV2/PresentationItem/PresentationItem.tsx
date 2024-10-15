@@ -1,4 +1,9 @@
-import {deletePresentation, selectPresentation, updatePresentationTitle} from "../../../../store/actions.ts";
+import {
+    deletePresentation,
+    selectPresentation,
+    selectSlide,
+    updatePresentationTitle
+} from "../../../../store/actions.ts";
 import {AppDispatch} from "../../../../store/store.ts";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -36,6 +41,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigateToEditPresentation = () => {
         dispatch(selectPresentation(presentation.id));
         navigate(`/presentation/${presentation.id}`);
+        dispatch(selectSlide(presentation.id, firstSlide.id))
     }
 
     return (
@@ -43,6 +49,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             <div
                 className={styles.presentationCard}
                 onClick={navigateToEditPresentation}
+                style={{backgroundColor: `${firstSlide.backgroundColor}`}}
             >
                 <RenderSlideItemElements slide={firstSlide} multiplier={5} />
             </div>

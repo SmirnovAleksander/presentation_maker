@@ -8,6 +8,7 @@ export const SELECT_PRESENTATION = 'SELECT_PRESENTATION';
 export const ADD_SLIDE = 'ADD_SLIDE';
 export const SELECT_SLIDE = 'SELECT_SLIDE';
 export const DELETE_SLIDE = 'DELETE_SLIDE';
+export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 
 export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
@@ -45,6 +46,13 @@ export interface SelectSlideAction {
 export interface DeleteSlideAction {
     type: typeof DELETE_SLIDE;
     payload: { presentationId: number, slideId: number };
+}
+export interface UpdateSlideAction {
+    type: typeof UPDATE_SLIDE;
+    payload: {
+        id: number;
+        backgroundColor: string;
+    };
 }
 
 //////////////////////////////////
@@ -87,7 +95,8 @@ export type ElementActions =
     | DeletePresentationAction
     | UpdatePresentationTitleAction
     | SelectPresentationAction
-    | DeleteSlideAction;
+    | DeleteSlideAction
+    | UpdateSlideAction;
 
 //Экшены
 ///////////////////////////
@@ -124,6 +133,10 @@ export const selectSlide = (presentationId: number, slideId: number): SelectSlid
 export const deleteSlide = (presentationId: number, slideId: number): DeleteSlideAction => ({
     type: DELETE_SLIDE,
     payload: { presentationId, slideId },
+});
+export const updateSlide = (id: number, backgroundColor: string): UpdateSlideAction => ({
+    type: UPDATE_SLIDE,
+    payload: { id, backgroundColor },
 });
 //////////////////////////////////////////
 

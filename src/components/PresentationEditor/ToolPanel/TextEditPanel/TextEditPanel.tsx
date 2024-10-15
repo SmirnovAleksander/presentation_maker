@@ -31,49 +31,57 @@ const TextEditPanel = () => {
         'Tahoma',
         'Trebuchet MS',
     ];
+
+    const defaultFontSize = 16;
+    const defaultFontFamily = 'Arial';
+    const standardFontSizes = [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56, 64];
+
+    const isTextElement = selectedElement?.type === 'text'
+    const fontSize = isTextElement ? selectedElement.fontSize : defaultFontSize;
+    const fontFamily = isTextElement ? selectedElement.fontFamily : defaultFontFamily;
+
     return (
         <div className={styles.textEditWrapper}>
-            <p>Параметры текстового элемента</p>
-            {selectedElement && selectedElement.type === 'text'
-                ? (
-                    <div>
-                        <div>
-                            <label>Id: </label>
-                            {selectedElement && selectedElement.id}
-                        </div>
-                        <div>
-                            <label>Размер шрифта:</label>
-                            <input
-                                type="number"
-                                value={selectedElement.fontSize || ''}
-                                onChange={(e) => {
-                                    const newValue = e.target.value;
-                                    if (newValue === '') {
-                                        return;
-                                    }
-                                    updateFontSize(Number(newValue))
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <label>Шрифт:</label>
-                            <select
-                                value={selectedElement.fontFamily}
-                                onChange={(e) => {
-                                    updateFontFamily(e.target.value)
-                                }}
-                            >
-                                {availableFonts.map(font => (
-                                    <option key={font} value={font}>{font}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                ) : (
-                    <div>
-                        Выбери текстовый элемент
-                    </div>
-                )}
+            <p className={styles.textEditTitle}>Text</p>
+            <div className={styles.textEditFontSizeFamily}>
+                <select
+                    value={fontFamily}
+                    onChange={(e) => {
+                        updateFontFamily(e.target.value)
+                    }}
+                >
+                    {availableFonts.map(font => (
+                        <option key={font} value={font}>{font}</option>
+                    ))}
+                </select>
+                <input
+                    type="number"
+                    style={{width: '50px'}}
+                    value={fontSize}
+                    onChange={(e) => {
+                        const newValue = e.target.value;
+                        if (newValue === '') {
+                            return;
+                        }
+                        updateFontSize(Number(newValue))
+                    }}
+                />
+                <select
+                    value={fontSize}
+                    style={{width: '70px'}}
+                    onChange={(e) => {
+                        const newSize = Number(e.target.value);
+                        updateFontSize(newSize);
+                    }}
+                >
+                    {standardFontSizes.map(size => (
+                        <option key={size} value={size}>{size}</option>
+                    ))}
+                </select>
+            </div>
+            <div>
+
+            </div>
         </div>
     );
 };

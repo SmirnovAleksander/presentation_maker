@@ -1,29 +1,22 @@
-import styles from './ColorEditPanel.module.css'
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {updateElement} from "../../../../store/actions.ts";
 import {useState} from "react";
+import styles from "./SlideEditBackground.module.css";
+import {updateSlide} from "../../../../store/actions.ts";
 
-const ColorEditPanel = () => {
+const SlideEditBackground = () => {
     const dispatch: AppDispatch = useDispatch();
 
     const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
     const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
 
     const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
 
-    const isShapeElement = selectedElement && (
-        selectedElement.type === 'rectangle'
-        || selectedElement.type === 'line'
-        || selectedElement.type === 'circle'
-    );
-    const updateColor = (color: string) => {
-        if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { color }));
+    const updateBackgroundColor = (backgroundColor: string) => {
+        if (selectedSlide) {
+            dispatch(updateSlide(selectedSlide.id, backgroundColor));
         }
     };
     const [myTimeout, setMyTimeout] = useState(0);
@@ -33,13 +26,13 @@ const ColorEditPanel = () => {
         '#E74C3C', '#3498DB', '#2ECC71', '#1ABC9C', '#F39C12',
         '#D35400', '#C0392B', '#9B59B6', '#2980B9', '#27AE60',
     ];
-    const [localColor, setLocalColor] = useState('#000000');
+    const [localColor, setLocalColor] = useState('#D9D9D9');
 
     return (
         <>
-            {isShapeElement && <div className={styles.colorEditWrapper}>
+            {selectedSlide && <div className={styles.backgroundEditWrapper}>
                 <div>
-                    <p className={styles.colorEditTitle}>Цвет текста:</p>
+                    <p className={styles.backgroundEditTitle}>Задний фон презентации:</p>
                     <div className={styles.colorPickerWrapper}>
                         <p>Цвет:</p>
                         <input
@@ -48,13 +41,12 @@ const ColorEditPanel = () => {
                                 clearTimeout(myTimeout);
                                 setMyTimeout(
                                     setTimeout(() => {
-                                        updateColor(e.target.value);
+                                        updateBackgroundColor(e.target.value);
                                     }, 500) // <-- Delay api call by 300 milliseconds. Set to what you prefer
                                 );
                             }}
                         />
                     </div>
-
                     <div className={styles.colorsScrollWrapper}>
                         {popularColors.map((color, index) => (
                             <div
@@ -64,7 +56,7 @@ const ColorEditPanel = () => {
                                     backgroundColor: color,
                                 }}
                                 onClick={() => {
-                                    updateColor(color)
+                                    updateBackgroundColor(color)
                                     setLocalColor(color)
                                 }}
                             >
@@ -77,4 +69,4 @@ const ColorEditPanel = () => {
     );
 };
 
-export default ColorEditPanel;
+export default SlideEditBackground;
