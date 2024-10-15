@@ -1,5 +1,8 @@
 import {ElementProps, ImageElement, Presentation, ShapeElement, Slide, TextElement} from "./types.ts";
 
+export const MOVE_SLIDE_UP = 'MOVE_SLIDE_UP';
+export const MOVE_SLIDE_DOWN = 'MOVE_SLIDE_DOWN';
+
 export const ADD_PRESENTATION = 'ADD_PRESENTATION';
 export const DELETE_PRESENTATION = 'DELETE_PRESENTATION';
 export const UPDATE_PRESENTATION_TITLE = 'UPDATE_PRESENTATION_TITLE';
@@ -16,6 +19,22 @@ export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
 
+///////////////////////
+export interface MoveSlideUpAction {
+    type: typeof MOVE_SLIDE_UP;
+    payload: {
+        presentationId: number;
+        slideId: number;
+    };
+}
+
+export interface MoveSlideDownAction {
+    type: typeof MOVE_SLIDE_DOWN;
+    payload: {
+        presentationId: number;
+        slideId: number;
+    };
+}
 ////////////////////////
 export interface AddPresentationAction {
     type: typeof ADD_PRESENTATION;
@@ -96,9 +115,21 @@ export type ElementActions =
     | UpdatePresentationTitleAction
     | SelectPresentationAction
     | DeleteSlideAction
-    | UpdateSlideAction;
+    | UpdateSlideAction
+    | MoveSlideUpAction
+    | MoveSlideDownAction;
 
 //Экшены
+////////////////////////////
+export const moveSlideUp = (presentationId: number, slideId: number): MoveSlideUpAction => ({
+    type: MOVE_SLIDE_UP,
+    payload: { presentationId, slideId },
+});
+
+export const moveSlideDown = (presentationId: number, slideId: number): MoveSlideDownAction => ({
+    type: MOVE_SLIDE_DOWN,
+    payload: { presentationId, slideId },
+});
 ///////////////////////////
 export const addPresentation = (presentation: Presentation): AddPresentationAction => ({
     type: ADD_PRESENTATION,

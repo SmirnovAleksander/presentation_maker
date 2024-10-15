@@ -1,10 +1,9 @@
 .slideItemWrapper {
     display: flex;
     justify-content: space-between;
-    gap: 2px;
 }
 .slideItem {
-    width: 150px;
+    min-width: 150px;
     height: 84px; /*calc(150px * 9 / 16)*/
     cursor: pointer;
     /*display: flex;*/
@@ -19,6 +18,12 @@
 .slideItem:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border: 2px solid #C7C7C7;
+}
+.slideMoveButtons {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 .slideItemSelected {

@@ -42,14 +42,18 @@ const ToolPanel = () => {
             <div className={styles.panelMain}>
                 <CustomButton onClick={() => navigate('/')}>Вернуться на главную</CustomButton>
                 <div>
-                    <label>Id: </label>
+                    <label>Id element: </label>
                     {selectedElement && selectedElement.id}
+                </div>
+                <div>
+                    <label>Id slide: </label>
+                    {selectedSlide && selectedSlide.id}
                 </div>
                 <CustomButton onClick={addNewSlide}>Добавить слайд</CustomButton>
             </div>
             <div className={styles.toolsElementsWrapper}>
                 <div className={styles.toolsElements}>
-                <TextEditPanel/>
+                    <TextEditPanel/>
                     <ImageEditPanel/>
                     <ShapeEditPanel/>
                     <ColorEditPanel/>

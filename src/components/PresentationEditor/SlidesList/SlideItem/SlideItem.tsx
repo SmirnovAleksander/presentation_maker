@@ -3,9 +3,10 @@ import {Slide} from "../../../../store/types.ts";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, appState} from "../../../../store/store.ts";
-import {deleteSlide, selectSlide} from "../../../../store/actions.ts";
+import {deleteSlide, moveSlideDown, moveSlideUp, selectSlide} from "../../../../store/actions.ts";
 import deleteIcon from "../../../../assets/delete.svg";
 import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
+import CustomButton from "../../../UI/CustomButton/CustomButton.tsx";
 
 interface SlideItemProps {
     slide: Slide,
@@ -17,6 +18,9 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
     const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
     const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
     const isSelected = selectedSlideId === slide.id;
+    const selectedPresentation  = useSelector((state: appState) =>
+        state.presentations.find(p => p.id === selectedPresentationId)
+    );
 
 
     const handleSlideClick = () => {
@@ -27,6 +31,17 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
     const handleDeleteSlide = (slideId: number) => {
         if (selectedPresentationId) {
             dispatch(deleteSlide(selectedPresentationId, slideId));
+        }
+    };
+    const handleMoveSlideUp = () => {
+        if (selectedPresentationId) {
+            dispatch(moveSlideUp(selectedPresentationId, slide.id));
+        }
+    };
+
+    const handleMoveSlideDown = () => {
+        if (selectedPresentationId) {
+            dispatch(moveSlideDown(selectedPresentationId, slide.id));
         }
     };
 
@@ -56,6 +71,24 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
             >
                 <RenderSlideItemElements key={slide.id} slide={slide} multiplier={8} />
             </div>
+            {isSelected && (
+                <div className={styles.slideMoveButtons}>
+                    <CustomButton
+                        onClick={handleMoveSlideUp}
+                        disabled={slideIndex === 1}
+                        style={{backgroundColor: slideIndex === 1 ? 'rgba(0, 0, 0, 0.2)' : ''}}
+                    >
+                        ↑
+                    </CustomButton>
+                    <CustomButton
+                        onClick={handleMoveSlideDown}
+                        disabled={slideIndex === selectedPresentation!.slides.length}
+                        style={{backgroundColor: slideIndex === selectedPresentation!.slides.length ? 'rgba(0, 0, 0, 0.2)' : ''}}
+                    >
+                        ↓
+                    </CustomButton>
+                </div>
+            )}
         </div>
     );
 };

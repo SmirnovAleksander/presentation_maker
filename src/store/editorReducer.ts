@@ -15,6 +15,50 @@ const initialState: EditorState = {
 };
 const editorReducer = (state = initialState, action: ElementActions): EditorState  => {
     switch (action.type) {
+        case 'MOVE_SLIDE_UP': {
+            const presentation = state.presentations.find(p => p.id === action.payload.presentationId);
+            if (presentation) {
+                const slideIndex = presentation.slides.findIndex(slide => slide.id === action.payload.slideId);
+                if (slideIndex > 0) {
+                    // const newSlides = [...presentation.slides];
+                    // [newSlides[slideIndex - 1], newSlides[slideIndex]] = [newSlides[slideIndex], newSlides[slideIndex - 1]];
+                    const newSlides = [...presentation.slides];
+                    const [movedSlide] = newSlides.splice(slideIndex, 1);
+                    newSlides.splice(slideIndex - 1, 0, movedSlide);
+                    return {
+                        ...state,
+                        presentations: state.presentations.map(p =>
+                            p.id === action.payload.presentationId
+                                ? { ...p, slides: newSlides }
+                                : p
+                        ),
+                    };
+                }
+            }
+            return state;
+        }
+        case 'MOVE_SLIDE_DOWN': {
+            const presentation = state.presentations.find(p => p.id === action.payload.presentationId);
+            if (presentation) {
+                const slideIndex = presentation.slides.findIndex(slide => slide.id === action.payload.slideId);
+                if (slideIndex < presentation.slides.length - 1) {
+                    // const newSlides = [...presentation.slides];
+                    // [newSlides[slideIndex + 1], newSlides[slideIndex]] = [newSlides[slideIndex], newSlides[slideIndex + 1]];
+                    const newSlides = [...presentation.slides];
+                    const [movedSlide] = newSlides.splice(slideIndex, 1);
+                    newSlides.splice(slideIndex + 1, 0, movedSlide);
+                    return {
+                        ...state,
+                        presentations: state.presentations.map(p =>
+                            p.id === action.payload.presentationId
+                                ? { ...p, slides: newSlides }
+                                : p
+                        ),
+                    };
+                }
+            }
+            return state;
+        }
         case 'ADD_PRESENTATION': {
             return {
                 ...state,
