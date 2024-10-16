@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './CustomButton.module.css';
 
 interface CustomButtonProps {
-    onClick: () => void;
+    onClick?: () => void;
     children: React.ReactNode;
     style?: React.CSSProperties;
     disabled?: boolean;

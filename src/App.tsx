@@ -5,6 +5,8 @@ import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {appState} from "./store/store.ts";
 import PresentationsHomeV2 from "./pages/PresentationsHomeV2/PresentationsHomeV2.tsx";
+import FullscreenPresentationPreview
+    from "./components/FullscreenPresentationPreview/FullscreenPresentationPreview.tsx";
 
 const App = () => {
     const state = useSelector((state: appState) => state);
@@ -16,7 +18,8 @@ const App = () => {
             <Routes>
                 <Route path="*" element={<ErrorPage />} />
                 <Route path="/" element={<PresentationsHomeV2 />} />
-                <Route path="/presentation/:id" element={<PresentationEditor />} />
+                <Route path="/presentation/:id" element={<PresentationEditor />}/>
+                <Route path="/presentation/:id/slide_preview" element={<FullscreenPresentationPreview />}/>
             </Routes>
         </BrowserRouter>
     );

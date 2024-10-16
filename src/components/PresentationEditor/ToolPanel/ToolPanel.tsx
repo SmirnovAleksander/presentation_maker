@@ -37,6 +37,16 @@ const ToolPanel = () => {
             dispatch(selectSlide(selectedPresentation.id, newSlide.id))
         }
     };
+    const handleFullscreenPreviewFromFirstSlide = () => {
+        if (selectedPresentationId) {
+            navigate(`/presentation/${selectedPresentationId}/slide_preview`, { state: { startFromCurrentSlide: false } });
+        }
+    };
+    const handleFullscreenPreviewFromCurrentSlide = () => {
+        if (selectedPresentationId && selectedSlideId) {
+            navigate(`/presentation/${selectedPresentationId}/slide_preview`,  { state: { startFromCurrentSlide: true } });
+        }
+    };
     return (
         <div className={styles.toolPanelWrapper}>
             <div className={styles.panelMain}>
@@ -49,6 +59,8 @@ const ToolPanel = () => {
                     <label>Id slide: </label>
                     {selectedSlide && selectedSlide.id}
                 </div>
+                <CustomButton onClick={handleFullscreenPreviewFromFirstSlide}>Показ слайдов</CustomButton>
+                <CustomButton onClick={handleFullscreenPreviewFromCurrentSlide}>Показ с текущего слайда</CustomButton>
                 <CustomButton onClick={addNewSlide}>Добавить слайд</CustomButton>
             </div>
             <div className={styles.toolsElementsWrapper}>
