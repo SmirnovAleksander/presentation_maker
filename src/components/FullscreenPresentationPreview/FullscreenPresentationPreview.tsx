@@ -17,11 +17,8 @@ const FullscreenPresentationPreview = () => {
         state.presentations.find(p => p.id === Number(id))
     );
     const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedSlide = presentation?.slides.find(slide => slide.id === selectedSlideId);
 
     const { startFromCurrentSlide } = location.state || { startFromCurrentSlide: false };
-    console.log(startFromCurrentSlide);
-
     const initialSlideIndex = startFromCurrentSlide && selectedSlideId && presentation
         ? presentation.slides.findIndex(slide => slide.id === selectedSlideId)
         : 0
@@ -77,12 +74,11 @@ const FullscreenPresentationPreview = () => {
 
     const currentSlide = presentation.slides[currentSlideIndex];
     const slideStyle = {
-        width: '100%', height: '100%',
-        backgroundColor: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+        backgroundColor: currentSlide?.backgroundImage
             ? 'transparent'
-            : selectedSlide?.backgroundColor || '#ffffff',
-        backgroundImage: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
-            ? `url(${selectedSlide.backgroundImage})`
+            : currentSlide?.backgroundColor || '#ffffff',
+        backgroundImage: currentSlide?.backgroundImage
+            ? `url(${currentSlide.backgroundImage})`
             : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',

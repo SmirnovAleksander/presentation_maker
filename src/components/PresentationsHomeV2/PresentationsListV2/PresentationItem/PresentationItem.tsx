@@ -43,10 +43,10 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
         }
     }
     const slideStyle = {
-        backgroundColor: firstSlide?.backgroundColor === '#ffffff' && firstSlide?.backgroundImage
+        backgroundColor: firstSlide.backgroundImage
             ? 'transparent'
-            : firstSlide?.backgroundColor || '#ffffff',
-        backgroundImage: firstSlide?.backgroundColor === '#ffffff' && firstSlide?.backgroundImage
+            : firstSlide.backgroundColor || '#ffffff',
+        backgroundImage: firstSlide.backgroundImage
             ? `url(${firstSlide.backgroundImage})`
             : 'none',
         backgroundSize: 'cover',

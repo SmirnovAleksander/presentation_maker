@@ -21,7 +21,6 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
     const selectedPresentation  = useSelector((state: appState) =>
         state.presentations.find(p => p.id === selectedPresentationId)
     );
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
 
 
     const handleSlideClick = () => {
@@ -39,18 +38,17 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
             dispatch(moveSlideUp(selectedPresentationId, slide.id));
         }
     };
-
     const handleMoveSlideDown = () => {
         if (selectedPresentationId) {
             dispatch(moveSlideDown(selectedPresentationId, slide.id));
         }
     };
     const slideStyle = {
-        backgroundColor: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+        backgroundColor: slide?.backgroundImage
             ? 'transparent'
-            : selectedSlide?.backgroundColor || '#ffffff',
-        backgroundImage: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
-            ? `url(${selectedSlide.backgroundImage})`
+            : slide?.backgroundColor || '#ffffff',
+        backgroundImage: slide?.backgroundImage
+            ? `url(${slide.backgroundImage})`
             : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',

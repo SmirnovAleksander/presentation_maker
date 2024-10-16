@@ -111,6 +111,23 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                 selectedSlideId: action.payload.slideId,
             };
         }
+        case 'UPDATE_ALL_SLIDES_BACKGROUND': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => ({
+                                ...slide,
+                                backgroundImage: action.payload.backgroundImage,
+                            })),
+                        };
+                    }
+                    return presentation;
+                }),
+            };
+        }
         case 'UPDATE_SLIDE': {
             return {
                 ...state,
@@ -120,10 +137,7 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
                             ...presentation,
                             slides: presentation.slides.map(slide => {
                                 if (slide.id === action.payload.id) {
-                                    return {
-                                        ...slide,
-                                        backgroundColor: action.payload.backgroundColor || slide.backgroundColor,
-                                        backgroundImage: action.payload.backgroundImage || slide.backgroundImage};
+                                    return {...slide, backgroundColor: action.payload.backgroundColor};
                                 }
                                 return slide;
                             }),

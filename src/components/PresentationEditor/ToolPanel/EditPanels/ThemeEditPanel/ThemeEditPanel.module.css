@@ -20,7 +20,7 @@
     padding: 5px;
     overflow-y: auto;
     scrollbar-width: thin;
-    width: 300px;
+    width: 800px;
 }
 
 .themeItem {
@@ -28,12 +28,24 @@
     height: 84px; /*calc(150px * 9 / 16)*/
     position: relative;
     overflow: hidden;
+    border-radius: 10px;
     border: 1px solid #D9D9D9;
+    box-shadow: 1px 1px 1px #D9D9D9;
     object-fit: cover;
     flex-shrink: 0;
+}
+.themeItem:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 2px solid #C7C7C7;
 }
 .themeImage {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Обрезка изображения для сохранения пропорций */
+    object-fit: cover;
+}
+.selectedTheme {
+    border: 2px solid #2275ff;
+}
+.selectedTheme:hover {
+    border: 2px solid #2275ff;
 }

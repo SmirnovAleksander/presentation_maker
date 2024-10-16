@@ -22,10 +22,10 @@ const SlideEditor = () => {
         }
     };
     const slideStyle = {
-        backgroundColor: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+        backgroundColor: selectedSlide?.backgroundImage
             ? 'transparent'
             : selectedSlide?.backgroundColor || '#ffffff',
-        backgroundImage: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+        backgroundImage: selectedSlide?.backgroundImage
             ? `url(${selectedSlide.backgroundImage})`
             : 'none',
         backgroundSize: 'cover',

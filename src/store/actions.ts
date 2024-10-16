@@ -12,6 +12,7 @@ export const ADD_SLIDE = 'ADD_SLIDE';
 export const SELECT_SLIDE = 'SELECT_SLIDE';
 export const DELETE_SLIDE = 'DELETE_SLIDE';
 export const UPDATE_SLIDE = 'UPDATE_SLIDE';
+export const UPDATE_ALL_SLIDES_BACKGROUND = 'UPDATE_ALL_SLIDES_BACKGROUND';
 
 export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
@@ -66,12 +67,17 @@ export interface DeleteSlideAction {
     type: typeof DELETE_SLIDE;
     payload: { presentationId: number, slideId: number };
 }
+export interface UpdateAllSlidesBackgroundAction    {
+    type: typeof UPDATE_ALL_SLIDES_BACKGROUND;
+    payload: {
+        backgroundImage: string;
+    };
+}
 export interface UpdateSlideAction {
     type: typeof UPDATE_SLIDE;
     payload: {
         id: number;
         backgroundColor: string;
-        backgroundImage?: string;
     };
 }
 
@@ -116,6 +122,7 @@ export type ElementActions =
     | UpdatePresentationTitleAction
     | SelectPresentationAction
     | DeleteSlideAction
+    | UpdateAllSlidesBackgroundAction
     | UpdateSlideAction
     | MoveSlideUpAction
     | MoveSlideDownAction;
@@ -137,7 +144,7 @@ export const addPresentation = (presentation: Presentation): AddPresentationActi
     payload: presentation,
 });
 export const deletePresentation = (id: number) => ({
-    type: 'DELETE_PRESENTATION',
+    type: DELETE_PRESENTATION,
     payload: id,
 });
 export const updatePresentationTitle = (id: number, title: string): UpdatePresentationTitleAction => ({
@@ -166,10 +173,14 @@ export const deleteSlide = (presentationId: number, slideId: number): DeleteSlid
     type: DELETE_SLIDE,
     payload: { presentationId, slideId },
 });
-export const updateSlide = (id: number, backgroundColor: string, backgroundImage?: string): UpdateSlideAction => ({
-    type: UPDATE_SLIDE,
-    payload: {id, backgroundColor, backgroundImage},
+export const updateAllSlidesBackground = (backgroundImage: string): UpdateAllSlidesBackgroundAction    => ({
+    type: UPDATE_ALL_SLIDES_BACKGROUND,
+    payload: { backgroundImage },
 });
+export const updateSlide = (id: number, backgroundColor: string): UpdateSlideAction => ({
+        type: UPDATE_SLIDE,
+        payload: { id, backgroundColor },
+    });
 //////////////////////////////////////////
 
 // Действия для элементов

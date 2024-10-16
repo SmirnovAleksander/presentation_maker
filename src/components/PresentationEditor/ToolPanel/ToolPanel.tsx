@@ -34,6 +34,7 @@ const ToolPanel = () => {
             id: Date.now(),
             elements: [],
             backgroundColor: '#D9D9D9',
+            backgroundImage: selectedPresentation?.slides[0]?.backgroundImage,
         };
         if (selectedPresentation) {
             dispatch(addSlide(selectedPresentation.id, newSlide));
