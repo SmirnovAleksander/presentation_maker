@@ -4,6 +4,7 @@
     flex-direction: column;
     padding: 10px;
     align-items: center;
+    border-top: 2px solid #D9D9D9;
 }
 .ElementsListTitle {
     display: flex;
@@ -19,6 +20,12 @@
     overflow-y: auto;
     scrollbar-width: none;
 }
+.elementTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .elementsCard {
     padding: 6px;
     display: flex;

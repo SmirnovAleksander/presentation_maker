@@ -71,6 +71,7 @@ export interface UpdateSlideAction {
     payload: {
         id: number;
         backgroundColor: string;
+        backgroundImage?: string;
     };
 }
 
@@ -165,9 +166,9 @@ export const deleteSlide = (presentationId: number, slideId: number): DeleteSlid
     type: DELETE_SLIDE,
     payload: { presentationId, slideId },
 });
-export const updateSlide = (id: number, backgroundColor: string): UpdateSlideAction => ({
+export const updateSlide = (id: number, backgroundColor: string, backgroundImage?: string): UpdateSlideAction => ({
     type: UPDATE_SLIDE,
-    payload: { id, backgroundColor },
+    payload: {id, backgroundColor, backgroundImage},
 });
 //////////////////////////////////////////
 

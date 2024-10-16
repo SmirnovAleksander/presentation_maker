@@ -4,14 +4,17 @@ import {addSlide, selectSlide} from "../../../store/actions.ts";
 import {AppDispatch, appState} from "../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import TextEditPanel from "./TextEditPanel/TextEditPanel.tsx";
-import ImageEditPanel from "./ImageEditPanel/ImageEditPanel.tsx";
-import ShapeEditPanel from "./ShapeEditPanel/ShapeEditPanel.tsx";
-import CreateElementButtons from "./CreateElementButtons/CreateElementButtons.tsx";
 import CustomButton from "../../UI/CustomButton/CustomButton.tsx";
-import RotationEditPanel from "./RotationEditPanel/RotationEditPanel.tsx";
-import ColorEditPanel from "./ColorEditPanel/ColorEditPanel.tsx";
-import SlideEditBackground from "./SlideEditBackground/SlideEditBackground.tsx";
+import TextEditPanel from "./EditPanels/TextEditPanel/TextEditPanel.tsx";
+import ImageEditPanel from "./EditPanels/ImageEditPanel/ImageEditPanel.tsx";
+import ShapeEditPanel from "./EditPanels/ShapeEditPanel/ShapeEditPanel.tsx";
+import ColorEditPanel from "./EditPanels/ColorEditPanel/ColorEditPanel.tsx";
+import RotationEditPanel from "./EditPanels/RotationEditPanel/RotationEditPanel.tsx";
+import SlideEditBackground from "./EditPanels/SlideEditBackground/SlideEditBackground.tsx";
+import CreateElementButtons from "./EditPanels/CreateElementButtons/CreateElementButtons.tsx";
+import TextColorEditPanel from "./EditPanels/TextColorEditPanel/TextColorEditPanel.tsx";
+import BorderEditPanel from "./EditPanels/BorderEditPanel/BorderEditPanel.tsx";
+import ThemeEditPanel from "./EditPanels/ThemeEditPanel/ThemeEditPanel.tsx";
 
 const ToolPanel = () => {
     const navigate = useNavigate();
@@ -65,14 +68,17 @@ const ToolPanel = () => {
             </div>
             <div className={styles.toolsElementsWrapper}>
                 <div className={styles.toolsElements}>
+                <CreateElementButtons/>
                     <TextEditPanel/>
+                    <RotationEditPanel/>
                     <ImageEditPanel/>
                     <ShapeEditPanel/>
                     <ColorEditPanel/>
-                    <RotationEditPanel/>
+                    <BorderEditPanel/>
+                    <TextColorEditPanel/>
                     <SlideEditBackground/>
+                    <ThemeEditPanel/>
                 </div>
-                <CreateElementButtons/>
             </div>
         </div>
     );

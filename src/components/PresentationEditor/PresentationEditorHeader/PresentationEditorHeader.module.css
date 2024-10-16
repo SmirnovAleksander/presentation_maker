@@ -1,7 +1,8 @@
 .header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    flex-direction: row;
+    /*padding: 10px;*/
     background: #ffffff;
     gap: 10px;
 }

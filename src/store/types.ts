@@ -8,6 +8,7 @@ export interface Slide {
     id: number;
     elements: ElementProps[];
     backgroundColor: string;
+    backgroundImage?: string;
 }
 
 export interface TextElement {

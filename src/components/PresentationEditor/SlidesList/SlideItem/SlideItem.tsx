@@ -21,6 +21,7 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
     const selectedPresentation  = useSelector((state: appState) =>
         state.presentations.find(p => p.id === selectedPresentationId)
     );
+    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
 
 
     const handleSlideClick = () => {
@@ -44,7 +45,16 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
             dispatch(moveSlideDown(selectedPresentationId, slide.id));
         }
     };
-
+    const slideStyle = {
+        backgroundColor: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+            ? 'transparent'
+            : selectedSlide?.backgroundColor || '#ffffff',
+        backgroundImage: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+            ? `url(${selectedSlide.backgroundImage})`
+            : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    };
     return (
         <div
             className={styles.slideItemWrapper}
@@ -67,7 +77,7 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
             </div>
             <div
                 className={`${styles.slideItem} ${isSelected && styles.slideItemSelected}`}
-                style={{backgroundColor: `${slide.backgroundColor}`,}}
+                style={slideStyle}
             >
                 <RenderSlideItemElements key={slide.id} slide={slide} multiplier={8} />
             </div>

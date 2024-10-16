@@ -21,13 +21,22 @@ const SlideEditor = () => {
             dispatch(deselectElement());
         }
     };
-
+    const slideStyle = {
+        backgroundColor: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+            ? 'transparent'
+            : selectedSlide?.backgroundColor || '#ffffff',
+        backgroundImage: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+            ? `url(${selectedSlide.backgroundImage})`
+            : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    };
     return (
         <div className={styles.slideEditorWrapper}>
             <div
                 className={styles.slideEditor}
                 onMouseDown={handleEditorClick}
-                style={{backgroundColor: `${selectedSlide ? selectedSlide.backgroundColor : '#ffffff'}`}}
+                style={slideStyle}
             >
                 {selectedSlide && selectedSlide.elements.map(el => {
                     switch (el.type) {

@@ -5,7 +5,6 @@ import {updatePresentationTitle} from "../../../store/actions.ts";
 import styles from './PresentationEditorHeader.module.css'
 import PresentationIcon from "../../../assets/PresentationsLogo.svg";
 import editIcon from "../../../assets/Edit.svg";
-
 const PresentationEditorHeader = () => {
     const dispatch: AppDispatch = useDispatch();
     const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
@@ -15,13 +14,6 @@ const PresentationEditorHeader = () => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
-    // useEffect(() => {
-    //     if (selectedPresentation) {
-    //         setNewTitle(selectedPresentation.title);
-    //     } else {
-    //         setNewTitle(''); // Сбрасываем заголовок, если выбранная презентация не найдена
-    //     }
-    // }, [selectedPresentation]);
     const handleEditClick = () => {
         setIsEditing(true);
     };

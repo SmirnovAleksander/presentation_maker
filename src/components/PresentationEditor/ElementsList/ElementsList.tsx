@@ -29,7 +29,7 @@ const ElementsList = () => {
                             onClick={() => handleSelectElement(el.id)}
                             className={`${styles.elementsCard} ${el.id === selectedElementId && styles.elementsCardSelected}`}
                         >
-                            <p>{el.type}</p>
+                            <p className={styles.elementTitle}>{el.type}</p>
                             <button onClick={() => handleDeleteElement(el.id)}>
                                 Удалить
                             </button>

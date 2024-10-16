@@ -17,6 +17,7 @@ const FullscreenPresentationPreview = () => {
         state.presentations.find(p => p.id === Number(id))
     );
     const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const selectedSlide = presentation?.slides.find(slide => slide.id === selectedSlideId);
 
     const { startFromCurrentSlide } = location.state || { startFromCurrentSlide: false };
     console.log(startFromCurrentSlide);
@@ -75,9 +76,19 @@ const FullscreenPresentationPreview = () => {
     }
 
     const currentSlide = presentation.slides[currentSlideIndex];
-
+    const slideStyle = {
+        width: '100%', height: '100%',
+        backgroundColor: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+            ? 'transparent'
+            : selectedSlide?.backgroundColor || '#ffffff',
+        backgroundImage: selectedSlide?.backgroundColor === '#ffffff' && selectedSlide?.backgroundImage
+            ? `url(${selectedSlide.backgroundImage})`
+            : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    };
     return (
-        <div className={styles.fullscreenPreview} ref={elementRef} style={{ width: '100%', height: '100%', backgroundColor: 'lightgray' }}>
+        <div className={styles.fullscreenPreview} ref={elementRef} style={slideStyle}>
             {currentSlide && (
                 <RenderSlideItemElements key={currentSlide.id} slide={currentSlide} multiplier={0.62}/>
             )}

@@ -1,0 +1,13 @@
+.elementButtonsWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 2px;
+}
+
+.elementButtonsWrapper p {
+    padding: 3px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

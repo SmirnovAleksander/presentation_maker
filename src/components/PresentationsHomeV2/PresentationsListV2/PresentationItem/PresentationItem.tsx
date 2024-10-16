@@ -42,13 +42,22 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             dispatch(selectSlide(presentation.id, firstSlide.id));
         }
     }
-
+    const slideStyle = {
+        backgroundColor: firstSlide?.backgroundColor === '#ffffff' && firstSlide?.backgroundImage
+            ? 'transparent'
+            : firstSlide?.backgroundColor || '#ffffff',
+        backgroundImage: firstSlide?.backgroundColor === '#ffffff' && firstSlide?.backgroundImage
+            ? `url(${firstSlide.backgroundImage})`
+            : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    };
     return (
         <div key={presentation.id} className={styles.presentationCardWrapper}>
             <div
                 className={styles.presentationCard}
                 onClick={navigateToEditPresentation}
-                style={{backgroundColor: firstSlide ? firstSlide.backgroundColor : '#D9D9D9'}}
+                style={slideStyle}
             >
                 <div>
                     {firstSlide
