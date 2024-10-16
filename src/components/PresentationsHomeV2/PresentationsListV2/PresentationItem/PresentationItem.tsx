@@ -1,9 +1,4 @@
-import {
-    deletePresentation,
-    selectPresentation,
-    selectSlide,
-    updatePresentationTitle
-} from "../../../../store/actions.ts";
+import {deletePresentation, selectPresentation, selectSlide, updatePresentationTitle} from "../../../../store/actions.ts";
 import {AppDispatch} from "../../../../store/store.ts";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -20,13 +15,15 @@ interface PresentationItemProps {
 const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
-    const firstSlide = presentation.slides[0]
+    const firstSlide = presentation.slides[0];
+
     const handleDeletePresentation = (id: number) => {
         dispatch(deletePresentation(id));
     };
 
     const [editingId, setEditingId] = useState<number | null>(null);
     const [newTitle, setNewTitle] = useState<string>('');
+
     const handleDoubleClick = (presentationId: number, currentTitle: string) => {
         setEditingId(presentationId);
         setNewTitle(currentTitle);
@@ -41,7 +38,9 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigateToEditPresentation = () => {
         dispatch(selectPresentation(presentation.id));
         navigate(`/presentation/${presentation.id}`);
-        dispatch(selectSlide(presentation.id, firstSlide.id))
+        if (firstSlide) {
+            dispatch(selectSlide(presentation.id, firstSlide.id));
+        }
     }
 
     return (
@@ -49,9 +48,15 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             <div
                 className={styles.presentationCard}
                 onClick={navigateToEditPresentation}
-                style={{backgroundColor: `${firstSlide.backgroundColor}`}}
+                style={{backgroundColor: firstSlide ? firstSlide.backgroundColor : '#D9D9D9'}}
             >
-                <RenderSlideItemElements slide={firstSlide} multiplier={5} />
+                <div>
+                    {firstSlide
+                        ? <RenderSlideItemElements slide={firstSlide} multiplier={5}/>
+                        : <div>Пустая презентация</div>
+                    }
+                </div>
+                {firstSlide && <div className={styles.editText}>Редактировать</div>}
             </div>
             <div className={styles.presentationUnder}>
                 {editingId === presentation.id ? (

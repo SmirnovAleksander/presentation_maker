@@ -4,8 +4,17 @@ import styles from './PresentationsListV2.module.css'
 import PresentationItem from "./PresentationItem/PresentationItem.tsx";
 
 const PresentationsListV2 = () => {
+    // const dispatch: AppDispatch = useDispatch();
     const presentations = useSelector((state: appState) => state.presentations);
 
+    // useEffect(() => {
+    //     presentations.forEach(presentation => {
+    //         if (presentation.slides.length === 0) {
+    //             dispatch(deletePresentation(presentation.id));
+    //         }
+    //     })
+    // }, [presentations, dispatch]);
+    // const filteredPresentations = presentations.filter(presentation => presentation.slides.length > 0);
 
     return (
         <div className={styles.presentationContainer}>

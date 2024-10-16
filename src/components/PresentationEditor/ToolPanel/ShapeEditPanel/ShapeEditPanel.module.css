@@ -1,0 +1,10 @@
+.shapeEditWrapper {
+    display: flex;
+    flex-direction: column;
+    /*width: 240px;*/
+    height: 100%;
+    background-color: #fdcdd1;
+    align-items: center;
+    /*min-width: 300px;*/
+    z-index: 10;
+}

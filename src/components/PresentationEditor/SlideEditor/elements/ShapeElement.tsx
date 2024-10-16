@@ -20,7 +20,7 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [resizeStart, setResizeStart] = useState({ width: 0, height: 0, direction: '' });
 
-    const { color, rotation, position, size, lineWidth, borderRadius} = element;
+    const { color, rotation, position, size, lineWidth, borderRadius, opacity, borderWidth, borderStyle, borderColor} = element;
 
     const [localPosition, setLocalPosition] = useState(position);
     const [localSize, setLocalSize] = useState(size);
@@ -125,12 +125,14 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
                     left: localPosition.x,
                     width: localSize.width,
                     height: localSize.height,
-                    backgroundColor: isSelected ? 'rgba(0, 0, 255, 0.3)' : 'transparent',
-                    border: isSelected ? `2px solid blue` : 'none',
+                    // backgroundColor: isSelected ? 'rgba(0, 0, 255, 0.3)' : 'transparent',
+                    border: `${borderWidth}px ${borderStyle} ${borderColor}`,
                     cursor: isDragging ? 'move' : 'default',
                     userSelect: 'none',
                     pointerEvents: 'auto',
                     transform: `rotate(${rotation}deg)`,
+                    opacity: opacity,
+                    // boxShadow: `0px 0px 10px ${borderColor}`,
                 }}
             >
                 {element.type === 'rectangle' && (
@@ -139,7 +141,9 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
                             width: '100%',
                             height: '100%',
                             backgroundColor: color,
-                            borderRadius: `${borderRadius}px`
+                            borderRadius: `${borderRadius}px`,
+                            opacity: opacity,
+                            // boxShadow: `0px 0px 10px ${borderColor}`,
                         }}
                     />
                 )}
@@ -150,6 +154,8 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
                             height: '100%',
                             backgroundColor: color,
                             borderRadius: '50%',
+                            opacity: opacity,
+                            // boxShadow: `0px 0px 10px ${borderColor}`,
                         }}
                     />
                 )}

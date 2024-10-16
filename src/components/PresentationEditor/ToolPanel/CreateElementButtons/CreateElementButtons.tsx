@@ -24,6 +24,13 @@ const CreateElementButtons = () => {
             position: { x: 100, y: 100 },
             size: { width: 200, height: 50 },
             rotation: 0,
+            backgroundColor: 'transparent',
+            bold: false,
+            italic: false,
+            underline: false,
+            strikethrough: false,
+            textTransform: 'none',
+            alignment: 'left',
         };
 
         if (selectedSlideId && selectedPresentation) {
@@ -40,6 +47,12 @@ const CreateElementButtons = () => {
             position: { x: 150, y: 150 },
             size: { width: 100, height: 100 },
             rotation: 0,
+            borderColor: '#000000',
+            borderStyle: 'solid',
+            borderWidth: 0,
+            borderRadius: 0,
+            boxShadow: 'none',
+            opacity: 1,
         };
 
         if (selectedSlideId && selectedPresentation) {
@@ -55,8 +68,13 @@ const CreateElementButtons = () => {
             size: { width: 100, height: 100 },
             color: '#ff0000',
             rotation: 0,
-            lineWidth: 2,
-            borderRadius: type === 'circle' ? 50 : 0, // Пример для круга
+            lineWidth: type === 'line' ? 2 : undefined,
+            borderRadius: type === 'circle' ? 50 : 0,
+            opacity: 1,
+            borderColor: '#000000',
+            borderStyle: 'solid',
+            borderWidth: 1,
+            boxShadow: 'none',
         };
 
         if (selectedSlideId && selectedPresentation) {

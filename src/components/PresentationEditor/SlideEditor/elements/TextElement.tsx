@@ -8,7 +8,6 @@ import type {TextElement} from "../../../../store/types.ts";
 interface TextElementProps {
     element: TextElement
 }
-
 const TextElement: React.FC<TextElementProps> = ({element}) => {
     const dispatch : AppDispatch = useDispatch();
 
@@ -20,7 +19,7 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [resizeStart, setResizeStart] = useState({ width: 0, height: 0, direction: '' });
 
-    const { content, fontSize, fontFamily, color, rotation, position, size } = element;
+    const { content, fontSize, fontFamily, color, rotation, position, size, backgroundColor, textTransform, bold, italic, alignment, strikethrough, underline } = element;
 
     const [localPosition, setLocalPosition] = useState(position);
     const [localSize, setLocalSize] = useState(size);
@@ -61,7 +60,6 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         }
     }, [isEditing]);
     /////
-
 
     useEffect(() => {
         if (isDragging || isResizing) {
@@ -161,23 +159,31 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         setResizeStart({ width: size.width, height: size.height, direction });
     };
 
+
+
     return (
         <div
             className={`text-element ${isSelected ? 'selected' : ''}`}
             style={{
+                whiteSpace: 'pre-wrap',
                 top: localPosition.y,
                 left: localPosition.x,
                 width: localSize.width,
                 height: localSize.height,
                 position: 'absolute',
-                textAlign: 'center',
+                textAlign: `${alignment}`,
                 border: isSelected ? '1px solid blue' : 'none',
                 cursor: isDragging ? 'move' : 'default',
                 userSelect: isEditing ? 'text' : 'none', // Отключает выделение текста
                 color: `${color}`,
+                backgroundColor: `${backgroundColor}`,
                 transform: `rotate(${rotation}deg)`,
                 fontSize: `${fontSize}px`,
                 fontFamily: `${fontFamily}`,
+                fontWeight: bold ? 'bold' : 'normal',
+                fontStyle: italic ? 'italic' : 'normal',
+                textDecoration: `${underline ? 'underline' : ''} ${strikethrough ? 'line-through' : ''}`,
+                textTransform: textTransform,
             }}
             onMouseDown={handleMouseDown}
             onDoubleClick={handleDoubleClick}
@@ -195,16 +201,23 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
                         height: '100%',
                         fontSize: `${fontSize}px`,
                         fontFamily: `${fontFamily}`,
+                        fontWeight: bold ? 'bold' : 'normal',
+                        fontStyle: italic ? 'italic' : 'normal',
                         color: `${color}`,
+                        textAlign: `${alignment}`,
+                        border: 'none',
+                        outline: 'none',
+                        backgroundColor: backgroundColor,
+                        textDecoration: `${underline ? 'underline' : ''} ${strikethrough ? 'line-through' : ''}`,
+                        textTransform: textTransform,
                         transform: `rotate(${rotation}deg)`,
                         resize: 'none',
                         overflow: 'hidden',
-                        border: 'none',
                         background: "transparent"
                     }}
                 />
             ) : (
-                <div>{content}</div>
+                <p style={{margin: 0}}>{content}</p>
             )}
             {isSelected && (<ResizeHandles onResizeStart={handleResizeMouseDown} />)}
         </div>

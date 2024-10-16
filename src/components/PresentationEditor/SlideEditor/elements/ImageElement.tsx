@@ -20,7 +20,7 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [resizeStart, setResizeStart] = useState({ width: 0, height: 0, direction: '' });
 
-    const { rotation, position, size, content} = element;
+    const { rotation, position, size, content, borderRadius, borderColor, borderStyle, borderWidth, opacity, boxShadow} = element;
 
     const [localPosition, setLocalPosition] = useState(position);
     const [localSize, setLocalSize] = useState(size);
@@ -124,7 +124,9 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
                 width: localSize.width,
                 height: localSize.height,
                 position: 'absolute',
-                border: isSelected ? '1px solid blue' : 'none',
+                border: `${borderWidth}px ${borderStyle} ${borderColor}`,
+                borderRadius: `${borderRadius}px`,
+                boxShadow: boxShadow,
                 cursor: isDragging ? 'move' : 'move',
                 transform: `rotate(${rotation}deg)`,
                 userSelect: 'none',
@@ -138,6 +140,9 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
                     width: '100%',
                     height: '100%',
                     display: 'block',
+                    borderRadius: `${borderRadius}px`,
+                    // border: `${borderWidth}px ${borderStyle} ${borderColor}`,
+                    opacity: opacity,
                 }}
             />
             {isSelected && <ResizeHandles onResizeStart={handleResizeMouseDown} />}

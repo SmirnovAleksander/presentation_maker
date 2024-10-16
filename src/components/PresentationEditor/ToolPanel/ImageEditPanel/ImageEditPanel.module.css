@@ -5,6 +5,7 @@
     height: 100%;
     background-color: #fdcdd1;
     /*min-width: 300px;*/
+    z-index: 10;
 }
 
 .imageEditTitle {

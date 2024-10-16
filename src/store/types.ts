@@ -20,6 +20,13 @@ export interface TextElement {
     fontFamily: string;
     color: string;
     rotation: number;
+    backgroundColor: string;
+    bold: boolean;
+    italic: boolean;
+    underline: boolean;
+    strikethrough: boolean;
+    textTransform: 'none' | 'uppercase';
+    alignment: 'left' | 'center' | 'right' | 'justify';
 }
 
 export interface ImageElement {
@@ -29,6 +36,12 @@ export interface ImageElement {
     position: { x: number; y: number };
     size: { width: number; height: number };
     rotation: number;
+    borderColor?: string;
+    borderStyle?: 'solid' | 'dashed' | 'dotted' | 'none';
+    borderWidth?: number;
+    borderRadius?: number;
+    boxShadow?: string;
+    opacity?: number;
 }
 
 export interface ShapeElement {
@@ -40,6 +53,13 @@ export interface ShapeElement {
     rotation: number;
     lineWidth?: number;
     borderRadius?: number;
+    opacity: number;
+    boxShadow: string;
+    borderColor: string;
+    borderStyle: 'solid' | 'dashed' | 'dotted';
+    borderWidth: number;
+    gradient: string;
+    fillType: 'solid' | 'gradient';
 }
 
 export type ElementProps = TextElement | ImageElement | ShapeElement;
