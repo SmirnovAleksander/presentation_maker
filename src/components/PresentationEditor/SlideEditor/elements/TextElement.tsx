@@ -25,17 +25,47 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
     const [localSize, setLocalSize] = useState(size);
     const [myTimer, setMyTimer] = useState(0);
 
-    //для textarea
+    useEffect(() => {
+        if (!isSelected) {
+            return;
+        }
+        if (myTimer) {
+            clearTimeout(myTimer);
+        }
+        const newTime = window.setTimeout(() => {
+            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+        }, 5000);
+        setMyTimer(newTime);
+
+        return () => {
+            if (myTimer) {
+                clearTimeout(myTimer);
+            }
+        };
+    }, [localPosition, localSize, isSelected]);
+
+
+    useEffect(() => {
+        if (isDragging || isResizing) {
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isDragging, isResizing]);
+
+    ////////////////////для textarea
     const [isEditing, setIsEditing] = useState(false);
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [editableText, setEditableText] = useState(element?.type === 'text' ? element.content : '');
-
     // useEffect(() => {
     //     if (element && element.type === 'text' && element.content !== editableText) {
     //         setEditableText(element.content);
     //     }
     // }, [element]);
-
     const handleDoubleClick = () => {
         setIsEditing(true);
     };
@@ -59,38 +89,7 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
             inputRef.current.focus();
         }
     }, [isEditing]);
-    /////
-
-    useEffect(() => {
-        if (isDragging || isResizing) {
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
-        }
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [isDragging, isResizing]);
-
-    useEffect(() => {
-        if (!isSelected) {
-            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
-        } else {
-            if (myTimer) {
-                clearTimeout(myTimer);
-            }
-            const newTime = window.setTimeout(() => {
-                dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
-            }, 5000);
-            setMyTimer(newTime);
-        }
-        return () => {
-            if (myTimer) {
-                clearTimeout(myTimer);
-            }
-        };
-    }, [localPosition, localSize, isSelected]);
+    ////////////////для textarea
 
     if (!element) return null;
     if (element.type !== 'text') return null;
@@ -107,6 +106,7 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         const newHeight = Math.min(Math.max(20, height), slideHeight - localPosition.y);
         setLocalSize({ width: newWidth, height: newHeight });
     };
+
     const updateElementContent = (newText: string) => {
         dispatch(updateElement(element.id, { content: newText }));
     };
@@ -115,13 +115,14 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         if (e.target instanceof HTMLTextAreaElement) {
             return;
         }
-
         if (!isEditing) {
             e.stopPropagation();
-            e.preventDefault(); // Отключаем выделение
+            e.preventDefault();
             setIsDragging(true);
             setDragStart({ x: e.clientX - localPosition.x, y: e.clientY - localPosition.y });
-            dispatch(selectElement(element.id))
+            if (selectedElementId !== element.id) {
+                dispatch(selectElement(element.id))
+            }
         }
      };
 
@@ -132,15 +133,15 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         if (isResizing) {
             let newWidth = localSize.width;
             let newHeight = localSize.height;
-            if (resizeStart.direction.includes('right')) {
-                newWidth = Math.max(50, resizeStart.width + (e.clientX - dragStart.x));
-            } else if (resizeStart.direction.includes('left')) {
+            if (resizeStart.direction.includes('left')) {
                 newWidth = Math.max(50, resizeStart.width - (e.clientX - dragStart.x));
+            } else if (resizeStart.direction.includes('right')) {
+                newWidth = Math.max(50, resizeStart.width + (e.clientX - dragStart.x));
             }
-            if (resizeStart.direction.includes('bottom')) {
-                newHeight = Math.max(20, resizeStart.height + (e.clientY - dragStart.y));
-            } else if (resizeStart.direction.includes('top')) {
+            if (resizeStart.direction.includes('top')) {
                 newHeight = Math.max(20, resizeStart.height - (e.clientY - dragStart.y));
+            } else if (resizeStart.direction.includes('bottom')) {
+                newHeight = Math.max(20, resizeStart.height + (e.clientY - dragStart.y));
             }
             updateSize(newWidth, newHeight);
         }
@@ -159,8 +160,6 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         setResizeStart({ width: size.width, height: size.height, direction });
     };
 
-
-
     return (
         <div
             className={`text-element ${isSelected ? 'selected' : ''}`}
@@ -173,8 +172,8 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
                 position: 'absolute',
                 textAlign: `${alignment}`,
                 border: isSelected ? '1px solid blue' : 'none',
-                cursor: isDragging ? 'move' : 'default',
-                userSelect: isEditing ? 'text' : 'none', // Отключает выделение текста
+                cursor: isDragging ? 'move' : 'move',
+                userSelect: isEditing ? 'text' : 'none',
                 color: `${color}`,
                 backgroundColor: `${backgroundColor}`,
                 transform: `rotate(${rotation}deg)`,
@@ -219,7 +218,7 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
             ) : (
                 <p style={{margin: 0}}>{content}</p>
             )}
-            {isSelected && (<ResizeHandles onResizeStart={handleResizeMouseDown} />)}
+            {isSelected && <ResizeHandles onResizeStart={handleResizeMouseDown} />}
         </div>
     );
 };

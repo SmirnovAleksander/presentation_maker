@@ -28,16 +28,16 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
 
     useEffect(() => {
         if (!isSelected) {
-            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
-        } else {
-            if (myTimer) {
-                clearTimeout(myTimer);
-            }
-            const newTime = window.setTimeout(() => {
-                dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
-            }, 5000);
-            setMyTimer(newTime);
+            return;
         }
+        if (myTimer) {
+            clearTimeout(myTimer);
+        }
+        const newTime = window.setTimeout(() => {
+            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+        }, 5000);
+        setMyTimer(newTime);
+
         return () => {
             if (myTimer) {
                 clearTimeout(myTimer); // Очищаем таймер при размонтировании
@@ -79,7 +79,9 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         e.preventDefault();
         setIsDragging(true);
         setDragStart({ x: e.clientX - localPosition.x, y: e.clientY - localPosition.y });
-        dispatch(selectElement(element.id))
+        if (selectedElementId !== element.id) {
+            dispatch(selectElement(element.id))
+        }
     };
 
     const handleMouseMove = (e: MouseEvent) => {

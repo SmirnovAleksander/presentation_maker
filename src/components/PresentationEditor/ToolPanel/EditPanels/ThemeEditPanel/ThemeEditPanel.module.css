@@ -33,6 +33,7 @@
     box-shadow: 1px 1px 1px #D9D9D9;
     object-fit: cover;
     flex-shrink: 0;
+    cursor: pointer;
 }
 .themeItem:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -49,3 +50,26 @@
 .selectedTheme:hover {
     border: 2px solid #2275ff;
 }
+
+.themeAddButtonWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.themeAddButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #D9D9D9;
+    border: #EDEDED solid 1px;
+    transition: border 0.3s, background-color 0.3s, transform 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.themeAddButton:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+

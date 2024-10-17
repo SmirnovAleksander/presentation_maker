@@ -4,9 +4,7 @@ import styles from './PresentationsListV2.module.css'
 import PresentationItem from "./PresentationItem/PresentationItem.tsx";
 
 const PresentationsListV2 = () => {
-    // const dispatch: AppDispatch = useDispatch();
     const presentations = useSelector((state: appState) => state.presentations);
-
     // useEffect(() => {
     //     presentations.forEach(presentation => {
     //         if (presentation.slides.length === 0) {

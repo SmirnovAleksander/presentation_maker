@@ -63,8 +63,18 @@ const ToolPanel = () => {
                     <label>Id slide: </label>
                     {selectedSlide && selectedSlide.id}
                 </div>
-                <CustomButton onClick={handleFullscreenPreviewFromFirstSlide}>Показ слайдов</CustomButton>
-                <CustomButton onClick={handleFullscreenPreviewFromCurrentSlide}>Показ с текущего слайда</CustomButton>
+                <CustomButton
+                    onClick={handleFullscreenPreviewFromFirstSlide}
+                    disabled={selectedPresentation && selectedPresentation.slides.length === 0}
+                >
+                    Показ слайдов
+                </CustomButton>
+                <CustomButton
+                    onClick={handleFullscreenPreviewFromCurrentSlide}
+                    disabled={selectedPresentation && selectedPresentation.slides.length === 0}
+                >
+                    Показ с текущего слайда
+                </CustomButton>
                 <CustomButton onClick={addNewSlide}>Добавить слайд</CustomButton>
             </div>
             <div className={styles.toolsElementsWrapper}>

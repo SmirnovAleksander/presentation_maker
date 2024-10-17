@@ -42,7 +42,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             dispatch(selectSlide(presentation.id, firstSlide.id));
         }
     }
-    const slideStyle = {
+    const slideStyle = firstSlide ? {
         backgroundColor: firstSlide.backgroundImage
             ? 'transparent'
             : firstSlide.backgroundColor || '#ffffff',
@@ -51,7 +51,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-    };
+    } : {};
     return (
         <div key={presentation.id} className={styles.presentationCardWrapper}>
             <div
