@@ -68,7 +68,7 @@ const CreateElementButtons = () => {
             size: { width: 100, height: 100 },
             color: '#ff0000',
             rotation: 0,
-            lineWidth: type === 'line' ? 0 : undefined,
+            lineWidth: type === 'line' ? 2 : undefined,
             borderRadius: type === 'circle' ? 50 : 0,
             opacity: 1,
             borderColor: '#000000',

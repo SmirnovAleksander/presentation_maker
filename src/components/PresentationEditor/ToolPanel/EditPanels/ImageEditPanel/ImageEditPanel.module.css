@@ -1,11 +1,19 @@
 .imageEditWrapper {
     display: flex;
     flex-direction: column;
-    /*width: 240px;*/
     height: 100%;
     border: 2px solid #D9D9D9;
-    /*min-width: 300px;*/
     z-index: 10;
+    gap: 5px;
+    min-width: 800px;
+}
+
+.imageEditContainer {
+    display: flex;
+    /*flex-direction: column;*/
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
 }
 
 .imageEditTitle {
@@ -18,6 +26,28 @@
 .imageDownloadWrapper {
     display: flex;
     flex-direction: column;
+    /*border: 2px solid #D9D9D9;*/
+    border: 2px solid #ed3737;
+    /*width: 300px;*/
+    /*align-items: center;*/
+    gap: 5px;
+    padding: 5px;
+}
+
+.itemBlocWrapper {
+    display: flex;
+    flex-direction: column;
+    /*border: 2px solid #D9D9D9;*/
+    border: 2px solid #ed3737;
+    /*width: 300px;*/
+    align-items: center;
+    padding: 5px;
+}
+
+.itemEditWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 5px;
 }
 
@@ -43,4 +73,27 @@
 
 .imageDownload input[type="file"]:hover {
     background-color: #e0e0e0;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+input[type="text"]:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+}
+input[type="text"] {
+    -moz-appearance: textfield;
+}
+input[type="text"]::-webkit-outer-spin-button,
+input[type="text"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

@@ -122,17 +122,17 @@ const TextEditPanel = () => {
                         </div>
                     </div>
                     <div className={styles.textFormatButtons}>
-                        <CustomButton onClick={toggleBold}>B</CustomButton>
-                        <CustomButton onClick={toggleItalic}><i>I</i></CustomButton>
-                        <CustomButton onClick={toggleUnderline}><u>U</u></CustomButton>
-                        <CustomButton onClick={toggleStrikethrough}><s>S</s></CustomButton>
-                        <CustomButton onClick={toggleUppercase}>Aa</CustomButton>
+                        <CustomButton onClick={toggleBold} style={{backgroundColor: selectedElement.bold ? 'lightblue' : 'transparent',}}>B</CustomButton>
+                        <CustomButton onClick={toggleItalic} style={{backgroundColor: selectedElement.italic ? 'lightblue' : 'transparent',}}><i>I</i></CustomButton>
+                        <CustomButton onClick={toggleUnderline} style={{backgroundColor: selectedElement.underline ? 'lightblue' : 'transparent',}}><u>U</u></CustomButton>
+                        <CustomButton onClick={toggleStrikethrough} style={{backgroundColor: selectedElement.strikethrough ? 'lightblue' : 'transparent',}}><s>S</s></CustomButton>
+                        <CustomButton onClick={toggleUppercase} style={{backgroundColor: selectedElement.textTransform === 'uppercase' ? 'lightblue' : 'transparent',}}>Aa</CustomButton>
                     </div>
                     <div className={styles.textAlignmentButtons}>
-                        <CustomButton onClick={() => changeAlignment('left')}>Left</CustomButton>
-                        <CustomButton onClick={() => changeAlignment('center')}>Center</CustomButton>
-                        <CustomButton onClick={() => changeAlignment('right')}>Right</CustomButton>
-                        <CustomButton onClick={() => changeAlignment('justify')}>Justify</CustomButton>
+                        <CustomButton onClick={() => changeAlignment('left')} style={{backgroundColor: selectedElement.alignment === 'left' ? 'lightblue' : 'transparent',}}>Left</CustomButton>
+                        <CustomButton onClick={() => changeAlignment('center')} style={{backgroundColor: selectedElement.alignment === 'center' ? 'lightblue' : 'transparent',}}>Center</CustomButton>
+                        <CustomButton onClick={() => changeAlignment('right')} style={{backgroundColor: selectedElement.alignment === 'right' ? 'lightblue' : 'transparent',}}>Right</CustomButton>
+                        <CustomButton onClick={() => changeAlignment('justify')} style={{backgroundColor: selectedElement.alignment === 'justify' ? 'lightblue' : 'transparent',}}>Justify</CustomButton>
                     </div>
                 </div>
             )}

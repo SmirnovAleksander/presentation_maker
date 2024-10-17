@@ -30,7 +30,7 @@ const SlideEditBackground = () => {
 
     return (
         <>
-            {selectedSlide && <div className={styles.backgroundEditWrapper}>
+            {(selectedSlide && !selectedSlide.backgroundImage) && <div className={styles.backgroundEditWrapper}>
                 <p className={styles.backgroundEditTitle}>Задний фон слайда:</p>
                 <div className={styles.colorPickerWrapper}>
                     <p>Цвет:</p>

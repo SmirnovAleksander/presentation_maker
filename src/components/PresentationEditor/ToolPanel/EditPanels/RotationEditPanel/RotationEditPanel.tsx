@@ -15,6 +15,7 @@ const RotationEditPanel = () => {
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+
     const updateRotation = (rotation: number) => {
         if (selectedElement) {
             dispatch(updateElement(selectedElement.id, { rotation }));

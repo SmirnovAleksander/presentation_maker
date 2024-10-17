@@ -4,6 +4,8 @@
     background-color: #F1F3F4;
     gap: 10px;
     padding: 10px;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
 .panelMain {

@@ -1,10 +1,44 @@
 .shapeEditWrapper {
     display: flex;
     flex-direction: column;
-    /*width: 240px;*/
     height: 100%;
     border: 2px solid #D9D9D9;
-    align-items: center;
-    /*min-width: 300px;*/
+    min-width: 600px;
+    gap: 5px;
     z-index: 10;
+}
+.shapeEditTitle {
+    padding: 3px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.shapeEditItem {
+    display: flex;
+    flex-direction: row;
+}
+
+.itemBlocWrapper {
+    display: flex;
+    flex-direction: column;
+    /*border: 2px solid #D9D9D9;*/
+    border: 2px solid #ed3737;
+    /*width: 300px;*/
+    align-items: center;
+    padding: 5px;
+}
+
+.itemEditWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+.editItemsContainer {
+    display: flex;
+    /*flex-direction: column;*/
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
 }

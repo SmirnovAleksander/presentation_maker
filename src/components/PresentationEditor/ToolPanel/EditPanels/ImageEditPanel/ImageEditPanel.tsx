@@ -22,10 +22,6 @@ const ImageEditPanel = () => {
 
     const isImageElement = selectedElement && selectedElement.type === 'image'
 
-    const updateBorderColor = (color: string) => {
-        if (isImageElement)
-            dispatch(updateElement(selectedElement.id, { borderColor: color }));
-    };
     const updateBorderStyle = (style: 'solid' | 'dashed' | 'dotted') => {
         if (isImageElement)
             dispatch(updateElement(selectedElement.id, { borderStyle: style }));
@@ -65,88 +61,108 @@ const ImageEditPanel = () => {
     };
     return (
         <>
-            {isImageElement && <div className={styles.imageEditWrapper}>
-                <p className={styles.imageEditTitle}>Параметры картинки</p>
-                <div className={styles.imageDownloadWrapper}>
-                    <div>
-                        <label>URL изображения:</label>
-                        <input
-                            type="text"
-                            value={isImageElement ? selectedElement.content : defaultImageContent}
-                            onChange={(e) => updateContent(e.target.value)}
-                        />
+            {isImageElement && (
+                <div className={styles.imageEditWrapper}>
+                    <p className={styles.imageEditTitle}>Параметры картинки</p>
+                    <div className={styles.imageEditContainer}>
+                        <div className={styles.imageDownloadWrapper}>
+                            <div className={styles.itemEditWrapper}>
+                                <label>URL:</label>
+                                <input
+                                    style={{width: '300px'}}
+                                    type="text"
+                                    value={isImageElement ? selectedElement.content : defaultImageContent}
+                                    onChange={(e) => updateContent(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <CustomButton
+                                    style={{}}
+                                    onClick={handleButtonClick}
+                                >
+                                    Загрузить изображение
+                                </CustomButton>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={fileInputRef}
+                                    style={{display: 'none'}}
+                                    onChange={handleFileUpload}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.itemBlocWrapper}>
+                            <div className={styles.itemEditWrapper}>
+                                Ширина границы:
+                                <input
+                                    style={{width: '50px'}}
+                                    type="number"
+                                    value={selectedElement.borderWidth}
+                                    onChange={(e) => updateBorderWidth(parseFloat(e.target.value))}
+                                />
+                            </div>
+                            <input
+                                style={{width: '170px'}}
+                                type="range"
+                                min={0}
+                                max={20}
+                                value={selectedElement.borderWidth}
+                                onChange={(e) => updateBorderWidth(parseFloat(e.target.value))}
+                            />
+                        </div>
+                        <div className={styles.itemBlocWrapper}>
+                            <div className={styles.itemEditWrapper} style={{gap: '3px'}}>
+                                Радиус закругления:
+                                <input
+                                    style={{width: '50px'}}
+                                    type="number"
+                                    value={selectedElement.borderRadius}
+                                    onChange={(e) => updateBorderRadius(parseFloat(e.target.value))}
+                                />
+                            </div>
+                            <input
+                                style={{width: '170px'}}
+                                type="range"
+                                min={0}
+                                max={100}
+                                value={selectedElement.borderRadius}
+                                onChange={(e) => updateBorderRadius(parseFloat(e.target.value))}
+                            />
+                        </div>
+                        <div className={styles.itemBlocWrapper} style={{gap: '3px'}}>
+                            <label>Стиль границы:</label>
+                            <select
+                                value={selectedElement!.borderStyle}
+                                onChange={(e) => updateBorderStyle(e.target.value as 'solid' | 'dashed' | 'dotted')}
+                            >
+                                <option value="solid">Сплошная</option>
+                                <option value="dashed">Пунктир</option>
+                                <option value="dotted">Точечная</option>
+                            </select>
+                        </div>
+                        <div className={styles.itemBlocWrapper} style={{gap: '3px'}}>
+                            <label>Тень:</label>
+                            <input
+                                style={{width: '200px'}}
+                                type="text"
+                                value={selectedElement!.boxShadow}
+                                onChange={(e) => updateBoxShadow(e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.itemBlocWrapper}>
+                            <label>Прозрачность:</label>
+                            <input
+                                type="range"
+                                min={0}
+                                max={1}
+                                step={0.01}
+                                value={selectedElement!.opacity}
+                                onChange={(e) => updateOpacity(parseFloat(e.target.value))}
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <CustomButton
-                            style={{}}
-                            onClick={handleButtonClick}
-                        >
-                            Загрузить изображение
-                        </CustomButton>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={fileInputRef}
-                            style={{display: 'none'}}
-                            onChange={handleFileUpload}
-                        />
-                    </div>
                 </div>
-                <div>
-                    <label>Цвет границы:</label>
-                    <input
-                        type="color"
-                        value={selectedElement!.borderColor}
-                        onChange={(e) => updateBorderColor(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Стиль границы:</label>
-                    <select
-                        value={selectedElement!.borderStyle}
-                        onChange={(e) => updateBorderStyle(e.target.value as 'solid' | 'dashed' | 'dotted')}
-                    >
-                        <option value="solid">Сплошная</option>
-                        <option value="dashed">Пунктир</option>
-                        <option value="dotted">Точечная</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Ширина границы (px):</label>
-                    <input
-                        type="number"
-                        value={selectedElement!.borderWidth}
-                        onChange={(e) => updateBorderWidth(parseInt(e.target.value))}
-                    />
-                </div>
-                <div>
-                    <label>Радиус закругления(px):</label>
-                    <input
-                        type="number"
-                        value={selectedElement!.borderRadius}
-                        onChange={(e) => updateBorderRadius(parseInt(e.target.value))}
-                    />
-                </div>
-                <div>
-                    <label>Тень:</label>
-                    <input
-                        type="text"
-                        value={selectedElement!.boxShadow}
-                        onChange={(e) => updateBoxShadow(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Прозрачность:</label>
-                    <input
-                        type="range"
-                        min={0}
-                        max={1}
-                        step={0.01}
-                        value={selectedElement!.opacity}
-                        onChange={(e) => updateOpacity(parseFloat(e.target.value))}
-                    />
-                </div>
-            </div>}
+            )}
         </>
     );
 };
