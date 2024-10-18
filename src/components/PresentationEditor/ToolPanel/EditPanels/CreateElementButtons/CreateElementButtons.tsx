@@ -84,19 +84,16 @@ const CreateElementButtons = () => {
             dispatch(selectElement(newShapeElement.id))
         }
     };
+    console.log('Hello', !selectedSlideId)
     return (
-        <>
-            {selectedSlideId && (
-                <div className={styles.elementButtonsWrapper}>
-                    <p>Добавить</p>
-                    <CustomButton onClick={addTextElement}>Text</CustomButton>
-                    <CustomButton onClick={addImageElement}>Image</CustomButton>
-                    <CustomButton onClick={() => addShapeElement('rectangle')}>Rectangle</CustomButton>
-                    <CustomButton onClick={() => addShapeElement('circle')}>Circle</CustomButton>
-                    <CustomButton onClick={() => addShapeElement('line')}>Line</CustomButton>
-                </div>
-            )}
-        </>
+        <div className={styles.elementButtonsWrapper}>
+            {/*<p>Добавить</p>*/}
+            <CustomButton onClick={addTextElement} disabled={!selectedSlideId}>Text</CustomButton>
+            <CustomButton onClick={addImageElement} disabled={!selectedSlideId}>Image</CustomButton>
+            <CustomButton onClick={() => addShapeElement('rectangle')} disabled={!selectedSlideId}>Rectangle</CustomButton>
+            <CustomButton onClick={() => addShapeElement('circle')} disabled={!selectedSlideId}>Circle</CustomButton>
+            <CustomButton onClick={() => addShapeElement('line')} disabled={!selectedSlideId}>Line</CustomButton>
+        </div>
     );
 };
 

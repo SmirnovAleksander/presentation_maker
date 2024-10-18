@@ -29,41 +29,37 @@ const SlideEditBackground = () => {
     const [localColor, setLocalColor] = useState('#D9D9D9');
 
     return (
-        <>
-            {(selectedSlide && !selectedSlide.backgroundImage) && <div className={styles.backgroundEditWrapper}>
-                <p className={styles.backgroundEditTitle}>Задний фон слайда:</p>
-                <div className={styles.colorPickerWrapper}>
-                    <p>Цвет:</p>
-                    <input
-                        type="color"
-                        onChange={e => {
-                            clearTimeout(myTimeout);
-                            setMyTimeout(
-                                setTimeout(() => {
-                                    updateBackgroundColor(e.target.value);
-                                }, 500) // <-- Delay api call by 300 milliseconds. Set to what you prefer
-                            );
+        <div className={styles.backgroundEditWrapper}>
+            <p className={styles.backgroundEditTitle}>Задний фон слайда:</p>
+            <div className={styles.colorPickerWrapper}>
+                <p>Цвет фона:</p>
+                <input
+                    type="color"
+                    onChange={e => {
+                        clearTimeout(myTimeout);
+                        setMyTimeout(
+                            setTimeout(() => {
+                                updateBackgroundColor(e.target.value);
+                            }, 500) // <-- Delay api call by 300 milliseconds. Set to what you prefer
+                        );
+                    }}
+                />
+            </div>
+            <div className={styles.colorsScrollWrapper}>
+                {popularColors.map((color, index) => (
+                    <div
+                        key={index}
+                        style={{backgroundColor: color}}
+                        className={`${styles.colorBlock} ${localColor === color ? styles.colorBlockSelected : ''}`}
+                        onClick={() => {
+                            updateBackgroundColor(color)
+                            setLocalColor(color)
                         }}
-                    />
-                </div>
-                <div className={styles.colorsScrollWrapper}>
-                    {popularColors.map((color, index) => (
-                        <div
-                            key={index}
-                            className={`${styles.colorBlock} ${localColor === color ? styles.colorBlockSelected : ''}`}
-                            style={{
-                                backgroundColor: color,
-                            }}
-                            onClick={() => {
-                                updateBackgroundColor(color)
-                                setLocalColor(color)
-                            }}
-                        >
-                        </div>
-                    ))}
-                </div>
-            </div>}
-        </>
+                    >
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 

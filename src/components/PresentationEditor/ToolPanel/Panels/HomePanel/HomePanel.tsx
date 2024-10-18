@@ -1,9 +1,14 @@
+import TextEditPanel from "../../EditPanels/TextEditPanel/TextEditPanel.tsx";
+import CreateElementButtons from "../../EditPanels/CreateElementButtons/CreateElementButtons.tsx";
+import RotationEditPanel from "../../EditPanels/RotationEditPanel/RotationEditPanel.tsx";
 
 const HomePanel = () => {
     return (
-        <div>
-            {/*<TextEditPanel/>*/}
-        </div>
+        <>
+            <CreateElementButtons/>
+            <RotationEditPanel/>
+            <TextEditPanel/>
+        </>
     );
 };
 

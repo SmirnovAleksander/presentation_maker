@@ -5,16 +5,11 @@ import {AppDispatch, appState} from "../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import CustomButton from "../../UI/CustomButton/CustomButton.tsx";
-import TextEditPanel from "./EditPanels/TextEditPanel/TextEditPanel.tsx";
-import ImageEditPanel from "./EditPanels/ImageEditPanel/ImageEditPanel.tsx";
-import ShapeEditPanel from "./EditPanels/ShapeEditPanel/ShapeEditPanel.tsx";
-import ColorEditPanel from "./EditPanels/ColorEditPanel/ColorEditPanel.tsx";
-import RotationEditPanel from "./EditPanels/RotationEditPanel/RotationEditPanel.tsx";
-import SlideEditBackground from "./EditPanels/SlideEditBackground/SlideEditBackground.tsx";
-import CreateElementButtons from "./EditPanels/CreateElementButtons/CreateElementButtons.tsx";
-import TextColorEditPanel from "./EditPanels/TextColorEditPanel/TextColorEditPanel.tsx";
-import BorderEditPanel from "./EditPanels/BorderEditPanel/BorderEditPanel.tsx";
-import ThemeEditPanel from "./EditPanels/ThemeEditPanel/ThemeEditPanel.tsx";
+import {useState} from "react";
+import HomePanel from "./Panels/HomePanel/HomePanel.tsx";
+import InsertPanel from "./Panels/InsertPanel/InsertPanel.tsx";
+import FormatPanel from "./Panels/FormatPanel/FormatPanel.tsx";
+import SlideDesignPanel from "./Panels/SlideDesignPanel/SlideDesignPanel.tsx";
 
 const ToolPanel = () => {
     const navigate = useNavigate();
@@ -39,6 +34,7 @@ const ToolPanel = () => {
         if (selectedPresentation) {
             dispatch(addSlide(selectedPresentation.id, newSlide));
             dispatch(selectSlide(selectedPresentation.id, newSlide.id))
+            setActivePanel('slideDesign')
         }
     };
     const handleFullscreenPreviewFromFirstSlide = () => {
@@ -51,6 +47,26 @@ const ToolPanel = () => {
             navigate(`/presentation/${selectedPresentationId}/slide_preview`,  { state: { startFromCurrentSlide: true } });
         }
     };
+
+    const [activePanel, setActivePanel] = useState<string>('home');
+    const renderActivePanel = () => {
+        switch (activePanel) {
+            case 'home':
+                return <HomePanel />;
+            case 'insert':
+                return <InsertPanel />;
+            case 'slideDesign':
+                return <SlideDesignPanel/>
+            case 'format':
+                return <FormatPanel />;
+            default:
+                return (
+                    <div>
+                        Error when render panels
+                    </div>
+                );
+        }
+    }
     return (
         <div className={styles.toolPanelWrapper}>
             <div className={styles.panelMain}>
@@ -78,17 +94,34 @@ const ToolPanel = () => {
                 <CustomButton onClick={addNewSlide}>Добавить слайд</CustomButton>
             </div>
             <div className={styles.toolsElementsWrapper}>
+                <div className={styles.panelsButtonsWrapper}>
+                    <CustomButton onClick={() => setActivePanel('home')}
+                                  style={{backgroundColor: activePanel === 'home' ? 'lightblue' : 'transparent'}}>Главная</CustomButton>
+                    <CustomButton onClick={() => setActivePanel('insert')}
+                                  style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}>Вставка</CustomButton>
+                    <CustomButton onClick={() => setActivePanel('slideDesign')}
+                                  style={{backgroundColor: activePanel === 'slideDesign' ? 'lightblue' : 'transparent'}}>Дизайн слайдов</CustomButton>
+                    <CustomButton onClick={() => setActivePanel('format')}
+                                  style={{
+                                      backgroundColor: activePanel === 'format'
+                                          ? 'lightblue'
+                                          : (selectedElementId && activePanel !== 'format')
+                                              ? '#fdcbcb'
+                                              : 'transparent',
+                    }}>Формат</CustomButton>
+                </div>
                 <div className={styles.toolsElements}>
-                <CreateElementButtons/>
-                    <TextEditPanel/>
-                    <RotationEditPanel/>
-                    <ImageEditPanel/>
-                    <ShapeEditPanel/>
-                    <ColorEditPanel/>
-                    <BorderEditPanel/>
-                    <TextColorEditPanel/>
-                    <SlideEditBackground/>
-                    <ThemeEditPanel/>
+                    {/*<CreateElementButtons/>*/}
+                    {/*<RotationEditPanel/>*/}
+                    {renderActivePanel()}
+                    {/*<TextEditPanel/>*/}
+                    {/*<ImageEditPanel/>*/}
+                    {/*<ShapeEditPanel/>*/}
+                    {/*<ColorEditPanel/>*/}
+                    {/*<BorderEditPanel/>*/}
+                    {/*<TextColorEditPanel/>*/}
+                    {/*<SlideEditBackground/>*/}
+                    {/*<ThemeEditPanel/>*/}
                 </div>
             </div>
         </div>
