@@ -64,7 +64,7 @@ const ThemeEditPanel = () => {
     };
     return (
         <div className={styles.themeEditWrapper}>
-            <p className={styles.themeEditTitle}>Задний фон слайда:</p>
+            <p className={styles.themeEditTitle}>Задний фон слайда</p>
             <div className={styles.themeEditScrollWrapper}>
                 {themes.map((theme) => {
                     const isSelected = selectedPresentation?.slides.every(slide => slide.backgroundImage === theme.image);

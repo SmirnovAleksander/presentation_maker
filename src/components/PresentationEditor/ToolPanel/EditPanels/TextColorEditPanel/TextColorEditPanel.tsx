@@ -36,7 +36,7 @@ const TextColorEditPanel = () => {
     return (
         <>
             {isTextElement && <div className={styles.colorEditWrapper}>
-                <p className={styles.colorEditTitle}>Цвет текста:</p>
+                <p className={styles.colorEditTitle}>Цвет текста</p>
                 <div className={styles.colorPickerWrapper}>
                     <p>Цвет:</p>
                     <input

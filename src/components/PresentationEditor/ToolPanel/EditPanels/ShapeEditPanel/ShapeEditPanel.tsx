@@ -37,20 +37,19 @@ const ShapeEditPanel = () => {
         if (isShapeElement)
             dispatch(updateElement(selectedElement.id, { borderStyle: value }));
     };
-    const updateFillType = (value: 'solid' | 'gradient') => {
-        if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { fillType: value }));
-    };
-    const updateGradient = (value: string) => {
-        if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { gradient: value }));
-    };
-
+    // const updateFillType = (value: 'solid' | 'gradient') => {
+    //     if (isShapeElement)
+    //         dispatch(updateElement(selectedElement.id, { fillType: value }));
+    // };
+    // const updateGradient = (value: string) => {
+    //     if (isShapeElement)
+    //         dispatch(updateElement(selectedElement.id, { gradient: value }));
+    // };
     return (
         <>
             {isShapeElement && (
                 <div className={styles.shapeEditWrapper}>
-                    <p className={styles.shapeEditTitle}>Редактировать фигуру</p>
+                    {/*<p className={styles.shapeEditTitle}>Редактировать фигуру</p>*/}
                     <div className={styles.editItemsContainer}>
                         {(selectedElement.type === 'rectangle' || selectedElement.type === 'circle') && (
                             <div className={styles.itemBlocWrapper}>
@@ -110,28 +109,28 @@ const ShapeEditPanel = () => {
                                         <option value="dotted">Точечная</option>
                                     </select>
                                 </div>
-                                <div className={styles.itemBlocWrapper} style={{gap: '3px'}}>
-                                    Тип заливки:
-                                    <select
-                                        style={{width: '150px'}}
-                                        value={selectedElement.fillType}
-                                        onChange={(e) => updateFillType(e.target.value as 'solid' | 'gradient')}
-                                    >
-                                        <option value="solid">Сплошная</option>
-                                        <option value="gradient">Градиент</option>
-                                    </select>
-                                </div>
-                                {selectedElement.fillType === 'gradient' && (
-                                    <div className={styles.itemBlocWrapper}>
-                                        Градиент:
-                                        <input
-                                            style={{width: '170px'}}
-                                            type="text"
-                                            value={selectedElement.gradient}
-                                            onChange={(e) => updateGradient(e.target.value)}
-                                        />
-                                    </div>
-                                )}
+                                {/*<div className={styles.itemBlocWrapper} style={{gap: '3px'}}>*/}
+                                {/*    Тип заливки:*/}
+                                {/*    <select*/}
+                                {/*        style={{width: '150px'}}*/}
+                                {/*        value={selectedElement.fillType}*/}
+                                {/*        onChange={(e) => updateFillType(e.target.value as 'solid' | 'gradient')}*/}
+                                {/*    >*/}
+                                {/*        <option value="solid">Сплошная</option>*/}
+                                {/*        <option value="gradient">Градиент</option>*/}
+                                {/*    </select>*/}
+                                {/*</div>*/}
+                                {/*{selectedElement.fillType === 'gradient' && (*/}
+                                {/*    <div className={styles.itemBlocWrapper}>*/}
+                                {/*        Градиент:*/}
+                                {/*        <input*/}
+                                {/*            style={{width: '170px'}}*/}
+                                {/*            type="text"*/}
+                                {/*            value={selectedElement.gradient}*/}
+                                {/*            onChange={(e) => updateGradient(e.target.value)}*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
+                                {/*)}*/}
                             </>
                         )}
                         {selectedElement.type === 'line' && (

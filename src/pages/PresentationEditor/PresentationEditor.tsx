@@ -7,6 +7,8 @@ import {appState} from "../../store/store.ts";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import ElementsList from "../../components/PresentationEditor/ElementsList/ElementsList.tsx";
+import PresentationEditorHeader
+    from "../../components/PresentationEditor/PresentationEditorHeader/PresentationEditorHeader.tsx";
 
 const PresentationEditor = () => {
     const navigate = useNavigate();
@@ -18,6 +20,7 @@ const PresentationEditor = () => {
     }, [selectedPresentationId, navigate]);
     return (
         <div className={styles.presentationEditor}>
+            <PresentationEditorHeader/>
             <ToolPanel/>
             <div className={styles.wrapper}>
                 <SlideList/>

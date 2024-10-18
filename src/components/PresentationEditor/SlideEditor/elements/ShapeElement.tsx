@@ -134,6 +134,7 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
                     pointerEvents: 'auto',
                     transform: `rotate(${rotation}deg)`,
                     opacity: opacity,
+                    borderRadius: '50%',
                     // boxShadow: `0px 0px 10px ${borderColor}`,
                 }}
             >

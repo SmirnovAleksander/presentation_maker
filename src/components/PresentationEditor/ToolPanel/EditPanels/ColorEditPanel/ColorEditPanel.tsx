@@ -21,9 +21,16 @@ const ColorEditPanel = () => {
         || selectedElement.type === 'line'
         || selectedElement.type === 'circle'
     );
+    const isTextElement = selectedElement && selectedElement.type === 'text';
+
     const updateColor = (color: string) => {
         if (selectedElement) {
             dispatch(updateElement(selectedElement.id, { color }));
+        }
+    };
+    const updateBackgroundColor = (backgroundColor: string) => {
+        if (selectedElement) {
+            dispatch(updateElement(selectedElement.id, { backgroundColor: backgroundColor }));
         }
     };
     const [myTimeout, setMyTimeout] = useState(0);
@@ -49,8 +56,8 @@ const ColorEditPanel = () => {
 
     return (
         <>
-            {isShapeElement && <div className={styles.colorEditWrapper}>
-                <p className={styles.colorEditTitle}>Цвет фона элемента:</p>
+            {(isShapeElement || isTextElement) && <div className={styles.colorEditWrapper}>
+                <p className={styles.colorEditTitle}>Цвет фона элемента</p>
                 <div className={styles.colorPickerWrapper}>
                     <p>Цвет:</p>
                     <input
@@ -59,8 +66,11 @@ const ColorEditPanel = () => {
                             clearTimeout(myTimeout);
                             setMyTimeout(
                                 setTimeout(() => {
-                                    updateColor(e.target.value);
-                                }, 500) // <-- Delay api call by 300 milliseconds. Set to what you prefer
+                                    if (isShapeElement)
+                                        updateColor(e.target.value)
+                                    if (isTextElement)
+                                        updateBackgroundColor(e.target.value)
+                                }, 500)
                             );
                         }}
                     />
@@ -74,7 +84,10 @@ const ColorEditPanel = () => {
                                 backgroundColor: color,
                             }}
                             onClick={() => {
-                                updateColor(color)
+                                if (isShapeElement)
+                                    updateColor(color)
+                                if (isTextElement)
+                                    updateBackgroundColor(color)
                                 setLocalColor(color)
                             }}
                         >

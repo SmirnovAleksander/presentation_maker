@@ -111,17 +111,7 @@ const ToolPanel = () => {
                     }}>Формат</CustomButton>
                 </div>
                 <div className={styles.toolsElements}>
-                    {/*<CreateElementButtons/>*/}
-                    {/*<RotationEditPanel/>*/}
                     {renderActivePanel()}
-                    {/*<TextEditPanel/>*/}
-                    {/*<ImageEditPanel/>*/}
-                    {/*<ShapeEditPanel/>*/}
-                    {/*<ColorEditPanel/>*/}
-                    {/*<BorderEditPanel/>*/}
-                    {/*<TextColorEditPanel/>*/}
-                    {/*<SlideEditBackground/>*/}
-                    {/*<ThemeEditPanel/>*/}
                 </div>
             </div>
         </div>

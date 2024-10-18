@@ -1,4 +1,5 @@
 import {ElementProps, Slide} from "../../../store/types.ts";
+import React from "react";
 
 interface RenderSlideItemElementsProps {
     slide: Slide;
@@ -12,17 +13,22 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                 return (
                     <div
                         key={element.id}
-                        // className={styles.element}
                         style={{
                             position: 'absolute',
+                            whiteSpace: 'pre-wrap',
                             left: element.position.x / multiplier,
                             top: element.position.y / multiplier,
                             width: element.size.width / multiplier,
                             height: element.size.height / multiplier,
-                            fontSize: element.fontSize / multiplier,
-                            color: element.color,
-                            textAlign: 'center',
+                            textAlign: `${element.alignment}`,
+                            backgroundColor: `${element.backgroundColor}`,
+                            fontSize: `${element.fontSize / multiplier}px`,
+                            fontFamily: `${element.fontFamily}`,
+                            fontWeight: element.bold ? 'bold' : 'normal',
+                            fontStyle: element.italic ? 'italic' : 'normal',
+                            textDecoration: `${element.underline ? 'underline' : ''} ${element.strikethrough ? 'line-through' : ''}`,
                             transform: `rotate(${element.rotation}deg)`,
+                            color: element.color,
                         }}
                     >
                         {element.content}
@@ -30,39 +36,86 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                 );
             case 'image':
                 return (
-                    <img
-                        key={element.id}
-                        src={element.content}
-                        alt="Image"
-                        // className={styles.element}
+                    <div
                         style={{
-                            position: 'absolute',
                             left: element.position.x / multiplier,
                             top: element.position.y / multiplier,
                             width: element.size.width / multiplier,
                             height: element.size.height / multiplier,
+                            position: 'absolute',
+                            border: `${(element.borderWidth ?? 0) / multiplier}px ${element.borderStyle} ${element.borderColor}`,
+                            borderRadius: `${(element.borderRadius ?? 0) / multiplier}px`,
+                            boxShadow: element.boxShadow,
                             transform: `rotate(${element.rotation}deg)`,
                         }}
-                    />
+                    >
+                        <img
+                            src={element.content}
+                            alt="Image"
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                display: 'block',
+                                borderRadius: `${(element.borderRadius ?? 0) / multiplier}px`,
+                                opacity: element.opacity,
+                            }}
+                        />
+                    </div>
                 );
             case 'rectangle':
             case 'circle':
             case 'line':
                 return (
                     <div
-                        key={element.id}
-                        // className={styles.element}
                         style={{
                             position: 'absolute',
                             left: element.position.x / multiplier,
                             top: element.position.y / multiplier,
                             width: element.size.width / multiplier,
                             height: element.size.height / multiplier,
-                            backgroundColor: element.color,
+                            border: `${element.borderWidth / multiplier}px ${element.borderStyle} ${element.borderColor}`,
+                            userSelect: 'none',
+                            pointerEvents: 'auto',
                             transform: `rotate(${element.rotation}deg)`,
-                            borderRadius: element.type === 'circle' ? '50%' : undefined,
+                            opacity: element.opacity,
+                            borderRadius: '50%',
                         }}
-                    />
+                    >
+                        {element.type === 'rectangle' && (
+                            <div
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    backgroundColor: element.color,
+                                    borderRadius: `${(element.borderRadius ?? 0) / multiplier}px`,
+                                    opacity: element.opacity,
+                                }}
+                            />
+                        )}
+                        {element.type === 'circle' && (
+                            <div
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    backgroundColor: element.color,
+                                    borderRadius: '50%',
+                                    opacity: element.opacity,
+                                }}
+                            />
+                        )}
+                        {element.type === 'line' && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: element.size.height / multiplier,
+                                    left: 0,
+                                    width: element.size.width / multiplier,
+                                    height: `${(element.lineWidth ?? 0) / multiplier}px`,
+                                    backgroundColor: element.color,
+                                }}
+                            />
+                        )}
+                    </div>
                 );
             default:
                 return null;

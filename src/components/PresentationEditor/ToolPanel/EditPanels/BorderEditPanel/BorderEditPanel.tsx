@@ -51,7 +51,7 @@ const BorderEditPanel = () => {
     return (
         <>
             {isShapeImageElement && <div className={styles.colorEditWrapper}>
-                <p className={styles.colorEditTitle}>Цвет границы:</p>
+                <p className={styles.colorEditTitle}>Цвет границы</p>
                 <div className={styles.colorPickerWrapper}>
                     <p>Цвет:</p>
                     <input

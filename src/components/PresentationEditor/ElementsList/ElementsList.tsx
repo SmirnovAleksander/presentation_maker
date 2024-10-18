@@ -21,6 +21,7 @@ const ElementsList = () => {
     return (
         <div className={styles.ElementsList}>
             <h3 className={styles.ElementsListTitle}>Список элементов</h3>
+            <div className={styles.line}></div>
             <div className={styles.elementsCardWrapper}>
                 {selectedSlide && selectedSlide.elements.length > 0
                     ? selectedSlide.elements.map(el => (

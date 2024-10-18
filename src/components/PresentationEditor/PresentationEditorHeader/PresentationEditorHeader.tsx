@@ -14,6 +14,7 @@ const PresentationEditorHeader = () => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
+
     const handleEditClick = () => {
         setIsEditing(true);
     };
@@ -39,7 +40,6 @@ const PresentationEditorHeader = () => {
     return (
         <div className={styles.header}>
             <img src={PresentationIcon} alt="Presentation" width={35} height={35}/>
-            {/*<h3>{selectedPresentation && selectedPresentation.title}</h3>*/}
             {isEditing
                 ? (
                     <div>

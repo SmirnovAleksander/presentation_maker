@@ -2,9 +2,9 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    /*padding: 10px;*/
     background: #ffffff;
     gap: 10px;
+    padding: 4px;
 }
 
 .editIconContainer {
@@ -18,26 +18,6 @@
 .editIconContainer:hover {
     transform: scale(1.1);
 }
-/*.editIconContainer:hover::after {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    top: -5px;*/
-/*    left: -5px;*/
-/*    width: 30px;*/
-/*    height: 30px;*/
-/*    border-radius: 50%;*/
-/*    background-color: rgba(175, 175, 175, 0.5);*/
-/*    opacity: 1;*/
-/*    transition: opacity 0.2s ease;*/
-/*    z-index: 0;*/
-/*}*/
-/*.editIconContainer:active::after {*/
-/*    top: -5px;*/
-/*    left: -5px;*/
-/*    background-color: rgba(140, 139, 139, 0.5);*/
-/*    transition: opacity 0.2s ease;*/
-/*}*/
-
 .presentationTitleInput {
     font-size: 16px;
     border: none;
@@ -51,4 +31,28 @@
     color: #333;
     margin: 0;
 }
+
+input[type="text"] {
+    width: 100%;
+    padding: 2px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+input[type="text"]:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+}
+input[type="text"] {
+    -moz-appearance: textfield;
+}
+input[type="text"]::-webkit-outer-spin-button,
+input[type="text"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 
