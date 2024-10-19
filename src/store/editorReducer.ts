@@ -1,5 +1,6 @@
 import {ImageElement, Presentation, ShapeElement, TextElement} from "./types.ts";
 import {ElementActions} from "./actions.ts";
+import {AnyAction} from "@reduxjs/toolkit";
 
 export interface EditorState {
     presentations: Presentation[];
@@ -13,7 +14,7 @@ const initialState: EditorState = {
     selectedSlideId: null,
     selectedElementId: null,
 };
-const editorReducer = (state = initialState, action: ElementActions): EditorState  => {
+const editorReducer = (state = initialState, action: ElementActions | AnyAction): EditorState  => {
     switch (action.type) {
         case 'MOVE_SLIDE_UP': {
             const presentation = state.presentations.find(p => p.id === action.payload.presentationId);

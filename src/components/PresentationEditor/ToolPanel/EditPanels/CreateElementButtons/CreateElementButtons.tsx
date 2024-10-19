@@ -84,7 +84,6 @@ const CreateElementButtons = () => {
             dispatch(selectElement(newShapeElement.id))
         }
     };
-    console.log('Hello', !selectedSlideId)
     return (
         <div className={styles.elementButtonsWrapper}>
             {/*<p>Добавить</p>*/}
