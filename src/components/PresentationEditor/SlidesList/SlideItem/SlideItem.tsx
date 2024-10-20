@@ -1,12 +1,10 @@
 import styles from './SlideItem.module.css'
 import {Slide} from "../../../../store/types.ts";
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, appState} from "../../../../store/store.ts";
-import {deleteSlide, moveSlideDown, moveSlideUp, selectSlide} from "../../../../store/actions.ts";
 import deleteIcon from "../../../../assets/delete.svg";
 import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
 import CustomButton from "../../../UI/CustomButton/CustomButton.tsx";
+import useEditorStore from "../../../../store/store.ts";
 
 interface SlideItemProps {
     slide: Slide,
@@ -14,33 +12,28 @@ interface SlideItemProps {
 }
 
 const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const {presentations, selectedPresentationId, selectedSlideId, selectSlide, deleteSlide, moveSlideUp, moveSlideDown} = useEditorStore();
     const isSelected = selectedSlideId === slide.id;
-    const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
-    );
-
+    const selectedPresentation = presentations.find(p => p.id === selectedPresentationId);
 
     const handleSlideClick = () => {
         if (selectedPresentationId) {
-            dispatch(selectSlide(selectedPresentationId ,slide.id));
+            selectSlide(slide.id);
         }
     };
     const handleDeleteSlide = (slideId: number) => {
         if (selectedPresentationId) {
-            dispatch(deleteSlide(selectedPresentationId, slideId));
+            deleteSlide(slideId);
         }
     };
     const handleMoveSlideUp = () => {
         if (selectedPresentationId) {
-            dispatch(moveSlideUp(selectedPresentationId, slide.id));
+           moveSlideUp(slide.id);
         }
     };
     const handleMoveSlideDown = () => {
         if (selectedPresentationId) {
-            dispatch(moveSlideDown(selectedPresentationId, slide.id));
+            moveSlideDown(slide.id);
         }
     };
     const slideStyle = {

@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import {AppDispatch, appState} from "../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {selectElement, updateElement} from "../../../../store/actions.ts";
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {ImageElement} from "../../../../store/types.ts";
+import useEditorStore from "../../../../store/store.ts";
 
 interface ImageProps {
     element: ImageElement
 }
 
 const ImageElement: React.FC<ImageProps> = ({element}) => {
-    const dispatch : AppDispatch = useDispatch();
+    const {
+        selectElement,
+        updateElement,
+        selectedElementId
+    } = useEditorStore()
 
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
     const isSelected = selectedElementId === element.id;
-
+    
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -34,7 +35,7 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
             clearTimeout(myTimer);
         }
         const newTime = window.setTimeout(() => {
-            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
+            updateElement(element.id, {position: localPosition, size: localSize });
         }, 5000);
         setMyTimer(newTime);
 
@@ -80,7 +81,7 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         setIsDragging(true);
         setDragStart({ x: e.clientX - localPosition.x, y: e.clientY - localPosition.y });
         if (selectedElementId !== element.id) {
-            dispatch(selectElement(element.id))
+            selectElement(element.id)
         }
     };
 

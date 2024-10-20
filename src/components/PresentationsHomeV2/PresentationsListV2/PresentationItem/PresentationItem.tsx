@@ -1,12 +1,10 @@
-import {deletePresentation, selectPresentation, selectSlide, updatePresentationTitle} from "../../../../store/actions.ts";
-import {AppDispatch} from "../../../../store/store.ts";
-import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import styles from './PresentationItem.module.css'
 import deleteIcon from '../../../../assets/delete.svg'
 import {Presentation} from "../../../../store/types.ts";
 import React, {useState} from "react";
 import RenderSlideItemElements from "../../../PresentationEditor/SlidesList/RenderSlideItemElements.tsx";
+import useEditorStore from "../../../../store/store.ts";
 
 interface PresentationItemProps {
     presentation: Presentation;
@@ -14,11 +12,11 @@ interface PresentationItemProps {
 
 const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
+    const { deletePresentation, selectPresentation, selectSlide, updatePresentationTitle } = useEditorStore();
     const firstSlide = presentation.slides[0];
 
     const handleDeletePresentation = (id: number) => {
-        dispatch(deletePresentation(id));
+        deletePresentation(id);
     };
 
     const [editingId, setEditingId] = useState<number | null>(null);
@@ -30,16 +28,16 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     };
     const handleChangeTitle = (presentationId: number) => {
         if (newTitle.trim() !== '') {
-            dispatch(updatePresentationTitle(presentationId, newTitle));
+            updatePresentationTitle(presentationId, newTitle);
             setEditingId(null);
             setNewTitle('');
         }
     };
     const navigateToEditPresentation = () => {
-        dispatch(selectPresentation(presentation.id));
+        selectPresentation(presentation.id);
         navigate(`/presentation/${presentation.id}`);
         if (firstSlide) {
-            dispatch(selectSlide(presentation.id, firstSlide.id));
+           selectSlide(firstSlide.id);
         }
     }
     const slideStyle = firstSlide ? {

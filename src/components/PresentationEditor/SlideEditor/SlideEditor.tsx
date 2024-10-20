@@ -1,25 +1,24 @@
 import styles from './SlideEditor.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, appState} from "../../../store/store.ts";
 import ShapeElement from "./elements/ShapeElement.tsx";
 import ImageElement from "./elements/ImageElement.tsx";
 import TextElement from "./elements/TextElement.tsx";
-import {deselectElement} from "../../../store/actions.ts";
+import useEditorStore from "../../../store/store.ts";
 
 const SlideEditor = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedPresentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        presentations,
+        selectedElementId,
+        deselectElement,
+    } = useEditorStore()
+    const selectedPresentation = presentations.find(p => p.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
 
     const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const clickedOnElement = (e.target as HTMLElement).closest('.element');
         if (!clickedOnElement && selectedElementId) {
-            dispatch(deselectElement());
+            deselectElement();
         }
     };
     const slideStyle = {

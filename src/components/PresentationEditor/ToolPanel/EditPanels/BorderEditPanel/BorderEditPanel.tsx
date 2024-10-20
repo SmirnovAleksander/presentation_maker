@@ -1,17 +1,16 @@
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {updateElement} from "../../../../../store/actions.ts";
 import {useState} from "react";
 import styles from './BorderEditPanel.module.css'
+import useEditorStore from "../../../../../store/store.ts";
 
 const BorderEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
@@ -24,7 +23,7 @@ const BorderEditPanel = () => {
     );
     const updateBorderColor = (color: string) => {
         if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { borderColor: color }));
+            updateElement(selectedElement.id, { borderColor: color });
         }
     };
     const [myTimeout, setMyTimeout] = useState(0);

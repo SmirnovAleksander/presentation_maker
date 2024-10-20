@@ -37,6 +37,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
             case 'image':
                 return (
                     <div
+                        key={element.id}
                         style={{
                             left: element.position.x / multiplier,
                             top: element.position.y / multiplier,
@@ -67,6 +68,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
             case 'line':
                 return (
                     <div
+                        key={element.id}
                         style={{
                             position: 'absolute',
                             left: element.position.x / multiplier,

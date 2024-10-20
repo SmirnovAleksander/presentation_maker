@@ -1,22 +1,22 @@
-import {AppDispatch, appState} from "../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteElement, selectElement} from "../../../store/actions.ts";
 import styles from './ElementsList.module.css'
+import useEditorStore from "../../../store/store.ts";
 
 const ElementsList = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedPresentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
-    );
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const {selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        selectElement,
+        deleteElement,
+    } = useEditorStore();
+    const selectedPresentation = presentations.find(p => p.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
+
     const handleSelectElement = (id: number) => {
-        dispatch(selectElement(id));
+        selectElement(id);
     };
     const handleDeleteElement = (id: number) => {
-        dispatch(deleteElement(id));
+        deleteElement(id);
     };
     return (
         <div className={styles.ElementsList}>

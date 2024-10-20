@@ -1,24 +1,23 @@
-import {updateElement} from "../../../../../store/actions.ts";
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
 import styles from './RotationEditPanel.module.css'
 import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
+import useEditorStore from "../../../../../store/store.ts";
 
 const RotationEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
 
     const updateRotation = (rotation: number) => {
         if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { rotation }));
+            updateElement(selectedElement.id, { rotation });
         }
     };
     const rotationAngles = [0, 45, 90, 135, 180, 225, 270, 315];

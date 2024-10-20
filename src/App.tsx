@@ -2,17 +2,18 @@ import PresentationEditor from "./pages/PresentationEditor/PresentationEditor.ts
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.tsx";
 import {useEffect} from "react";
-import {useSelector} from "react-redux";
-import {appState} from "./store/store.ts";
 import PresentationsHomeV2 from "./pages/PresentationsHomeV2/PresentationsHomeV2.tsx";
 import FullscreenPresentationPreview
     from "./components/FullscreenPresentationPreview/FullscreenPresentationPreview.tsx";
+import useEditorStore from "./store/store.ts";
 
 const App = () => {
-    const state = useSelector((state: appState) => state);
+    const state = useEditorStore()
+    const presentations = useEditorStore((state) => state.presentations);
     useEffect(() => {
         console.log('Общий стейт:', state);
-    }, [state]);
+        console.log('Общий presentations:', presentations);
+    }, [state, presentations]);
     return (
         <BrowserRouter>
             <Routes>

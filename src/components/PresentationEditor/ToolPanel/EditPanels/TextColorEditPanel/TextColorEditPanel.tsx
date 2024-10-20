@@ -1,26 +1,26 @@
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {updateElement} from "../../../../../store/actions.ts";
 import {useState} from "react";
 import styles from './TextColorEditPanel.module.css'
+import useEditorStore from "../../../../../store/store.ts";
 
 const TextColorEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+
 
     const isTextElement = selectedElement && (selectedElement.type === 'text');
 
     const updateColor = (color: string) => {
         if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { color }));
+            updateElement(selectedElement.id, { color });
         }
     };
     const [myTimeout, setMyTimeout] = useState(0);

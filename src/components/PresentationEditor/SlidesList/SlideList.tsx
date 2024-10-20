@@ -1,13 +1,10 @@
 import styles from './SlideList.module.css'
-import {appState} from "../../../store/store.ts";
-import {useSelector} from "react-redux";
 import SlideItem from "./SlideItem/SlideItem.tsx";
+import useEditorStore from "../../../store/store.ts";
 
 const SlideList = () => {
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {selectedPresentationId, presentations} = useEditorStore();
+    const selectedPresentation = presentations.find(p => p.id === selectedPresentationId);
     return (
         <div className={styles.slideListWrapper}>
             {selectedPresentation && selectedPresentation.slides.map((slide, index) => (

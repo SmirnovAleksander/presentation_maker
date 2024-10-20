@@ -1,17 +1,17 @@
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
 import {ImageElement, ShapeElement, TextElement} from "../../../../../store/types.ts";
-import {addElement, selectElement} from "../../../../../store/actions.ts";
 import styles from './CreateElementButtons.module.css'
 import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
+import useEditorStore from "../../../../../store/store.ts";
 
 const CreateElementButtons = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        presentations,
+        addElement,
+        selectElement
+    } = useEditorStore();
+    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
 
     const addTextElement = () => {
         const newTextElement: TextElement = {
@@ -34,8 +34,8 @@ const CreateElementButtons = () => {
         };
 
         if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newTextElement));
-            dispatch(selectElement(newTextElement.id))
+            addElement(newTextElement);
+            selectElement(newTextElement.id)
         }
     };
     const addImageElement = () => {
@@ -56,8 +56,8 @@ const CreateElementButtons = () => {
         };
 
         if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newImageElement));
-            dispatch(selectElement(newImageElement.id))
+            addElement(newImageElement);
+            selectElement(newImageElement.id)
         }
     };
     const addShapeElement = (type: 'rectangle' | 'circle' | 'line') => {
@@ -80,11 +80,10 @@ const CreateElementButtons = () => {
         };
 
         if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newShapeElement));
-            dispatch(selectElement(newShapeElement.id))
+            addElement(newShapeElement);
+            selectElement(newShapeElement.id)
         }
     };
-    console.log('Hello', !selectedSlideId)
     return (
         <div className={styles.elementButtonsWrapper}>
             {/*<p>Добавить</p>*/}

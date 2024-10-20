@@ -1,16 +1,15 @@
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {updateElement} from "../../../../../store/actions.ts";
 import styles from './ShapeEditPanel.module.css'
+import useEditorStore from "../../../../../store/store.ts";
 
 const ShapeEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
@@ -19,23 +18,23 @@ const ShapeEditPanel = () => {
 
     const updateLineWidth = (value: number) => {
         if (isShapeElement)
-        dispatch(updateElement(selectedElement.id, { lineWidth: value }));
+        updateElement(selectedElement.id, { lineWidth: value });
     };
     const updateBorderRadius = (value: number) => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { borderRadius: value }));
+            updateElement(selectedElement.id, { borderRadius: value });
     };
     const updateOpacity = (value: number) => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { opacity: value }));
+            updateElement(selectedElement.id, { opacity: value });
     };
     const updateBorderWidth = (value: number) => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { borderWidth: value }));
+            updateElement(selectedElement.id, { borderWidth: value });
     };
     const updateBorderStyle = (value: 'solid' | 'dashed' | 'dotted') => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { borderStyle: value }));
+            updateElement(selectedElement.id, { borderStyle: value });
     };
     // const updateFillType = (value: 'solid' | 'gradient') => {
     //     if (isShapeElement)

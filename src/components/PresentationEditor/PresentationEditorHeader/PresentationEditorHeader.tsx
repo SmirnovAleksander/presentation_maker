@@ -1,16 +1,11 @@
-import {AppDispatch, appState} from "../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {updatePresentationTitle} from "../../../store/actions.ts";
 import styles from './PresentationEditorHeader.module.css'
 import PresentationIcon from "../../../assets/PresentationsLogo.svg";
 import editIcon from "../../../assets/Edit.svg";
+import useEditorStore from "../../../store/store.ts";
 const PresentationEditorHeader = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {selectedPresentationId, presentations, updatePresentationTitle} = useEditorStore();
+    const selectedPresentation = presentations.find(p => p.id === selectedPresentationId);
 
     const [isEditing, setIsEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
@@ -23,13 +18,13 @@ const PresentationEditorHeader = () => {
     };
     const handleKeyDown  = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && selectedPresentation) {
-            dispatch(updatePresentationTitle(selectedPresentation.id, newTitle));
+            updatePresentationTitle(selectedPresentation.id, newTitle);
             setIsEditing(false);
         }
     };
     const handleBlur = () => {
         if (selectedPresentation) {
-            dispatch(updatePresentationTitle(selectedPresentation.id, newTitle));
+            updatePresentationTitle(selectedPresentation.id, newTitle);
         }
         setIsEditing(false);
     };

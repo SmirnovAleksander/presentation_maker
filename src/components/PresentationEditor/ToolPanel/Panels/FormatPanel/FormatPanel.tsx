@@ -3,12 +3,11 @@ import ColorEditPanel from "../../EditPanels/ColorEditPanel/ColorEditPanel.tsx";
 import TextColorEditPanel from "../../EditPanels/TextColorEditPanel/TextColorEditPanel.tsx";
 import ImageEditPanel from "../../EditPanels/ImageEditPanel/ImageEditPanel.tsx";
 import BorderEditPanel from "../../EditPanels/BorderEditPanel/BorderEditPanel.tsx";
-import {useSelector} from "react-redux";
-import {appState} from "../../../../../store/store.ts";
 import styles from './FormatPanel.module.css'
+import useEditorStore from "../../../../../store/store.ts";
 
 const FormatPanel = () => {
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const selectedElementId = useEditorStore((store) => store.selectedElementId);
     return (
         <>
             {selectedElementId ? (

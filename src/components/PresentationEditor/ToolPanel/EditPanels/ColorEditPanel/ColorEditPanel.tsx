@@ -1,17 +1,16 @@
 import styles from './ColorEditPanel.module.css'
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {updateElement} from "../../../../../store/actions.ts";
 import {useState} from "react";
+import useEditorStore from "../../../../../store/store.ts";
 
 const ColorEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
@@ -25,12 +24,12 @@ const ColorEditPanel = () => {
 
     const updateColor = (color: string) => {
         if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { color }));
+            updateElement(selectedElement.id, { color });
         }
     };
     const updateBackgroundColor = (backgroundColor: string) => {
         if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { backgroundColor: backgroundColor }));
+            updateElement(selectedElement.id, { backgroundColor: backgroundColor });
         }
     };
     const [myTimeout, setMyTimeout] = useState(0);

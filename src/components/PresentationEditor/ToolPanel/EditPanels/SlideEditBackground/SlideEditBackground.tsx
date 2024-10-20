@@ -1,22 +1,21 @@
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import styles from "./SlideEditBackground.module.css";
-import {updateSlide} from "../../../../../store/actions.ts";
+import useEditorStore from "../../../../../store/store.ts";
 
 const SlideEditBackground = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        presentations,
+        updateSlide,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
 
     const updateBackgroundColor = (backgroundColor: string) => {
         if (selectedSlide) {
-            dispatch(updateSlide(selectedSlide.id, backgroundColor));
+            updateSlide(selectedSlide.id, backgroundColor);
         }
     };
     const [myTimeout, setMyTimeout] = useState(0);

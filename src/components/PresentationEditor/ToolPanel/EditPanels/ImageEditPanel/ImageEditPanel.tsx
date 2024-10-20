@@ -1,16 +1,15 @@
-import {updateElement} from "../../../../../store/actions.ts";
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
 import styles from './ImageEditPanel.module.css'
+import useEditorStore from "../../../../../store/store.ts";
 
 const ImageEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
@@ -19,15 +18,15 @@ const ImageEditPanel = () => {
 
     const updateBorderStyle = (style: 'solid' | 'dashed' | 'dotted') => {
         if (isImageElement)
-            dispatch(updateElement(selectedElement.id, { borderStyle: style }));
+            updateElement(selectedElement.id, { borderStyle: style });
     };
     const updateBorderWidth = (width: number) => {
         if (isImageElement)
-            dispatch(updateElement(selectedElement.id, { borderWidth: width }));
+            updateElement(selectedElement.id, { borderWidth: width });
     };
     const updateBorderRadius = (radius: number) => {
         if (isImageElement)
-            dispatch(updateElement(selectedElement.id, { borderRadius: radius }));
+            updateElement(selectedElement.id, { borderRadius: radius });
     };
     // const updateBoxShadow = (shadow: string) => {
     //     if (isImageElement)
@@ -35,7 +34,7 @@ const ImageEditPanel = () => {
     // };
     const updateOpacity = (opacity: number) => {
         if (isImageElement)
-            dispatch(updateElement(selectedElement.id, { opacity }));
+            updateElement(selectedElement.id, { opacity });
     };
     return (
         <>

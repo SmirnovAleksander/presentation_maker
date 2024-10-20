@@ -1,8 +1,5 @@
 import styles from './ToolPanel.module.css'
 import {Slide} from "../../../store/types.ts";
-import {addSlide, selectSlide} from "../../../store/actions.ts";
-import {AppDispatch, appState} from "../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import CustomButton from "../../UI/CustomButton/CustomButton.tsx";
 import {useState} from "react";
@@ -10,16 +7,19 @@ import HomePanel from "./Panels/HomePanel/HomePanel.tsx";
 import InsertPanel from "./Panels/InsertPanel/InsertPanel.tsx";
 import FormatPanel from "./Panels/FormatPanel/FormatPanel.tsx";
 import SlideDesignPanel from "./Panels/SlideDesignPanel/SlideDesignPanel.tsx";
+import useEditorStore from "../../../store/store.ts";
 
 const ToolPanel = () => {
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        addSlide,
+        selectSlide,
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
@@ -32,8 +32,8 @@ const ToolPanel = () => {
             backgroundImage: selectedPresentation?.slides[0]?.backgroundImage,
         };
         if (selectedPresentation) {
-            dispatch(addSlide(selectedPresentation.id, newSlide));
-            dispatch(selectSlide(selectedPresentation.id, newSlide.id))
+            addSlide(newSlide);
+            selectSlide(newSlide.id)
             setActivePanel('slideDesign')
         }
     };

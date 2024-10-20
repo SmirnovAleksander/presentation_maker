@@ -1,22 +1,20 @@
 import {useEffect, useRef, useState} from 'react';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {appState} from "../../store/store.ts";
 import RenderSlideItemElements from "../PresentationEditor/SlidesList/RenderSlideItemElements.tsx";
 import styles from './FullscreenPresentationPreview.module.css'
 import CustomButton from "../UI/CustomButton/CustomButton.tsx";
+import useEditorStore from "../../store/store.ts";
 
 const FullscreenPresentationPreview = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = useParams<{ id: string }>();
-    console.log(id, 'Hello');
     const elementRef = useRef<HTMLDivElement>(null);
 
-    const presentation = useSelector((state: appState) =>
+    const presentation = useEditorStore((state) =>
         state.presentations.find(p => p.id === Number(id))
     );
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const selectedSlideId = useEditorStore(state => state.selectedSlideId);
 
     const { startFromCurrentSlide } = location.state || { startFromCurrentSlide: false };
     const initialSlideIndex = startFromCurrentSlide && selectedSlideId && presentation
@@ -92,7 +90,6 @@ const FullscreenPresentationPreview = () => {
                 <CustomButton
                     onClick={handlePreviousSlide}
                     disabled={currentSlideIndex === 0}
-                    // style={{backgroundColor: currentSlideIndex === 0 ? 'rgba(0, 0, 0, 0.01)' : ''}}
                 >
                     ←
                 </CustomButton>
@@ -100,7 +97,6 @@ const FullscreenPresentationPreview = () => {
                 <CustomButton
                     onClick={handleNextSlide}
                     disabled={currentSlideIndex === presentation.slides.length - 1}
-                    // style={{backgroundColor: currentSlideIndex === presentation.slides.length - 1 ? 'rgba(0, 0, 0, 0.01)' : ''}}
                 >
                     →
                 </CustomButton>

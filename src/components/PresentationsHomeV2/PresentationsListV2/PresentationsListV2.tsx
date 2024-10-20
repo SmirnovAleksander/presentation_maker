@@ -1,19 +1,9 @@
-import {useSelector} from "react-redux";
-import {appState} from "../../../store/store.ts";
 import styles from './PresentationsListV2.module.css'
 import PresentationItem from "./PresentationItem/PresentationItem.tsx";
+import useEditorStore from "../../../store/store.ts";
 
 const PresentationsListV2 = () => {
-    const presentations = useSelector((state: appState) => state.presentations);
-    // useEffect(() => {
-    //     presentations.forEach(presentation => {
-    //         if (presentation.slides.length === 0) {
-    //             dispatch(deletePresentation(presentation.id));
-    //         }
-    //     })
-    // }, [presentations, dispatch]);
-    // const filteredPresentations = presentations.filter(presentation => presentation.slides.length > 0);
-
+    const presentations = useEditorStore((state) => state.presentations);
     return (
         <div className={styles.presentationContainer}>
             {presentations.length === 0

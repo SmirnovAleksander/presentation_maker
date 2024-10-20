@@ -1,24 +1,26 @@
-import {AppDispatch, appState} from "../../../../../store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {addElement, selectElement, updateElement} from "../../../../../store/actions.ts";
 import {useRef, useState} from "react";
 import {ImageElement} from "../../../../../store/types.ts";
 import styles from "./InsertImagePanel.module.css";
 import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
+import useEditorStore from "../../../../../store/store.ts";
 
 const InsertImagePanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedPresentationId,
+        selectedSlideId,
+        selectedElementId,
+        presentations,
+        updateElement,
+        addElement,
+        selectElement
+    } = useEditorStore();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+
     const updateContent = (text: string) => {
-        dispatch(updateElement(selectedElement!.id, { content: text }));
+        updateElement(selectedElement!.id, { content: text });
     };
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const isImageElement = selectedElement && selectedElement.type === 'image';
@@ -58,8 +60,8 @@ const InsertImagePanel = () => {
         };
 
         if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newImageElement));
-            dispatch(selectElement(newImageElement.id))
+            addElement(newImageElement);
+            selectElement(newImageElement.id)
         }
     };
     return (
