@@ -9,7 +9,7 @@ const NewPresentationModalV2 = () => {
     const createNewPresentation  = () => {
         const newPresentation = {
             id: Date.now(),
-            title: "Новая презентация",
+            title: '',
             slides: [],
         };
         addPresentation(newPresentation);

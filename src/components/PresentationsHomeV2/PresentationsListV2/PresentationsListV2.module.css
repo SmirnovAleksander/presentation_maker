@@ -26,8 +26,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px;
     font-size: 20px;
+    position: absolute;
+    top: 3px;
+    left: 0;
 }
 .errorMasage {
     display: flex;
@@ -37,4 +39,14 @@
     padding-top: 5vw;
     font-size: 20px;
     width: 100%;
+}
+
+.presentationsSearch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-bottom: 10px;
+    position: relative;
 }

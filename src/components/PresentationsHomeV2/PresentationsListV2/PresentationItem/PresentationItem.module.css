@@ -55,6 +55,7 @@
     background: linear-gradient(to bottom, #EDEDED, #f1f1f1);
     max-width: 244px;
     /*position: relative;*/
+    transition: all 0.3s ease;
 }
 .cardTitle {
     /*padding: 10px 0;*/

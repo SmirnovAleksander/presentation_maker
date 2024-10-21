@@ -70,7 +70,7 @@ const ToolPanel = () => {
     return (
         <div className={styles.toolPanelWrapper}>
             <div className={styles.panelMain}>
-                <CustomButton onClick={() => navigate('/')}>Вернуться на главную</CustomButton>
+                <CustomButton onClick={() => navigate('/')} disabled={selectedPresentation!.title === ''}>Вернуться на главную</CustomButton>
                 <div>
                     <label>Id element: </label>
                     {selectedElement && selectedElement.id}

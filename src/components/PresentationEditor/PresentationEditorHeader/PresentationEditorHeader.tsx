@@ -1,14 +1,22 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styles from './PresentationEditorHeader.module.css'
 import PresentationIcon from "../../../assets/PresentationsLogo.svg";
 import editIcon from "../../../assets/Edit.svg";
 import useEditorStore from "../../../store/store.ts";
+import {useNavigate} from "react-router-dom";
 const PresentationEditorHeader = () => {
     const {selectedPresentationId, presentations, updatePresentationTitle} = useEditorStore();
     const selectedPresentation = presentations.find(p => p.id === selectedPresentationId);
-
-    const [isEditing, setIsEditing] = useState(false);
+    const navigate = useNavigate()
+    const [isEditing, setIsEditing] = useState(true);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
+
+    useEffect(() => {
+        if (selectedPresentation?.title !== '') {
+            setNewTitle(selectedPresentation!.title);
+            setIsEditing(false);
+        }
+    }, [selectedPresentation])
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -18,15 +26,18 @@ const PresentationEditorHeader = () => {
     };
     const handleKeyDown  = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && selectedPresentation) {
+            if (newTitle.trim() === '') {
+                return;
+            }
             updatePresentationTitle(selectedPresentation.id, newTitle);
             setIsEditing(false);
         }
     };
     const handleBlur = () => {
-        if (selectedPresentation) {
+        if (selectedPresentation && newTitle.trim() !== '') {
             updatePresentationTitle(selectedPresentation.id, newTitle);
+            setIsEditing(false)
         }
-        setIsEditing(false);
     };
     if (!selectedPresentation) {
         return <div className={styles.header}>Презентация не найдена</div>;
@@ -34,11 +45,12 @@ const PresentationEditorHeader = () => {
 
     return (
         <div className={styles.header}>
-            <img src={PresentationIcon} alt="Presentation" width={35} height={35}/>
+            <img src={PresentationIcon} alt="Presentation" width={35} height={35} onClick={() => navigate('/')} style={{cursor: 'pointer'}}/>
             {isEditing
                 ? (
                     <div>
                         <input
+                            style={{width: '250px'}}
                             type="text"
                             value={newTitle}
                             onChange={handleChangeTitle}

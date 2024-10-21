@@ -14,13 +14,17 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigate = useNavigate();
     const { deletePresentation, selectPresentation, selectSlide, updatePresentationTitle } = useEditorStore();
     const firstSlide = presentation.slides[0];
-
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const handleDeletePresentation = (id: number) => {
-        deletePresentation(id);
+        setIsDeleting(true);
+        setTimeout(() => {
+            deletePresentation(id);
+        }, 300);
     };
 
     const [editingId, setEditingId] = useState<number | null>(null);
     const [newTitle, setNewTitle] = useState<string>('');
+
 
     const handleDoubleClick = (presentationId: number, currentTitle: string) => {
         setEditingId(presentationId);
@@ -51,7 +55,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
         backgroundPosition: 'center',
     } : {};
     return (
-        <div key={presentation.id} className={styles.presentationCardWrapper}>
+        <div key={presentation.id} className={styles.presentationCardWrapper} style={{transform: `${isDeleting ? 'scale(0)' : 'scale(1)'}`}}>
             <div
                 className={styles.presentationCard}
                 onClick={navigateToEditPresentation}
