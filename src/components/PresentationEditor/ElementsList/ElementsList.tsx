@@ -5,12 +5,12 @@ import styles from './ElementsList.module.css'
 
 const ElementsList = () => {
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
+    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
     const selectedPresentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
+        state.present.presentations.find(p => p.id === selectedPresentationId)
     );
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const handleSelectElement = (id: number) => {
         dispatch(selectElement(id));

@@ -29,9 +29,9 @@ const ThemeEditPanel = () => {
         { id: 20, image: 'https://img.freepik.com/free-photo/3d-rendering-abstract-black-white-geometric-background_23-2150853539.jpg?t=st=1729129217~exp=1729132817~hmac=d390e221b8017503720ce9c84dc7f685353382725210ddc6f54f056e07fbac97&w=1380' },
     ];
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
     const selectedPresentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
+        state.present.presentations.find(p => p.id === selectedPresentationId)
     );
     const [themes, setThemes] = useState(initialThemes);
 

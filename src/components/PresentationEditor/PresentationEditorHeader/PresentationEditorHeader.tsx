@@ -8,9 +8,9 @@ import editIcon from "../../../assets/Edit.svg";
 import {useNavigate} from "react-router-dom";
 const PresentationEditorHeader = () => {
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
     const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
+        state.present.presentations.find(p => p.id === selectedPresentationId)
     );
     const navigate = useNavigate()
     const [isEditing, setIsEditing] = useState(true);

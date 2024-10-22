@@ -12,7 +12,7 @@ interface ImageProps {
 const ImageElement: React.FC<ImageProps> = ({element}) => {
     const dispatch : AppDispatch = useDispatch();
 
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
     const isSelected = selectedElementId === element.id;
 
     const [isDragging, setIsDragging] = useState(false);

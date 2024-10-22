@@ -14,9 +14,9 @@ const FullscreenPresentationPreview = () => {
     const elementRef = useRef<HTMLDivElement>(null);
 
     const presentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === Number(id))
+        state.present.presentations.find(p => p.id === Number(id))
     );
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
 
     const { startFromCurrentSlide } = location.state || { startFromCurrentSlide: false };
     const initialSlideIndex = startFromCurrentSlide && selectedSlideId && presentation

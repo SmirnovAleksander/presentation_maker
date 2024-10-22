@@ -1,5 +1,8 @@
 import {ElementProps, ImageElement, Presentation, ShapeElement, Slide, TextElement} from "./types.ts";
 
+export const UNDO = 'UNDO';
+export const REDO = 'REDO';
+
 export const MOVE_SLIDE_UP = 'MOVE_SLIDE_UP';
 export const MOVE_SLIDE_DOWN = 'MOVE_SLIDE_DOWN';
 
@@ -21,6 +24,14 @@ export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
 
 ///////////////////////
+export interface UndoAction {
+    type: typeof UNDO;
+}
+
+export interface RedoAction {
+    type: typeof REDO;
+}
+//////////////////////
 export interface MoveSlideUpAction {
     type: typeof MOVE_SLIDE_UP;
     payload: {
@@ -125,9 +136,19 @@ export type ElementActions =
     | UpdateAllSlidesBackgroundAction
     | UpdateSlideAction
     | MoveSlideUpAction
-    | MoveSlideDownAction;
+    | MoveSlideDownAction
+    | UndoAction
+    | RedoAction;
 
 //Экшены
+
+export const undo = (): UndoAction => ({
+    type: UNDO
+});
+export const redo = (): RedoAction => ({
+    type: REDO
+});
+
 ////////////////////////////
 export const moveSlideUp = (presentationId: number, slideId: number): MoveSlideUpAction => ({
     type: MOVE_SLIDE_UP,

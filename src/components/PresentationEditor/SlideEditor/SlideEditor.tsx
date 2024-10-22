@@ -8,13 +8,13 @@ import {deselectElement} from "../../../store/actions.ts";
 
 const SlideEditor = () => {
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
+    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
     const selectedPresentation = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
+        state.present.presentations.find(p => p.id === selectedPresentationId)
     );
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
 
     const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const clickedOnElement = (e.target as HTMLElement).closest('.element');

@@ -21,7 +21,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const handleDeletePresentation = (id: number) => {
         setIsDeleting(true);
         setTimeout(() => {
-            deletePresentation(id);
+            dispatch(deletePresentation(id));
         }, 300);
     };
 

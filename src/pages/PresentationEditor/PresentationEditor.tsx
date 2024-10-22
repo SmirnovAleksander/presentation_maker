@@ -12,7 +12,7 @@ import PresentationEditorHeader
 
 const PresentationEditor = () => {
     const navigate = useNavigate();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
     useEffect(() => {
         if (!selectedPresentationId) {
             navigate("/");

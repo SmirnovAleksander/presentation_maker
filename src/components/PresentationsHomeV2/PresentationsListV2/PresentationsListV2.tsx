@@ -6,7 +6,7 @@ import {useState} from "react";
 import CustomButton from "../../UI/CustomButton/CustomButton.tsx";
 
 const PresentationsListV2 = () => {
-    const presentations = useSelector((state: appState) => state.presentations);
+    const presentations = useSelector((state: appState) => state.present.presentations);
     const [searchTitle, setSearchTitle] = useState("");
     const filteredPresentations = presentations.filter((p) => p.title.toLowerCase().includes(searchTitle.toLowerCase()));
     return (

@@ -7,21 +7,66 @@ export interface EditorState {
     selectedSlideId: number | null;
     selectedElementId: number | null;
 }
-const initialState: EditorState = {
+export interface UndoableState {
+    past: EditorState[];
+    present: EditorState;
+    future: EditorState[];
+}
+const initialPresentState: EditorState = {
     presentations: [],
     selectedPresentationId: null,
     selectedSlideId: null,
     selectedElementId: null,
 };
-const editorReducer = (state = initialState, action: ElementActions): EditorState  => {
+const initialUndoableState: UndoableState = {
+    past: [],
+    present: initialPresentState,
+    future: [],
+}
+export const undoableReducer = (state = initialUndoableState, action: ElementActions): UndoableState => {
+    const { past, present, future } = state;
+    switch (action.type) {
+        case 'UNDO': {
+            if (past.length === 0) return state;
+            const previous = past[past.length - 1];
+            const newPast = past.slice(0, past.length - 1);
+
+            return {
+                past: newPast,
+                present: previous,
+                future: [present, ...future],
+            };
+        }
+        case 'REDO': {
+            if (future.length === 0) return state;
+            const next = future[0]
+            const newFuture = future.slice(1)
+            return {
+                past: [...past, present],
+                present: next,
+                future: newFuture
+            }
+        }
+        default: {
+            const newPresent = editorReducer(present, action)
+            if (newPresent === present) {
+                return state;
+            }
+            return {
+                past: [...past, present],
+                present: newPresent,
+                future: [],
+            };
+        }
+    }
+}
+const editorReducer = (state = initialPresentState, action: ElementActions): EditorState  => {
     switch (action.type) {
         case 'MOVE_SLIDE_UP': {
             const presentation = state.presentations.find(p => p.id === action.payload.presentationId);
             if (presentation) {
                 const slideIndex = presentation.slides.findIndex(slide => slide.id === action.payload.slideId);
                 if (slideIndex > 0) {
-                    // const newSlides = [...presentation.slides];
-                    // [newSlides[slideIndex - 1], newSlides[slideIndex]] = [newSlides[slideIndex], newSlides[slideIndex - 1]];
                     const newSlides = [...presentation.slides];
                     const [movedSlide] = newSlides.splice(slideIndex, 1);
                     newSlides.splice(slideIndex - 1, 0, movedSlide);
@@ -42,8 +87,6 @@ const editorReducer = (state = initialState, action: ElementActions): EditorStat
             if (presentation) {
                 const slideIndex = presentation.slides.findIndex(slide => slide.id === action.payload.slideId);
                 if (slideIndex < presentation.slides.length - 1) {
-                    // const newSlides = [...presentation.slides];
-                    // [newSlides[slideIndex + 1], newSlides[slideIndex]] = [newSlides[slideIndex], newSlides[slideIndex + 1]];
                     const newSlides = [...presentation.slides];
                     const [movedSlide] = newSlides.splice(slideIndex, 1);
                     newSlides.splice(slideIndex + 1, 0, movedSlide);

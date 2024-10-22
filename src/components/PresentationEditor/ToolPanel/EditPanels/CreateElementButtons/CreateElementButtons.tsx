@@ -7,10 +7,10 @@ import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
 
 const CreateElementButtons = () => {
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
+    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
     const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
+        state.present.presentations.find(p => p.id === selectedPresentationId)
     );
 
     const addTextElement = () => {

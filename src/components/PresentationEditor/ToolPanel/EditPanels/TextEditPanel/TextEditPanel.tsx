@@ -7,11 +7,11 @@ import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
 const TextEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();
 
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
+    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
+    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
 
-    const presentations = useSelector((state: appState) => state.presentations);
+    const presentations = useSelector((state: appState) => state.present.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);

@@ -4,9 +4,9 @@ import {useSelector} from "react-redux";
 import SlideItem from "./SlideItem/SlideItem.tsx";
 
 const SlideList = () => {
-    const selectedPresentationId = useSelector((state: appState) => state.selectedPresentationId);
+    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
     const selectedPresentation  = useSelector((state: appState) =>
-        state.presentations.find(p => p.id === selectedPresentationId)
+        state.present.presentations.find(p => p.id === selectedPresentationId)
     );
     return (
         <div className={styles.slideListWrapper}>

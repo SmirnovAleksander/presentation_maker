@@ -8,7 +8,7 @@ import {appState} from "../../../../../store/store.ts";
 import styles from './FormatPanel.module.css'
 
 const FormatPanel = () => {
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);
+    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
     return (
         <>
             {selectedElementId ? (

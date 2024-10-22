@@ -12,7 +12,7 @@ interface ShapeElementProps {
 const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
     const dispatch : AppDispatch = useDispatch();
 
-    const selectedElementId = useSelector((state: appState) => state.selectedElementId);  // Получаем ID выделенного элемента
+    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);  // Получаем ID выделенного элемента
     const isSelected = selectedElementId === element.id;  // Проверяем, выбран ли текущий элемент
 
     const [isDragging, setIsDragging] = useState(false);
