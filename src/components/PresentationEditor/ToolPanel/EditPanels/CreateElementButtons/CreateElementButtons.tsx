@@ -7,11 +7,7 @@ import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
 
 const CreateElementButtons = () => {
     const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
     const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedPresentation  = useSelector((state: appState) =>
-        state.present.presentations.find(p => p.id === selectedPresentationId)
-    );
 
     const addTextElement = () => {
         const newTextElement: TextElement = {
@@ -33,8 +29,8 @@ const CreateElementButtons = () => {
             alignment: 'left',
         };
 
-        if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newTextElement));
+        if (selectedSlideId) {
+            dispatch(addElement(newTextElement));
             dispatch(selectElement(newTextElement.id))
         }
     };
@@ -55,8 +51,8 @@ const CreateElementButtons = () => {
             opacity: 1,
         };
 
-        if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newImageElement));
+        if (selectedSlideId) {
+            dispatch(addElement(newImageElement));
             dispatch(selectElement(newImageElement.id))
         }
     };
@@ -79,12 +75,11 @@ const CreateElementButtons = () => {
             gradient: ''
         };
 
-        if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newShapeElement));
+        if (selectedSlideId) {
+            dispatch(addElement(newShapeElement));
             dispatch(selectElement(newShapeElement.id))
         }
     };
-    console.log('Hello', !selectedSlideId)
     return (
         <div className={styles.elementButtonsWrapper}>
             {/*<p>Добавить</p>*/}

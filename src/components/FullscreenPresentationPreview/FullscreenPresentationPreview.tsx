@@ -10,7 +10,6 @@ const FullscreenPresentationPreview = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = useParams<{ id: string }>();
-    console.log(id, 'Hello');
     const elementRef = useRef<HTMLDivElement>(null);
 
     const presentation = useSelector((state: appState) =>

@@ -25,22 +25,22 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
 
     const handleSlideClick = () => {
         if (selectedPresentationId) {
-            dispatch(selectSlide(selectedPresentationId ,slide.id));
+            dispatch(selectSlide(slide.id));
         }
     };
     const handleDeleteSlide = (slideId: number) => {
         if (selectedPresentationId) {
-            dispatch(deleteSlide(selectedPresentationId, slideId));
+            dispatch(deleteSlide(slideId));
         }
     };
     const handleMoveSlideUp = () => {
         if (selectedPresentationId) {
-            dispatch(moveSlideUp(selectedPresentationId, slide.id));
+            dispatch(moveSlideUp(slide.id));
         }
     };
     const handleMoveSlideDown = () => {
         if (selectedPresentationId) {
-            dispatch(moveSlideDown(selectedPresentationId, slide.id));
+            dispatch(moveSlideDown(slide.id));
         }
     };
     const slideStyle = {

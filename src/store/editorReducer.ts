@@ -63,7 +63,7 @@ export const undoableReducer = (state = initialUndoableState, action: ElementAct
 const editorReducer = (state = initialPresentState, action: ElementActions): EditorState  => {
     switch (action.type) {
         case 'MOVE_SLIDE_UP': {
-            const presentation = state.presentations.find(p => p.id === action.payload.presentationId);
+            const presentation = state.presentations.find(p => p.id === state.selectedPresentationId);
             if (presentation) {
                 const slideIndex = presentation.slides.findIndex(slide => slide.id === action.payload.slideId);
                 if (slideIndex > 0) {
@@ -73,7 +73,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                     return {
                         ...state,
                         presentations: state.presentations.map(p =>
-                            p.id === action.payload.presentationId
+                            p.id === state.selectedPresentationId
                                 ? { ...p, slides: newSlides }
                                 : p
                         ),
@@ -83,7 +83,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return state;
         }
         case 'MOVE_SLIDE_DOWN': {
-            const presentation = state.presentations.find(p => p.id === action.payload.presentationId);
+            const presentation = state.presentations.find(p => p.id === state.selectedPresentationId);
             if (presentation) {
                 const slideIndex = presentation.slides.findIndex(slide => slide.id === action.payload.slideId);
                 if (slideIndex < presentation.slides.length - 1) {
@@ -93,7 +93,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                     return {
                         ...state,
                         presentations: state.presentations.map(p =>
-                            p.id === action.payload.presentationId
+                            p.id === state.selectedPresentationId
                                 ? { ...p, slides: newSlides }
                                 : p
                         ),
@@ -106,6 +106,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return {
                 ...state,
                 presentations: [...state.presentations, action.payload],
+                selectedPresentationId: action.payload.id,
             };
         }
         case 'DELETE_PRESENTATION': {
@@ -113,6 +114,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return {
                 ...state,
                 presentations: updatedPresentations,
+                selectedPresentationId: state.selectedPresentationId === action.payload ? null : state.selectedPresentationId
             };
         }
         case 'UPDATE_PRESENTATION_TITLE': {
@@ -137,7 +139,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return {
                 ...state,
                 presentations: state.presentations.map(presentation => {
-                    if (presentation.id === action.payload.presentationId) {
+                    if (presentation.id === state.selectedPresentationId) {
                         return {
                             ...presentation,
                             slides: [...presentation.slides, action.payload.slide],
@@ -152,6 +154,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return {
                 ...state,
                 selectedSlideId: action.payload.slideId,
+                selectedElementId: null
             };
         }
         case 'UPDATE_ALL_SLIDES_BACKGROUND': {
@@ -194,7 +197,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return {
                 ...state,
                 presentations: state.presentations.map(presentation => {
-                    if (presentation.id === action.payload.presentationId) {
+                    if (presentation.id === state.selectedPresentationId) {
                         return {
                             ...presentation,
                             slides: presentation.slides.filter(slide => slide.id !== action.payload.slideId),
@@ -209,11 +212,11 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
             return {
                 ...state,
                 presentations: state.presentations.map(presentation => {
-                    if (presentation.id === action.payload.presentationId) {
+                    if (presentation.id === state.selectedPresentationId) {
                         return {
                             ...presentation,
                             slides: presentation.slides.map(slide => {
-                                if (slide.id === action.payload.slideId) {
+                                if (slide.id === state.selectedSlideId) {
                                     return {
                                         ...slide,
                                         elements: [...slide.elements, action.payload.element],

@@ -34,18 +34,12 @@ export interface RedoAction {
 //////////////////////
 export interface MoveSlideUpAction {
     type: typeof MOVE_SLIDE_UP;
-    payload: {
-        presentationId: number;
-        slideId: number;
-    };
+    payload: { slideId: number; };
 }
 
 export interface MoveSlideDownAction {
     type: typeof MOVE_SLIDE_DOWN;
-    payload: {
-        presentationId: number;
-        slideId: number;
-    };
+    payload: { slideId: number; };
 }
 ////////////////////////
 export interface AddPresentationAction {
@@ -68,35 +62,30 @@ export interface SelectPresentationAction {
 
 export interface AddSlideAction {
     type: typeof ADD_SLIDE;
-    payload: { presentationId: number, slide: Slide };
+    payload: { slide: Slide };
 }
 export interface SelectSlideAction {
     type: typeof SELECT_SLIDE;
-    payload: { slideId: number, presentationId: number };
+    payload: { slideId: number};
 }
 export interface DeleteSlideAction {
     type: typeof DELETE_SLIDE;
-    payload: { presentationId: number, slideId: number };
+    payload: { slideId: number };
 }
 export interface UpdateAllSlidesBackgroundAction    {
     type: typeof UPDATE_ALL_SLIDES_BACKGROUND;
-    payload: {
-        backgroundImage: string;
-    };
+    payload: { backgroundImage: string; };
 }
 export interface UpdateSlideAction {
     type: typeof UPDATE_SLIDE;
-    payload: {
-        id: number;
-        backgroundColor: string;
-    };
+    payload: { id: number; backgroundColor: string; };
 }
 
 //////////////////////////////////
 
 export interface AddElementAction {
     type: typeof ADD_ELEMENT;
-    payload: {presentationId: number, slideId: number, element: ElementProps};
+    payload: {element: ElementProps};
 }
 
 export interface DeleteElementAction {
@@ -150,14 +139,14 @@ export const redo = (): RedoAction => ({
 });
 
 ////////////////////////////
-export const moveSlideUp = (presentationId: number, slideId: number): MoveSlideUpAction => ({
+export const moveSlideUp = (slideId: number): MoveSlideUpAction => ({
     type: MOVE_SLIDE_UP,
-    payload: { presentationId, slideId },
+    payload: {slideId },
 });
 
-export const moveSlideDown = (presentationId: number, slideId: number): MoveSlideDownAction => ({
+export const moveSlideDown = (slideId: number): MoveSlideDownAction => ({
     type: MOVE_SLIDE_DOWN,
-    payload: { presentationId, slideId },
+    payload: {slideId },
 });
 ///////////////////////////
 export const addPresentation = (presentation: Presentation): AddPresentationAction => ({
@@ -179,20 +168,17 @@ export const selectPresentation = (presentationId: number): SelectPresentationAc
 
 /////////////////////////////////
 
-export const addSlide = (presentationId: number, slide: Slide): AddSlideAction => ({
+export const addSlide = ( slide: Slide): AddSlideAction => ({
     type: ADD_SLIDE,
-    payload: {
-        presentationId,
-        slide
-    },
+    payload: {slide},
 });
-export const selectSlide = (presentationId: number, slideId: number): SelectSlideAction => ({
+export const selectSlide = (slideId: number): SelectSlideAction => ({
     type: SELECT_SLIDE,
-    payload: { presentationId, slideId }
+    payload: {slideId }
 });
-export const deleteSlide = (presentationId: number, slideId: number): DeleteSlideAction => ({
+export const deleteSlide = (slideId: number): DeleteSlideAction => ({
     type: DELETE_SLIDE,
-    payload: { presentationId, slideId },
+    payload: {slideId },
 });
 export const updateAllSlidesBackground = (backgroundImage: string): UpdateAllSlidesBackgroundAction    => ({
     type: UPDATE_ALL_SLIDES_BACKGROUND,
@@ -205,13 +191,9 @@ export const updateSlide = (id: number, backgroundColor: string): UpdateSlideAct
 //////////////////////////////////////////
 
 // Действия для элементов
-export const addElement = (presentationId: number, slideId: number, element: ElementProps): AddElementAction => ({
+export const addElement = (element: ElementProps): AddElementAction => ({
     type: ADD_ELEMENT,
-    payload: {
-        presentationId,
-        slideId,
-        element
-    },
+    payload: {element},
 });
 
 export const deleteElement = (id: number): DeleteElementAction => ({

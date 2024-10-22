@@ -1,6 +1,6 @@
 import styles from './ToolPanel.module.css'
 import {Slide} from "../../../store/types.ts";
-import {addSlide, redo, selectSlide, undo} from "../../../store/actions.ts";
+import {addSlide, redo, undo} from "../../../store/actions.ts";
 import {AppDispatch, appState} from "../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -33,8 +33,7 @@ const ToolPanel = () => {
             backgroundImage: selectedPresentation?.slides[0]?.backgroundImage,
         };
         if (selectedPresentation) {
-            dispatch(addSlide(selectedPresentation.id, newSlide));
-            dispatch(selectSlide(selectedPresentation.id, newSlide.id))
+            dispatch(addSlide(newSlide));
             setActivePanel('slideDesign')
         }
     };

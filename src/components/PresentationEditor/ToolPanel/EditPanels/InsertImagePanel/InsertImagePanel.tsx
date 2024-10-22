@@ -58,7 +58,7 @@ const InsertImagePanel = () => {
         };
 
         if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(selectedPresentation.id, selectedSlideId, newImageElement));
+            dispatch(addElement(newImageElement));
             dispatch(selectElement(newImageElement.id))
         }
     };
