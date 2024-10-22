@@ -2,8 +2,13 @@ import PresentationIcon from '../../assets/PresentationsLogo.svg'
 import styles from "./PresentationsHomeV2.module.css"
 import NewPresentationModalV2 from "../../components/PresentationsHomeV2/NewPresentationModalV2/NewPresentationModalV2.tsx";
 import PresentationsListV2 from "../../components/PresentationsHomeV2/PresentationsListV2/PresentationsListV2.tsx";
+import CustomButton from "../../components/UI/CustomButton/CustomButton.tsx";
 
 const PresentationsHomeV2 = () => {
+    const handleReset = () => {
+        localStorage.clear();
+        window.location.reload();
+    };
     return (
         <div className={styles.presentationsHome}>
             <div className={styles.header}>
@@ -13,6 +18,7 @@ const PresentationsHomeV2 = () => {
                 </div>
             </div>
             <NewPresentationModalV2/>
+            <CustomButton onClick={() => handleReset()}>Reset</CustomButton>
             <PresentationsListV2/>
         </div>
     );

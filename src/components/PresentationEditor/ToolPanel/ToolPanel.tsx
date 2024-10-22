@@ -68,7 +68,7 @@ const ToolPanel = () => {
         }
     }
     const handleUndo = () => {
-        if (pastLength > 0) {
+        if (selectedPresentation!.title !== '' && pastLength > 0) {
             dispatch(undo());
         }
     };

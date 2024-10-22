@@ -43,7 +43,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
         dispatch(selectPresentation(presentation.id));
         navigate(`/presentation/${presentation.id}`);
         if (firstSlide) {
-            dispatch(selectSlide(presentation.id, firstSlide.id));
+            dispatch(selectSlide(firstSlide.id));
         }
     }
     const slideStyle = firstSlide ? {

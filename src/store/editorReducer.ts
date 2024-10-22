@@ -12,13 +12,13 @@ export interface UndoableState {
     present: EditorState;
     future: EditorState[];
 }
-const initialPresentState: EditorState = {
+export const initialPresentState: EditorState = {
     presentations: [],
     selectedPresentationId: null,
     selectedSlideId: null,
     selectedElementId: null,
 };
-const initialUndoableState: UndoableState = {
+export const initialUndoableState: UndoableState = {
     past: [],
     present: initialPresentState,
     future: [],
