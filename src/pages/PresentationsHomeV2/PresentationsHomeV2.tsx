@@ -18,7 +18,7 @@ const PresentationsHomeV2 = () => {
                 </div>
             </div>
             <NewPresentationModalV2/>
-            <CustomButton onClick={() => handleReset()}>Reset</CustomButton>
+            <CustomButton onClick={() => handleReset()} style={{position: 'absolute', left: '10px', bottom: '10px'}}>Reset store</CustomButton>
             <PresentationsListV2/>
         </div>
     );

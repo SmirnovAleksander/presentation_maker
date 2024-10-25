@@ -22,8 +22,6 @@ const ToolPanel = () => {
     const futureLength = useSelector((state: appState) => state.future.length)
     const presentations = useSelector((state: appState) => state.present.presentations);
     const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
 
     const addNewSlide = () => {
         const newSlide: Slide = {
@@ -83,14 +81,6 @@ const ToolPanel = () => {
             <div className={styles.panelMain}>
                 <CustomButton onClick={() => navigate('/')} disabled={selectedPresentation!.title === ''}>Вернуться на
                     главную</CustomButton>
-                <div>
-                    <label>Id element: </label>
-                    {selectedElement && selectedElement.id}
-                </div>
-                <div>
-                    <label>Id slide: </label>
-                    {selectedSlide && selectedSlide.id}
-                </div>
                 <div className={styles.undoableButtonsWrapper}>
                     <CustomButton onClick={handleUndo} disabled={pastLength === 0 || selectedPresentation!.slides.length === 0}>
                         Undo

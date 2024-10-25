@@ -15,13 +15,23 @@ const PresentationEditorHeader = () => {
     const navigate = useNavigate()
     const [isEditing, setIsEditing] = useState(true);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
+    const [isError, setIsError] = useState(false);
 
     useEffect(() => {
         if (selectedPresentation?.title !== '') {
             setNewTitle(selectedPresentation!.title);
             setIsEditing(false);
+            setIsError(false);
         }
     }, [selectedPresentation])
+
+    useEffect(() => {
+        if (newTitle.trim() === '') {
+            setIsError(true)
+        } else {
+            setIsError(false)
+        }
+    }, [newTitle]);
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -60,7 +70,7 @@ const PresentationEditorHeader = () => {
                 ? (
                     <div>
                         <input
-                            style={{width: '250px'}}
+                            style={{width: '250px', borderColor: isError ? 'red' : '', boxShadow: isError ? '0 0 5px rgba(241, 157, 149, 0.5)' : 'none'}}
                             type="text"
                             value={newTitle}
                             onChange={handleChangeTitle}
