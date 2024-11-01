@@ -10,6 +10,12 @@ import HomePanel from "./Panels/HomePanel/HomePanel.tsx";
 import InsertPanel from "./Panels/InsertPanel/InsertPanel.tsx";
 import FormatPanel from "./Panels/FormatPanel/FormatPanel.tsx";
 import SlideDesignPanel from "./Panels/SlideDesignPanel/SlideDesignPanel.tsx";
+import undoIcon from '../../../assets/undo.png'
+import reduIcon from '../../../assets/redo.png'
+import arrowBackIcon from '../../../assets/arrow.png'
+import interfaceIcon from '../../../assets/interface.png'
+import slideShowIcon from '../../../assets/slideshow.png'
+import plusIcon from '../../../assets/add.png'
 
 const ToolPanel = () => {
     const navigate = useNavigate();
@@ -76,32 +82,68 @@ const ToolPanel = () => {
             dispatch(redo());
         }
     };
+    const isDisableUndo = pastLength === 0 || selectedPresentation!.slides.length === 0
+    const isDisableRedo = futureLength === 0
+    const isDisableSlideShow = selectedPresentation && selectedPresentation.slides.length === 0
+    const isEmptyTitle = selectedPresentation && selectedPresentation.title === ''
+    const disabledStyle = { backgroundColor: 'rgba(0, 0, 0, 0.1)'};
     return (
         <div className={styles.toolPanelWrapper}>
             <div className={styles.panelMain}>
-                <CustomButton onClick={() => navigate('/')} disabled={selectedPresentation!.title === ''}>Вернуться на
-                    главную</CustomButton>
                 <div className={styles.undoableButtonsWrapper}>
-                    <CustomButton onClick={handleUndo} disabled={pastLength === 0 || selectedPresentation!.slides.length === 0}>
-                        Undo
+                    <CustomButton
+                        onClick={() => navigate('/')}
+                        disabled={selectedPresentation!.title === ''}
+                        style={{alignItems: 'center', justifyContent: 'center', gap: '7px', display: 'flex', padding: '5px'}}
+                    >
+                        <img src={arrowBackIcon} alt={'←'} width={14} height={14}/>
+                        <p>На главную</p>
                     </CustomButton>
-                    <CustomButton onClick={handleRedo} disabled={futureLength === 0}>
-                        Redo
+                    <CustomButton
+                        onClick={handleUndo}
+                        style={isDisableUndo ? disabledStyle : undefined}
+                    >
+                        <img src={undoIcon} alt={'undo'} width={14} height={14}/>
+                    </CustomButton>
+
+                    <CustomButton
+                        onClick={handleRedo}
+                        style={isDisableRedo  ? disabledStyle : undefined}
+                    >
+                        <img src={reduIcon} alt={'redo'} width={14} height={14}/>
                     </CustomButton>
                 </div>
-                <CustomButton
-                    onClick={handleFullscreenPreviewFromFirstSlide}
-                    disabled={selectedPresentation && selectedPresentation.slides.length === 0}
-                >
-                    Показ слайдов
-                </CustomButton>
-                <CustomButton
-                    onClick={handleFullscreenPreviewFromCurrentSlide}
-                    disabled={selectedPresentation && selectedPresentation.slides.length === 0}
-                >
-                    Показ с текущего слайда
-                </CustomButton>
-                <CustomButton onClick={addNewSlide}>Добавить слайд</CustomButton>
+                <div style={{display: 'flex', gap: '7px'}}>
+                    <CustomButton
+                        onClick={handleFullscreenPreviewFromFirstSlide}
+                        disabled={isDisableSlideShow}
+                        style={isDisableSlideShow ? disabledStyle : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+                    >
+                        <img src={interfaceIcon} alt={'([])'} width={34} height={34}/>
+                        <p>Показ слайдов</p>
+                    </CustomButton>
+                    <CustomButton
+                        onClick={handleFullscreenPreviewFromCurrentSlide}
+                        disabled={isDisableSlideShow}
+                        style={isDisableSlideShow ? disabledStyle : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+                    >
+                        <img src={slideShowIcon} alt={'([!])'} width={44} height={44}/>
+                        <p>C текущего слайда</p>
+                    </CustomButton>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <CustomButton
+                        onClick={addNewSlide}
+                        style={{
+                            ...{alignItems: 'center', justifyContent: 'center', gap: '7px', display: 'flex', padding: '5px'},
+                            ...(isEmptyTitle ? disabledStyle : {})
+                        }}
+                    >
+                        <img src={plusIcon} alt={'+'} width={18} height={18}/>
+                        <p>Добавить слайд</p>
+                    </CustomButton>
+                </div>
+
             </div>
             <div className={styles.toolsElementsWrapper}>
                 <div className={styles.panelsButtonsWrapper}>

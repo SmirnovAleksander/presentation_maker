@@ -68,7 +68,7 @@ const PresentationEditorHeader = () => {
             <img src={PresentationIcon} alt="Presentation" width={35} height={35} onClick={navigateToPresentationHome} style={{cursor: 'pointer'}}/>
             {isEditing
                 ? (
-                    <div>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '7px'}}>
                         <input
                             style={{width: '250px', borderColor: isError ? 'red' : '', boxShadow: isError ? '0 0 5px rgba(241, 157, 149, 0.5)' : 'none'}}
                             type="text"
@@ -79,6 +79,9 @@ const PresentationEditorHeader = () => {
                             className={styles.presentationTitleInput}
                             autoFocus
                         />
+                        {isError && (
+                            <div style={{padding: '2px 4px', backgroundColor: 'rgba(241, 157, 149, 0.9)', borderRadius: '5px'}}>Title is required</div>
+                        )}
                     </div>
                 )
                 : (

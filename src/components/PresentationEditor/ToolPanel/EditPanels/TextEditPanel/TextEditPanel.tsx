@@ -3,6 +3,12 @@ import {AppDispatch, appState} from "../../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {updateElement} from "../../../../../store/actions.ts";
 import CustomButton from "../../../../UI/CustomButton/CustomButton.tsx";
+import alignLeftIcon from '../../../../../assets/align-left.png'
+import alignRightIcon from '../../../../../assets/align-right.png'
+import justifyIcon from '../../../../../assets/justify.png'
+import alignCenterIcon from '../../../../../assets/format.png'
+
+
 
 const TextEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -129,10 +135,18 @@ const TextEditPanel = () => {
                 <CustomButton onClick={toggleUppercase} style={{backgroundColor: textTransform === 'uppercase' ? 'lightblue' : 'transparent',}}>Aa</CustomButton>
             </div>
             <div className={styles.textAlignmentButtons}>
-                <CustomButton onClick={() => changeAlignment('left')} style={{backgroundColor: alignment === 'left' ? 'lightblue' : 'transparent',}}>Left</CustomButton>
-                <CustomButton onClick={() => changeAlignment('center')} style={{backgroundColor: alignment === 'center' ? 'lightblue' : 'transparent',}}>Center</CustomButton>
-                <CustomButton onClick={() => changeAlignment('right')} style={{backgroundColor: alignment === 'right' ? 'lightblue' : 'transparent',}}>Right</CustomButton>
-                <CustomButton onClick={() => changeAlignment('justify')} style={{backgroundColor: alignment === 'justify' ? 'lightblue' : 'transparent',}}>Justify</CustomButton>
+                <CustomButton onClick={() => changeAlignment('left')} style={{backgroundColor: alignment === 'left' ? 'lightblue' : 'transparent',}}>
+                    <img src={alignLeftIcon} alt='left' width={14} height={14}/>
+                </CustomButton>
+                <CustomButton onClick={() => changeAlignment('center')} style={{backgroundColor: alignment === 'center' ? 'lightblue' : 'transparent',}}>
+                    <img src={alignCenterIcon} alt='center' width={14} height={14}/>
+                </CustomButton>
+                <CustomButton onClick={() => changeAlignment('right')} style={{backgroundColor: alignment === 'right' ? 'lightblue' : 'transparent',}}>
+                    <img src={alignRightIcon} alt='right' width={14} height={14}/>
+                </CustomButton>
+                <CustomButton onClick={() => changeAlignment('justify')} style={{backgroundColor: alignment === 'justify' ? 'lightblue' : 'transparent',}}>
+                    <img src={justifyIcon} alt='justify' width={14} height={14}/>
+                </CustomButton>
             </div>
         </div>
     );
