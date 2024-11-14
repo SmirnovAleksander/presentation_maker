@@ -21,10 +21,3 @@ h2 {
     font-size: 24px;
     color: #333;
 }
-
-.wrapper {
-    display: flex;
-    padding: 20px;
-    margin-top: 10%;
-    gap: 20px;
-}

@@ -92,9 +92,12 @@ const ToolPanel = () => {
             <div className={styles.panelMain}>
                 <div className={styles.undoableButtonsWrapper}>
                     <CustomButton
-                        onClick={() => navigate('/')}
-                        disabled={selectedPresentation!.title === ''}
-                        style={{alignItems: 'center', justifyContent: 'center', gap: '7px', display: 'flex', padding: '5px'}}
+                        onClick={() => !isEmptyTitle && navigate('/')}
+                        disabled={isEmptyTitle}
+                        style={{
+                            ...{alignItems: 'center', justifyContent: 'center', gap: '7px', display: 'flex', padding: '5px'},
+                            ...(isEmptyTitle ? disabledStyle : {})
+                        }}
                     >
                         <img src={arrowBackIcon} alt={'←'} width={14} height={14}/>
                         <p>На главную</p>
@@ -138,6 +141,7 @@ const ToolPanel = () => {
                             ...{alignItems: 'center', justifyContent: 'center', gap: '7px', display: 'flex', padding: '5px'},
                             ...(isEmptyTitle ? disabledStyle : {})
                         }}
+                        disabled={isEmptyTitle}
                     >
                         <img src={plusIcon} alt={'+'} width={18} height={18}/>
                         <p>Добавить слайд</p>

@@ -24,7 +24,6 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
 
     const [localPosition, setLocalPosition] = useState(position);
     const [localSize, setLocalSize] = useState(size);
-    const [myTimer, setMyTimer] = useState(0);
 
     useEffect(() => {
         if (isDragging || isResizing) {
@@ -40,22 +39,14 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
 
     useEffect(() => {
         if (!isSelected) {
-            return;
+            dispatch(updateElement(element.id, { position: localPosition, size: localSize }));
         }
-        if (myTimer) {
-            clearTimeout(myTimer);
-        }
-        const newTime = window.setTimeout(() => {
-            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
-        }, 5000);
-        setMyTimer(newTime);
+    }, [isSelected]);
 
-        return () => {
-            if (myTimer) {
-                clearTimeout(myTimer); // Очищаем таймер при размонтировании
-            }
-        };
-    }, [localPosition, localSize, isSelected]);
+    useEffect(() => {
+        setLocalPosition(element.position);
+        setLocalSize(element.size);
+    }, [element]);
 
     if (!element) return null;
     if (!['rectangle', 'circle', 'line'].includes(element.type)) return null;

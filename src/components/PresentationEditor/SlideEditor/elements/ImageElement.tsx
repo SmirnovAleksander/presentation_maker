@@ -24,26 +24,18 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
 
     const [localPosition, setLocalPosition] = useState(position);
     const [localSize, setLocalSize] = useState(size);
-    const [myTimer, setMyTimer] = useState(0);
 
     useEffect(() => {
         if (!isSelected) {
-            return;
+            dispatch(updateElement(element.id, { position: localPosition, size: localSize }));
         }
-        if (myTimer) {
-            clearTimeout(myTimer);
-        }
-        const newTime = window.setTimeout(() => {
-            dispatch(updateElement(element.id, {position: localPosition, size: localSize }));
-        }, 5000);
-        setMyTimer(newTime);
+    }, [isSelected]);
 
-        return () => {
-            if (myTimer) {
-                clearTimeout(myTimer); // Очищаем таймер при размонтировании
-            }
-        };
-    }, [localPosition, localSize, isSelected]);
+    useEffect(() => {
+        setLocalPosition(element.position);
+        setLocalSize(element.size);
+    }, [element]);
+
 
     useEffect(() => {
         if (isDragging || isResizing) {

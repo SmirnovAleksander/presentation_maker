@@ -1,61 +1,52 @@
 .presentationContainer {
-    border: 2px solid #ccc;
-    border-radius: 10px;
     padding: 10px;
-    min-height: 200px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    box-sizing: border-box;
-    overflow-x: auto;
+    flex: 1;
+    background-color: #ffffff;
 }
 .presentationContainer::-webkit-scrollbar {
     display: none;
 }
 .presentationList {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    /*justify-content: center;*/
     gap: 10px;
-    /*overflow-x: auto;*/
-    scroll-snap-type: x mandatory;
-    align-items: center;
-    scrollbar-width: none;
-
+    justify-content: flex-start;
 }
-.presentationCard {
-    flex: 0 0 240px;
+.presentationListWrapper {
+    width: 67%;
+}
+
+.presentationListTitle {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 240px;
-    height: calc(240px * 9 / 16);
-    background-color: #ffffff;
-    border-radius: 8px;
-    cursor: pointer;
-    border: #EDEDED solid 1px;
-    transition: border 0.3s, background-color 0.3s, transform 0.3s;
-}
-.presentationCard:hover {
-    background: #bcbcbc;
-}
-.cardTitle {
-    padding-top: 5px;
-    font-size: 16px;
-    color: #333;
-    margin: 0;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 240px;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-size: 20px;
+    position: absolute;
+    top: 3px;
+    left: 0;
 }
 .errorMasage {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     text-align: center;
     align-items: center;
+    padding-top: 5vw;
     font-size: 20px;
     width: 100%;
+}
+
+.presentationsSearch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-bottom: 10px;
+    position: relative;
 }
