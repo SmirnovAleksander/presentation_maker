@@ -55,7 +55,7 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
     };
 
     return (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} onClick={onClose}>
             <div className={styles.slidesContent}>
                 <div className={styles.slidesContainer}>
                     {slides.map((slide) => (
@@ -79,9 +79,6 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
                     ))}
                 </div>
                 <div className={styles.slidesButtons}>
-                    <CustomButton onClick={onClose}>
-                        Закрыть
-                    </CustomButton>
                     <CustomButton onClick={handleExportToPDF}>
                         Экспорт в PDF
                     </CustomButton>
