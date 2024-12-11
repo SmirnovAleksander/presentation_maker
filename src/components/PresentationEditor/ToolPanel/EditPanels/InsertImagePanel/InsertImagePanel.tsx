@@ -64,7 +64,7 @@ const InsertImagePanel = () => {
     };
     return (
         <div className={styles.insertPanelWrapper}>
-            <p className={styles.insertPanelTitle}>Редактировать фигуру</p>
+            <p className={styles.insertPanelTitle}>Импорт фото</p>
             <div className={styles.imageWrapper}>
                 <div className={styles.itemEditWrapper}>
                     <p>Url: </p>

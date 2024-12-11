@@ -154,7 +154,7 @@ const ToolPanel = () => {
                     <CustomButton onClick={() => setActivePanel('home')}
                                   style={{backgroundColor: activePanel === 'home' ? 'lightblue' : 'transparent'}}>Главная</CustomButton>
                     <CustomButton onClick={() => setActivePanel('insert')}
-                                  style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}>Вставка</CustomButton>
+                                  style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}>Импорт/Экспорт</CustomButton>
                     <CustomButton onClick={() => setActivePanel('slideDesign')}
                                   style={{backgroundColor: activePanel === 'slideDesign' ? 'lightblue' : 'transparent'}}>Дизайн слайдов</CustomButton>
                     <CustomButton onClick={() => setActivePanel('format')}

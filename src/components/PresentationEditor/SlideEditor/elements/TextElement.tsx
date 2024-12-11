@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {selectElement, updateElement} from "../../../../store/actions.ts";
+import {deleteElement, selectElement, updateElement} from "../../../../store/actions.ts";
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {TextElement} from "../../../../store/types.ts";
 
@@ -48,15 +48,24 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         };
     }, [isDragging, isResizing]);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (isSelected && e.key === 'Delete') {
+                dispatch(deleteElement(element.id));
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isSelected, element.id]);
+
     ////////////////////для textarea
     const [isEditing, setIsEditing] = useState(false);
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [editableText, setEditableText] = useState(element?.type === 'text' ? element.content : '');
-    // useEffect(() => {
-    //     if (element && element.type === 'text' && element.content !== editableText) {
-    //         setEditableText(element.content);
-    //     }
-    // }, [element]);
     const handleDoubleClick = () => {
         setIsEditing(true);
     };

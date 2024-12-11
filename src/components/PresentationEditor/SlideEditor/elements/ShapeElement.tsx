@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {selectElement, updateElement} from "../../../../store/actions.ts";
+import {deleteElement, selectElement, updateElement} from "../../../../store/actions.ts";
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {ShapeElement} from "../../../../store/types.ts";
 
@@ -36,6 +36,20 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
             window.removeEventListener('mouseup', handleMouseUp);
         };
     }, [isDragging, isResizing]);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (isSelected && e.key === 'Delete') {
+                dispatch(deleteElement(element.id));
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isSelected, element.id]);
 
     useEffect(() => {
         if (!isSelected) {

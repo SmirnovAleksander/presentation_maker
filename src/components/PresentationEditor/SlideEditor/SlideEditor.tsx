@@ -4,8 +4,11 @@ import {AppDispatch, appState} from "../../../store/store.ts";
 import ShapeElement from "./elements/ShapeElement.tsx";
 import ImageElement from "./elements/ImageElement.tsx";
 import TextElement from "./elements/TextElement.tsx";
-import {ImageElement as ImageElementProps, TextElement as TextElementProps} from '../../../store/types.ts'
+import {ImageElement as ImageElementProps} from '../../../store/types.ts'
 import {addElement, deselectElement} from "../../../store/actions.ts";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import {useRef} from "react";
 
 const SlideEditor = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -51,32 +54,6 @@ const SlideEditor = () => {
             reader.readAsDataURL(file);
         }
     };
-    const handlePaste = (event: React.ClipboardEvent) => {
-        const text = event.clipboardData.getData('text/plain');
-        if (text) {
-            const newElement: TextElementProps = {
-                id: Date.now(), // или другой способ генерации уникального ID
-                type: 'text',
-                content: text,
-                fontSize: 16,
-                fontFamily: 'Arial',
-                color: '#d21',
-                position: { x: 100, y: 100 }, // можно установить по умолчанию или вычислять
-                size: { width: 200, height: 50 }, // ширина и высота текста по умолчанию
-                rotation: 0,
-                backgroundColor: 'transparent',
-                bold: false,
-                italic: false,
-                underline: false,
-                strikethrough: false,
-                textTransform: 'none',
-                alignment: 'left',
-            };
-
-            dispatch(addElement(newElement)); // Диспатч для добавления нового элемента
-        }
-    };
-
 
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -91,47 +68,70 @@ const SlideEditor = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
+    const slideRef = useRef<HTMLDivElement>(null);
+    const handleExportToPDF = async () => {
+        if (slideRef.current) {
+            const canvas = await html2canvas(slideRef.current,  {
+                scale: 2,
+                useCORS: true,
+            });
+            const imgData = canvas.toDataURL("image/png");
+
+            const doc = new jsPDF({
+                orientation: 'landscape',
+                unit: 'mm',
+                format: 'a4',
+            });
+            doc.addImage(imgData, "PNG", 10, 10, 277, 155);
+            doc.save("slide.pdf");
+        }
+    };
+    console.log(selectedSlide?.backgroundImage);
+
     return (
         <div className={styles.slideEditorWrapper}>
-            <div
-                className={styles.slideEditor}
-                onMouseDown={handleEditorClick}
-                style={slideStyle}
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                onPaste={handlePaste}
-                tabIndex={0}
-            >
-                {selectedSlide && selectedSlide.elements.map(el => {
-                    switch (el.type) {
-                        case 'text':
-                            return (
-                                <TextElement
-                                    key={el.id}
-                                    element={el}
-                                />
-                            );
-                        case 'image':
-                            return (
-                                <ImageElement
-                                    key={el.id}
-                                    element={el}
-                                />
-                            );
-                        case 'rectangle':
-                        case 'circle':
-                        case 'line':
-                            return (
-                                <ShapeElement
-                                    key={el.id}
-                                    element={el}
-                                />
-                            );
-                        default:
-                            return null;
-                    }
-                })}
+            <div id={`slide-${selectedSlideId}`}>
+                <div
+                    className={styles.slideEditor}
+                    onMouseDown={handleEditorClick}
+                    style={slideStyle}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    tabIndex={0}
+                    ref={slideRef}
+                >
+                    {selectedSlide && selectedSlide.elements.map(el => {
+                        switch (el.type) {
+                            case 'text':
+                                return (
+                                    <TextElement
+                                        key={el.id}
+                                        element={el}
+                                    />
+                                );
+                            case 'image':
+                                return (
+                                    <ImageElement
+                                        key={el.id}
+                                        element={el}
+                                    />
+                                );
+                            case 'rectangle':
+                            case 'circle':
+                            case 'line':
+                                return (
+                                    <ShapeElement
+                                        key={el.id}
+                                        element={el}
+                                    />
+                                );
+                            default:
+                                return null;
+                        }
+                    })}
+                </div>
             </div>
+            <button onClick={handleExportToPDF}>Экспорт в PDF</button>
         </div>
     );
 };
