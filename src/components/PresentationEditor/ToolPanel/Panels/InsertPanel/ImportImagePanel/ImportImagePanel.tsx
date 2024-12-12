@@ -33,11 +33,12 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
     const [query, setQuery] = useState<string>('');
     const [images, setImages] = useState<UnsplashResult[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
 
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
     const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
 
-    const handleSearch = async () => {
+    const fetchImages = async (pageNumber: number) => {
         if (!query) return;
 
         setLoading(true);
@@ -47,6 +48,7 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
                     query: query,
                     client_id: UNSPLASH_API_KEY,
                     per_page: 20,
+                    page: pageNumber
                 }
             })
             const imageUrls = (response.data.results as UnsplashResult[]);
@@ -57,6 +59,32 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
             setLoading(false);
         }
     }
+
+    const handleSearch = () => {
+        setPage(1);
+        fetchImages(1);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    };
+
+    const handleNextPage = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        setLoading(false);
+        fetchImages(nextPage);
+    }
+
+    const handlePrevPage = () => {
+        if (page > 1) {
+            const prevPage = page - 1;
+            setPage(prevPage);
+            fetchImages(prevPage);
+        }
+    };
 
     const handleSelectImage = (index: number) => {
         setSelectedImageIndex(index);
@@ -114,7 +142,7 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
 
 
     return (
-        <div className={styles.imageSearchOverlay} onClick={onClose}>
+        <div className={styles.imageSearchOverlay}>
             <div className={styles.imageSearchContent}>
                 <div className={styles.imageSearchContainer}>
                     <input
@@ -123,6 +151,7 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Enter an image"
                         className={styles.searchInput}
+                        onKeyDown={handleKeyDown}
                     />
                     <CustomButton onClick={handleSearch} disabled={loading}>
                         {loading ? "Идет поиск..." : "Искать"}
@@ -139,7 +168,22 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
                         />
                     ))}
                 </div>
+                {images.length > 0 && (
+                    <div className={styles.paginationButtons}>
+                        <CustomButton onClick={handlePrevPage} disabled={page <= 1}>
+                            ⇦ Назад
+                        </CustomButton>
+                        <CustomButton onClick={handleNextPage}>
+                            Вперед ⇨
+                        </CustomButton>
+                    </div>
+                )}
                 <CustomButton onClick={onClose} style={{position: 'absolute'}}>Закрыть</CustomButton>
+                {images.length == 0 && (
+                    <div style={{paddingTop: '20px'}}>
+                        <h4>Введите ключевое слово для поиска изображений</h4>
+                    </div>
+                )}
             </div>
             {selectedImageIndex !== null && (
                 <div className={styles.imagePreviewOverlay} onClick={handleCloseImage}>

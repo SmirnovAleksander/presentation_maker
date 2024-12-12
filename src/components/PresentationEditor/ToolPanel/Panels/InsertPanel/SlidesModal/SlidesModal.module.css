@@ -12,6 +12,18 @@
     overflow: hidden;
 }
 
+.slideWithNumberWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.slideNumber {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
 .slidesContainer {
     display: flex;
     flex-direction: column;
@@ -32,7 +44,7 @@
 
 .slidesContent {
     display: flex;
-    width: 54%;
+    width: 56%;
     background-color: #ffffff;
     justify-content: space-between;
     padding: 20px;

@@ -55,30 +55,35 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
     };
 
     return (
-        <div className={styles.modalOverlay} onClick={onClose}>
+        <div className={styles.modalOverlay}>
             <div className={styles.slidesContent}>
                 <div className={styles.slidesContainer}>
-                    {slides.map((slide) => (
-                        <div
-                            id={`slide-${slide.id}`}
-                            key={slide.id}
-                            className={styles.slideWrapper}
-                            style={{
-                                backgroundColor: slide?.backgroundImage
-                                    ? 'transparent'
-                                    : slide?.backgroundColor || '#ffffff',
-                                backgroundImage: slide?.backgroundImage
-                                    ? `url(${slide.backgroundImage})`
-                                    : 'none',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                            }}
-                        >
-                            <RenderSlideItemElements slide={slide} multiplier={1.43}/>
+                    {slides.map((slide, index) => (
+                        <div key={slide.id} className={styles.slideWithNumberWrapper}>
+                            <div className={styles.slideNumber}>Slide {index + 1}</div>
+                            <div
+                                id={`slide-${slide.id}`}
+                                className={styles.slideWrapper}
+                                style={{
+                                    backgroundColor: slide?.backgroundImage
+                                        ? 'transparent'
+                                        : slide?.backgroundColor || '#ffffff',
+                                    backgroundImage: slide?.backgroundImage
+                                        ? `url(${slide.backgroundImage})`
+                                        : 'none',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                }}
+                            >
+                                <RenderSlideItemElements slide={slide} multiplier={1.43}/>
+                            </div>
                         </div>
                     ))}
                 </div>
                 <div className={styles.slidesButtons}>
+                    <CustomButton onClick={onClose}>
+                        Закрыть
+                    </CustomButton>
                     <CustomButton onClick={handleExportToPDF}>
                         Экспорт в PDF
                     </CustomButton>
