@@ -23,6 +23,8 @@ export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
 
+export const MOVE_SLIDE = 'MOVE_SLIDE';
+
 ///////////////////////
 export interface UndoAction {
     type: typeof UNDO;
@@ -109,7 +111,17 @@ export interface UpdateElementAction {
         updates: Partial<TextElement | ImageElement | ShapeElement>;
     };
 }
+
+export interface MoveSlideAction {
+    type: typeof MOVE_SLIDE;
+    payload: {
+        slideId: number;
+        newIndex: number;
+    };
+}
+
 export type ElementActions =
+    | MoveSlideAction
     | AddElementAction
     | DeleteElementAction
     | SelectElementAction
@@ -213,4 +225,9 @@ export const updateElement = (id: number, updates: Partial<TextElement | ImageEl
 
 export const deselectElement = (): DeselectElementAction => ({
     type: DESELECT_ELEMENT,
+});
+
+export const moveSlide = (slideId: number, newIndex: number): MoveSlideAction => ({
+    type: MOVE_SLIDE,
+    payload: { slideId, newIndex }
 });

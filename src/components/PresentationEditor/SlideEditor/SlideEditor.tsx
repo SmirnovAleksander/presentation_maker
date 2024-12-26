@@ -6,8 +6,6 @@ import ImageElement from "./elements/ImageElement.tsx";
 import TextElement from "./elements/TextElement.tsx";
 import {ImageElement as ImageElementProps} from '../../../store/types.ts'
 import {addElement, deselectElement} from "../../../store/actions.ts";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import {useRef} from "react";
 
 const SlideEditor = () => {
@@ -69,23 +67,6 @@ const SlideEditor = () => {
         backgroundPosition: 'center',
     };
     const slideRef = useRef<HTMLDivElement>(null);
-    const handleExportToPDF = async () => {
-        if (slideRef.current) {
-            const canvas = await html2canvas(slideRef.current,  {
-                scale: 2,
-                useCORS: true,
-            });
-            const imgData = canvas.toDataURL("image/png");
-
-            const doc = new jsPDF({
-                orientation: 'landscape',
-                unit: 'mm',
-                format: 'a4',
-            });
-            doc.addImage(imgData, "PNG", 10, 10, 277, 155);
-            doc.save("slide.pdf");
-        }
-    };
     console.log(selectedSlide?.backgroundImage);
 
     return (
@@ -131,7 +112,6 @@ const SlideEditor = () => {
                     })}
                 </div>
             </div>
-            <button onClick={handleExportToPDF}>Экспорт в PDF</button>
         </div>
     );
 };

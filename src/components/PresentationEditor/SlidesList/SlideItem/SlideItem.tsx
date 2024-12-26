@@ -1,6 +1,6 @@
 import styles from './SlideItem.module.css'
 import {Slide} from "../../../../store/types.ts";
-import React from "react";
+import React, {DragEvent} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, appState} from "../../../../store/store.ts";
 import {deleteSlide, moveSlideDown, moveSlideUp, selectSlide} from "../../../../store/actions.ts";
@@ -53,6 +53,18 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
+
+    const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        e.dataTransfer.setData('slideId', slide.id.toString());
+        e.dataTransfer.effectAllowed = 'move';
+        e.currentTarget.classList.add('dragging');
+    };
+
+    const handleDragEnd = (e: DragEvent<HTMLDivElement>) => {
+        e.currentTarget.classList.remove('dragging');
+    };
+
     return (
         <div
             className={styles.slideItemWrapper}
@@ -76,6 +88,9 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
             <div
                 className={`${styles.slideItem} ${isSelected && styles.slideItemSelected}`}
                 style={slideStyle}
+                draggable
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
             >
                 <RenderSlideItemElements key={slide.id} slide={slide} multiplier={8} />
             </div>

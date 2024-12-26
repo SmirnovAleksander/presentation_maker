@@ -296,6 +296,24 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                 selectedElementId: state.selectedElementId === action.payload ? null : state.selectedElementId,
             };
         }
+        case 'MOVE_SLIDE': {
+            const presentation = state.presentations.find(p => p.id === state.selectedPresentationId);
+            if (!presentation) return state;
+
+            const slides = [...presentation.slides];
+            const oldIndex = slides.findIndex(slide => slide.id === action.payload.slideId);
+            const [movedSlide] = slides.splice(oldIndex, 1);
+            slides.splice(action.payload.newIndex, 0, movedSlide);
+
+            return {
+                ...state,
+                presentations: state.presentations.map(p =>
+                    p.id === state.selectedPresentationId
+                        ? { ...p, slides }
+                        : p
+                )
+            };
+        }
         default:
             return state;
     }
