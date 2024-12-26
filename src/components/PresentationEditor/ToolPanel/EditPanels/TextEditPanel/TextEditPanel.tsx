@@ -8,8 +8,6 @@ import alignRightIcon from '../../../../../assets/align-right.png'
 import justifyIcon from '../../../../../assets/justify.png'
 import alignCenterIcon from '../../../../../assets/format.png'
 
-
-
 const TextEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();
 
@@ -87,7 +85,7 @@ const TextEditPanel = () => {
 
     const standardFontSizes = [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56, 64];
     return (
-        <div className={styles.textEditWrapper}>
+        <div className={`${styles.textEditWrapper} ${isTextElement ? styles.selected : ''}`}>
             <p>Text</p>
             <div className={styles.textEditFontSizeFamily}>
                 <select

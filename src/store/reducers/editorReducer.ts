@@ -1,5 +1,5 @@
-import {ImageElement, Presentation, ShapeElement, TextElement} from "./types.ts";
-import {ElementActions} from "./actions.ts";
+import {ImageElement, Presentation, ShapeElement, TextElement} from "../types.ts";
+import {ElementActions} from "../actions.ts";
 
 export interface EditorState {
     presentations: Presentation[];
@@ -7,59 +7,13 @@ export interface EditorState {
     selectedSlideId: number | null;
     selectedElementId: number | null;
 }
-export interface UndoableState {
-    past: EditorState[];
-    present: EditorState;
-    future: EditorState[];
-}
 export const initialPresentState: EditorState = {
     presentations: [],
     selectedPresentationId: null,
     selectedSlideId: null,
     selectedElementId: null,
 };
-export const initialUndoableState: UndoableState = {
-    past: [],
-    present: initialPresentState,
-    future: [],
-}
-export const undoableReducer = (state = initialUndoableState, action: ElementActions): UndoableState => {
-    const { past, present, future } = state;
-    switch (action.type) {
-        case 'UNDO': {
-            if (past.length === 0) return state;
-            const previous = past[past.length - 1];
-            const newPast = past.slice(0, past.length - 1);
 
-            return {
-                past: newPast,
-                present: previous,
-                future: [present, ...future],
-            };
-        }
-        case 'REDO': {
-            if (future.length === 0) return state;
-            const next = future[0]
-            const newFuture = future.slice(1)
-            return {
-                past: [...past, present],
-                present: next,
-                future: newFuture
-            }
-        }
-        default: {
-            const newPresent = editorReducer(present, action)
-            if (newPresent === present) {
-                return state;
-            }
-            return {
-                past: [...past, present],
-                present: newPresent,
-                future: [],
-            };
-        }
-    }
-}
 const editorReducer = (state = initialPresentState, action: ElementActions): EditorState  => {
     switch (action.type) {
         case 'MOVE_SLIDE_UP': {

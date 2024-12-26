@@ -1,5 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {undoableReducer, initialUndoableState, UndoableState, EditorState} from "./editorReducer.ts";
+import {EditorState} from "./reducers/editorReducer.ts";
+import {initialUndoableState, undoableReducer, UndoableState} from "./reducers/undoableReducer.ts";
 
 const saveState = (state: EditorState) => {
     try {
