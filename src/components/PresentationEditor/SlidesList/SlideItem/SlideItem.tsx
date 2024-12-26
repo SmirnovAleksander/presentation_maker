@@ -9,11 +9,13 @@ import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
 import CustomButton from "../../../UI/CustomButton/CustomButton.tsx";
 
 interface SlideItemProps {
-    slide: Slide,
+    slide: Slide;
     slideIndex: number;
+    onDragStart: (slideId: number) => void;
+    onDragEnd: () => void;
 }
 
-const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
+const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex, onDragStart, onDragEnd}) => {
     const dispatch: AppDispatch = useDispatch();
     const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
     const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
@@ -59,10 +61,12 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex}) => {
         e.dataTransfer.setData('slideId', slide.id.toString());
         e.dataTransfer.effectAllowed = 'move';
         e.currentTarget.classList.add('dragging');
+        onDragStart(slide.id);
     };
 
     const handleDragEnd = (e: DragEvent<HTMLDivElement>) => {
         e.currentTarget.classList.remove('dragging');
+        onDragEnd();
     };
 
     return (
