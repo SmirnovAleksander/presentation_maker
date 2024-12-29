@@ -1,9 +1,7 @@
 import styles from './ThemeEditPanel.module.css'
-import {useDispatch, useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import plusIcon from "@/assets/Plus.svg";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {updateAllSlidesBackground} from "@/app/store/actions.ts";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const ThemeEditPanel = () => {
     const initialThemes = [
@@ -28,11 +26,11 @@ const ThemeEditPanel = () => {
         { id: 19, image: 'https://img.freepik.com/free-photo/eucalyptus-leaves-white-surface-painted-watercolor_1268-27038.jpg?t=st=1729129181~exp=1729132781~hmac=bbdb4a944bbb8c1841bffd5fc42ff723cd11e2ca6f92b930ebc7bf6b9ad0812e&w=1380' },
         { id: 20, image: 'https://img.freepik.com/free-photo/3d-rendering-abstract-black-white-geometric-background_23-2150853539.jpg?t=st=1729129217~exp=1729132817~hmac=d390e221b8017503720ce9c84dc7f685353382725210ddc6f54f056e07fbac97&w=1380' },
     ];
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedPresentation = useSelector((state: appState) =>
-        state.present.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {
+        selectedPresentation,
+        selectedPresentationId,
+        updateAllSlidesBackgroundAction
+    } = useStoreSelector();
     const [themes, setThemes] = useState(initialThemes);
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -46,9 +44,9 @@ const ThemeEditPanel = () => {
         if (!selectedPresentationId) return;
         const allSlidesHaveSelectedTheme = selectedPresentation?.slides.every(slide => slide.backgroundImage === image);
         if (allSlidesHaveSelectedTheme) {
-            dispatch(updateAllSlidesBackground(''));
+            updateAllSlidesBackgroundAction('');
         } else {
-            dispatch(updateAllSlidesBackground(image));
+            updateAllSlidesBackgroundAction(image);
         }
     };
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

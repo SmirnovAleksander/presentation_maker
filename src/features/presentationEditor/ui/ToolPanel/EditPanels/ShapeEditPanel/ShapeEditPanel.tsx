@@ -1,41 +1,33 @@
-import {useDispatch, useSelector} from "react-redux";
 import styles from './ShapeEditPanel.module.css'
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {updateElement} from "@/app/store/actions.ts";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const ShapeEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+    const {
+        selectedElement,
+        updateSelectedElement,
+    } = useStoreSelector();
 
     const isShapeElement = selectedElement && ['rectangle', 'circle', 'line'].includes(selectedElement.type);
 
     const updateLineWidth = (value: number) => {
         if (isShapeElement)
-        dispatch(updateElement(selectedElement.id, { lineWidth: value }));
+        updateSelectedElement( { lineWidth: value });
     };
     const updateBorderRadius = (value: number) => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { borderRadius: value }));
+            updateSelectedElement( { borderRadius: value });
     };
     const updateOpacity = (value: number) => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { opacity: value }));
+            updateSelectedElement( { opacity: value });
     };
     const updateBorderWidth = (value: number) => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { borderWidth: value }));
+            updateSelectedElement( { borderWidth: value });
     };
     const updateBorderStyle = (value: 'solid' | 'dashed' | 'dotted') => {
         if (isShapeElement)
-            dispatch(updateElement(selectedElement.id, { borderStyle: value }));
+            updateSelectedElement( { borderStyle: value });
     };
     // const updateFillType = (value: 'solid' | 'gradient') => {
     //     if (isShapeElement)

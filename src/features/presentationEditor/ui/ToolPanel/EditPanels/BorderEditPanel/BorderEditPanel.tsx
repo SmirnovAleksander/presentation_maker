@@ -1,33 +1,23 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import styles from './BorderEditPanel.module.css'
-import {AppDispatch, appState } from "@/app/store/store.ts";
-import { updateElement } from "@/app/store/actions.ts";
-import {ColorPicker} from "@/shared/ui";
+import { useState } from "react";
+import styles from './BorderEditPanel.module.css';
+import { ColorPicker } from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const BorderEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+    const { selectedElement, updateSelectedElement } = useStoreSelector();
+    const [localColor, setLocalColor] = useState('#000000');
 
     const isShapeImageElement = selectedElement && (
-        selectedElement.type === 'rectangle'
-        || selectedElement.type === 'line'
-        || selectedElement.type === 'circle'
-        || selectedElement.type === 'image'
+        selectedElement.type === 'rectangle' ||
+        selectedElement.type === 'line' ||
+        selectedElement.type === 'circle' ||
+        selectedElement.type === 'image'
     );
+
     const updateBorderColor = (color: string) => {
-        if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { borderColor: color }));
-        }
+        updateSelectedElement({ borderColor: color });
     };
+
     const popularColors = [
         '#FFCDD2', '#F8BBD0', '#E1BEE7', '#D1C4E9', '#C5CAE9',
         '#BBDEFB', '#B3E5FC', '#B2EBF2', '#B2DFDB', '#C8E6C9',
@@ -45,7 +35,6 @@ const BorderEditPanel = () => {
         '#E74C3C', '#3498DB', '#2ECC71', '#1ABC9C', '#F39C12',
         '#D35400', '#C0392B', '#9B59B6', '#2980B9', '#27AE60',
     ];
-    const [localColor, setLocalColor] = useState('#000000');
 
     return (
         <>
@@ -63,10 +52,10 @@ const BorderEditPanel = () => {
                         <div
                             key={index}
                             className={`${styles.colorBlock} ${localColor === color ? styles.colorBlockSelected : ''}`}
-                            style={{backgroundColor: color}}
+                            style={{ backgroundColor: color }}
                             onClick={() => {
-                                updateBorderColor(color)
-                                setLocalColor(color)
+                                updateBorderColor(color);
+                                setLocalColor(color);
                             }}
                         >
                             <div className={styles.colorBlockDiv}></div>

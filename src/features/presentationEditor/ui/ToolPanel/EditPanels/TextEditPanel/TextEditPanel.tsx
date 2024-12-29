@@ -1,67 +1,59 @@
 import styles from './TextEditPanel.module.css'
-import {useDispatch, useSelector} from "react-redux";
 import alignLeftIcon from '@/assets/align-left.png'
 import alignRightIcon from '@/assets/align-right.png'
 import justifyIcon from '@/assets/justify.png'
 import alignCenterIcon from '@/assets/format.png'
 import {CustomButton} from "@/shared/ui";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {updateElement} from "@/app/store/actions.ts";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const TextEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+    const {
+        selectedElement,
+        updateSelectedElement,
+    } = useStoreSelector();
 
     const isTextElement = selectedElement?.type === 'text'
 
     const updateFontSize = (fontSize: number) => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { fontSize }));
+        updateSelectedElement( { fontSize });
     };
     const updateFontFamily = (fontFamily: string) => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { fontFamily }));
+        updateSelectedElement( { fontFamily });
     };
     ////////////////////////
 
     const toggleBold = () => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { bold: !selectedElement.bold }));
+        updateSelectedElement( { bold: !selectedElement.bold });
     };
 
     const toggleItalic = () => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { italic: !selectedElement.italic }));
+        updateSelectedElement( { italic: !selectedElement.italic });
     };
 
     const toggleUnderline = () => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { underline: !selectedElement.underline }));
+        updateSelectedElement( { underline: !selectedElement.underline });
     };
 
     const toggleStrikethrough = () => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { strikethrough: !selectedElement.strikethrough }));
+        updateSelectedElement( { strikethrough: !selectedElement.strikethrough });
     };
 
     const toggleUppercase = () => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, {
+        updateSelectedElement( {
             textTransform: selectedElement.textTransform === 'uppercase' ? 'none' : 'uppercase'
-        }));
+        });
 
     };
     const changeAlignment = (newAlignment: 'left' | 'center' | 'right' | 'justify') => {
         if (isTextElement)
-        dispatch(updateElement(selectedElement.id, { alignment: newAlignment }));
+        updateSelectedElement( { alignment: newAlignment });
     };
     ///////////////////////
     const availableFonts = [

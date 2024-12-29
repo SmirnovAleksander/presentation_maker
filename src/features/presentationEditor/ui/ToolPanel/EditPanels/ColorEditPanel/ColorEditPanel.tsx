@@ -1,21 +1,12 @@
-import styles from './ColorEditPanel.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {AppDispatch, appState} from '@/app/store/store.ts';
-import { updateElement } from '@/app/store/actions.ts';
-import {ColorPicker} from "@/shared/ui";
+import { useState } from "react";
+import styles from './ColorEditPanel.module.css';
+import { ColorPicker } from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+
 
 const ColorEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+    const { selectedElement, updateSelectedElement } = useStoreSelector();
+    const [localColor, setLocalColor] = useState('#000000');
 
     const isShapeElement = selectedElement && (
         selectedElement.type === 'rectangle'
@@ -25,13 +16,14 @@ const ColorEditPanel = () => {
     const isTextElement = selectedElement && selectedElement.type === 'text';
 
     const updateColor = (color: string) => {
-        if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { color }));
+        if (isShapeElement) {
+            updateSelectedElement({ color });
         }
     };
+
     const updateBackgroundColor = (backgroundColor: string) => {
-        if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { backgroundColor: backgroundColor }));
+        if (isTextElement) {
+            updateSelectedElement({ backgroundColor });
         }
     };
 
@@ -52,7 +44,6 @@ const ColorEditPanel = () => {
         '#E74C3C', '#3498DB', '#2ECC71', '#1ABC9C', '#F39C12',
         '#D35400', '#C0392B', '#9B59B6', '#2980B9', '#27AE60',
     ];
-    const [localColor, setLocalColor] = useState('#000000');
 
     return (
         <>
@@ -61,7 +52,11 @@ const ColorEditPanel = () => {
                 <ColorPicker
                     initialColor={localColor}
                     onColorChange={(color) => {
-                        updateBackgroundColor(color);
+                        if (isTextElement) {
+                            updateBackgroundColor(color);
+                        } else {
+                            updateColor(color);
+                        }
                         setLocalColor(color);
                     }}
                 />

@@ -1,24 +1,21 @@
-import {useDispatch, useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import styles from "./InsertImagePanel.module.css";
 import {CustomButton} from "@/shared/ui";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {addElement, selectElement, updateElement} from "@/app/store/actions.ts";
 import {ImageElement} from "@/shared/types/types.ts";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const InsertImagePanel = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {
+        selectedElement,
+        updateSelectedElement,
+        selectedPresentationId,
+        selectedSlideId,
+        addNewElement,
+        selectElementAction
+    } = useStoreSelector();
 
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
     const updateContent = (text: string) => {
-        dispatch(updateElement(selectedElement!.id, { content: text }));
+        updateSelectedElement({ content: text });
     };
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const isImageElement = selectedElement && selectedElement.type === 'image';
@@ -57,9 +54,9 @@ const InsertImagePanel = () => {
             opacity: 1,
         };
 
-        if (selectedSlideId && selectedPresentation) {
-            dispatch(addElement(newImageElement));
-            dispatch(selectElement(newImageElement.id))
+        if (selectedSlideId && selectedPresentationId) {
+            addNewElement(newImageElement);
+            selectElementAction(newImageElement.id)
         }
     };
     return (

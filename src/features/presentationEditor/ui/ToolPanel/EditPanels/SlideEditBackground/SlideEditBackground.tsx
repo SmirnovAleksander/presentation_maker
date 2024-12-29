@@ -1,23 +1,17 @@
-import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import styles from "./SlideEditBackground.module.css";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {updateSlide} from "@/app/store/actions.ts";
 import {ColorPicker} from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const SlideEditBackground = () => {
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
+    const {
+        selectedSlide,
+        updateSelectedSlide
+    } = useStoreSelector();
 
     const updateBackgroundColor = (backgroundColor: string) => {
         if (selectedSlide) {
-            dispatch(updateSlide(selectedSlide.id, backgroundColor));
+            updateSelectedSlide(backgroundColor);
         }
     };
 

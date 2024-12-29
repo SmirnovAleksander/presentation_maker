@@ -1,27 +1,19 @@
-import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import styles from './TextColorEditPanel.module.css'
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {updateElement} from "@/app/store/actions.ts";
 import {ColorPicker} from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const TextColorEditPanel = () => {
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
+    const {
+        selectedElement,
+        updateSelectedElement,
+    } = useStoreSelector();
 
     const isTextElement = selectedElement && (selectedElement.type === 'text');
 
     const updateColor = (color: string) => {
         if (selectedElement) {
-            dispatch(updateElement(selectedElement.id, { color }));
+            updateSelectedElement( { color });
         }
     };
     const popularColors = [
