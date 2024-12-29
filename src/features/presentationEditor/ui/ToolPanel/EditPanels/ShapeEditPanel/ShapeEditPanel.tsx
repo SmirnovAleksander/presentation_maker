@@ -1,7 +1,7 @@
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {updateElement} from "../../../../../../app/store/actions.ts";
 import styles from './ShapeEditPanel.module.css'
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {updateElement} from "@/app/store/actions.ts";
 
 const ShapeEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();

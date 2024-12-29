@@ -1,8 +1,8 @@
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import styles from "./SlideEditBackground.module.css";
-import {updateSlide} from "../../../../../../app/store/actions.ts";
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {updateSlide} from "@/app/store/actions.ts";
 
 const SlideEditBackground = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -19,7 +19,8 @@ const SlideEditBackground = () => {
             dispatch(updateSlide(selectedSlide.id, backgroundColor));
         }
     };
-    const [myTimeout, setMyTimeout] = useState(0);
+
+    const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout | null>(null);
 
     const popularColors = [
         '#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD',
@@ -36,12 +37,13 @@ const SlideEditBackground = () => {
                 <input
                     type="color"
                     onChange={e => {
-                        clearTimeout(myTimeout);
-                        setMyTimeout(
-                            setTimeout(() => {
-                                updateBackgroundColor(e.target.value);
-                            }, 500) // <-- Delay api call by 300 milliseconds. Set to what you prefer
-                        );
+                        if (myTimeout) {
+                            clearTimeout(myTimeout);
+                        }
+                        const timeout = setTimeout(() => {
+                            updateBackgroundColor(e.target.value);
+                        }, 500); // <-- Delay api call by 500 milliseconds
+                        setMyTimeout(timeout);
                     }}
                 />
             </div>
@@ -52,8 +54,8 @@ const SlideEditBackground = () => {
                         style={{backgroundColor: color}}
                         className={`${styles.colorBlock} ${localColor === color ? styles.colorBlockSelected : ''}`}
                         onClick={() => {
-                            updateBackgroundColor(color)
-                            setLocalColor(color)
+                            updateBackgroundColor(color);
+                            setLocalColor(color);
                         }}
                     >
                     </div>

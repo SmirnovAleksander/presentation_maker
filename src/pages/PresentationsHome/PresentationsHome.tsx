@@ -1,8 +1,8 @@
 import PresentationIcon from '@/assets/PresentationsLogo.svg'
 import styles from "./PresentationsHome.module.css"
 import NewPresentationModal from "@/features/presentationHome/ui/NewPresentationModal/NewPresentationModal.tsx";
-import CustomButton from "@/shared/ui/CustomButton/CustomButton.tsx";
 import PresentationsList from "@/features/presentationHome/ui/PresentationsList/PresentationsList.tsx";
+import {CustomButton} from "@/shared/ui";
 
 const PresentationsHome = () => {
     const handleReset = () => {

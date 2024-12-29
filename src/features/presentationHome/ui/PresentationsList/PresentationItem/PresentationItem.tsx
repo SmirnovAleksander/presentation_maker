@@ -1,12 +1,12 @@
-import {deletePresentation, selectPresentation, selectSlide, updatePresentationTitle} from "../../../../../app/store/actions.ts";
-import {AppDispatch} from "../../../../../app/store/store.ts";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import styles from './PresentationItem.module.css'
-import deleteIcon from '../../../../../assets/delete.svg'
-import {Presentation} from "../../../../../app/store/types.ts";
 import React, {useState} from "react";
 import RenderSlideItemElements from "@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements.tsx";
+import {AppDispatch} from "@/app/store/store.ts";
+import {deletePresentation, selectPresentation, selectSlide, updatePresentationTitle} from "@/app/store/actions.ts";
+import deleteIcon from '@/assets/delete.svg'
+import {Presentation} from "@/app/store/types.ts";
 
 interface PresentationItemProps {
     presentation: Presentation;

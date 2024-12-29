@@ -1,27 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {EditorState} from "./reducers/editorReducer.ts";
 import {initialUndoableState, undoableReducer, UndoableState} from "./reducers/undoableReducer.ts";
-
-const saveState = (state: EditorState) => {
-    try {
-        const serializedState = JSON.stringify(state);
-        localStorage.setItem('editorPresentState', serializedState);
-    } catch (err) {
-        console.error("Ошибка при сохранении состояния в localStorage", err);
-    }
-};
-const loadState = (): EditorState | undefined => {
-    try {
-        const serializedState = localStorage.getItem('editorPresentState');
-        if (serializedState === null) {
-            return undefined;
-        }
-        return JSON.parse(serializedState) as EditorState;
-    } catch (err) {
-        console.error("Ошибка при загрузке состояния из localStorage", err);
-        return undefined;
-    }
-};
+import { loadState, saveState } from "./utils/localStorage.ts";
 
 const persistedPresentState = loadState();
 const persistedState: UndoableState = persistedPresentState

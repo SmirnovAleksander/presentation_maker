@@ -1,8 +1,8 @@
-import {updateElement} from "../../../../../../app/store/actions.ts";
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import styles from './RotationEditPanel.module.css'
-import CustomButton from "../../../../../../shared/ui/CustomButton/CustomButton.tsx";
+import { CustomButton } from "@/shared/ui";
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {updateElement} from "@/app/store/actions.ts";
 
 const RotationEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();

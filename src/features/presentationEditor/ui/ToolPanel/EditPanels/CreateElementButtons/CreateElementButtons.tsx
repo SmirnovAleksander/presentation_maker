@@ -1,9 +1,9 @@
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {ImageElement, ShapeElement, TextElement} from "../../../../../../app/store/types.ts";
-import {addElement, selectElement} from "../../../../../../app/store/actions.ts";
 import styles from './CreateElementButtons.module.css'
-import CustomButton from "../../../../../../shared/ui/CustomButton/CustomButton.tsx";
+import {CustomButton} from "@/shared/ui";
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {ImageElement, ShapeElement, TextElement} from "@/app/store/types.ts";
+import {addElement, selectElement} from "@/app/store/actions.ts";
 
 const CreateElementButtons = () => {
     const dispatch: AppDispatch = useDispatch();

@@ -1,4 +1,3 @@
-// presentationSchema.ts
 const presentationSchema = {
     type: "object",
     properties: {

@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import styles from './FullscreenPresentationPreview.module.css'
 import {appState} from "@/app/store/store.ts";
 import RenderSlideItemElements from "@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements.tsx";
-import CustomButton from "@/shared/ui/CustomButton/CustomButton.tsx";
+import { CustomButton } from '@/shared/ui';
 
 const FullscreenPresentationPreview = () => {
     const navigate = useNavigate();

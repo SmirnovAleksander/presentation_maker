@@ -15,7 +15,7 @@ import plusIcon from '@/assets/add.png'
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {Slide} from "@/app/store/types.ts";
 import {addSlide, redo, undo} from "@/app/store/actions.ts";
-import CustomButton from "@/shared/ui/CustomButton/CustomButton.tsx";
+import { CustomButton } from '@/shared/ui';
 
 const ToolPanel = () => {
     const navigate = useNavigate();

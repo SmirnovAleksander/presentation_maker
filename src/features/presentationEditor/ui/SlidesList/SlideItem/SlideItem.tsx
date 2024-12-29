@@ -6,7 +6,7 @@ import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
 import {Slide} from "@/app/store/types.ts";
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {deleteSlide, moveSlideDown, moveSlideUp, selectSlide} from "@/app/store/actions.ts";
-import CustomButton from "@/shared/ui/CustomButton/CustomButton.tsx";
+import {CustomButton} from "@/shared/ui";
 
 interface SlideItemProps {
     slide: Slide;

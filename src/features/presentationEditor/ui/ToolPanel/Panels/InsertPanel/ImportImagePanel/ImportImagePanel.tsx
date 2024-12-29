@@ -1,6 +1,5 @@
 import styles from './ImportImagePanel.module.css'
 import {useState} from "react";
-import CustomButton from "../../../../../../../shared/ui/CustomButton/CustomButton.tsx";
 import axios from "axios";
 import arrowIconRight from '../../../../../../../assets/arrow_icon_right.png'
 import arrowIconLeft from '../../../../../../../assets/arrow_icon_left.png'
@@ -8,6 +7,7 @@ import {ImageElement} from "../../../../../../../app/store/types.ts";
 import {addElement, selectElement} from "../../../../../../../app/store/actions.ts";
 import {AppDispatch, appState} from "../../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
+import {CustomButton} from "@/shared/ui";
 
 interface ImportImagePanelInterface {
     onClose: () => void;

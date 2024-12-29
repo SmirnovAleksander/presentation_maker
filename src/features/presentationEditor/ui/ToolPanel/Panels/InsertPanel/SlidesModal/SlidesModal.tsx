@@ -1,4 +1,3 @@
-import CustomButton from "../../../../../../../shared/ui/CustomButton/CustomButton.tsx";
 import {Slide} from "../../../../../../../app/store/types.ts";
 import styles from './SlidesModal.module.css'
 import RenderSlideItemElements from "../../../../SlidesList/RenderSlideItemElements.tsx";
@@ -7,6 +6,7 @@ import {useSelector} from "react-redux";
 import {appState} from "../../../../../../../app/store/store.ts";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import {CustomButton} from "@/shared/ui";
 
 interface SlidesModalInterface {
     slides: Slide[],

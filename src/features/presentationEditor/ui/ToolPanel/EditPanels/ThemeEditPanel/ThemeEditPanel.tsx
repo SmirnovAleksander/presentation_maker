@@ -1,9 +1,9 @@
 import styles from './ThemeEditPanel.module.css'
-import {updateAllSlidesBackground} from "../../../../../../app/store/actions.ts";
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {useRef, useState} from "react";
-import plusIcon from "../../../../../../assets/Plus.svg";
+import plusIcon from "@/assets/Plus.svg";
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {updateAllSlidesBackground} from "@/app/store/actions.ts";
 
 const ThemeEditPanel = () => {
     const initialThemes = [

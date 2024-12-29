@@ -1,12 +1,12 @@
 import styles from './TextEditPanel.module.css'
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {updateElement} from "../../../../../../app/store/actions.ts";
-import CustomButton from "../../../../../../shared/ui/CustomButton/CustomButton.tsx";
-import alignLeftIcon from '../../../../../../assets/align-left.png'
-import alignRightIcon from '../../../../../../assets/align-right.png'
-import justifyIcon from '../../../../../../assets/justify.png'
-import alignCenterIcon from '../../../../../../assets/format.png'
+import alignLeftIcon from '@/assets/align-left.png'
+import alignRightIcon from '@/assets/align-right.png'
+import justifyIcon from '@/assets/justify.png'
+import alignCenterIcon from '@/assets/format.png'
+import {CustomButton} from "@/shared/ui";
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {updateElement} from "@/app/store/actions.ts";
 
 const TextEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();

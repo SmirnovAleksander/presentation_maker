@@ -1,9 +1,9 @@
 import {useSelector} from "react-redux";
-import {appState} from "../../../../app/store/store.ts";
 import styles from './PresentationsList.module.css'
 import PresentationItem from "./PresentationItem/PresentationItem.tsx";
 import {useState} from "react";
-import CustomButton from "../../../../shared/ui/CustomButton/CustomButton.tsx";
+import {appState} from "@/app/store/store.ts";
+import {CustomButton} from "@/shared/ui";
 
 const PresentationsList = () => {
     const presentations = useSelector((state: appState) => state.present.presentations);

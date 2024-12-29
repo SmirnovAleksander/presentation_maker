@@ -1,10 +1,10 @@
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {addElement, selectElement, updateElement} from "../../../../../../app/store/actions.ts";
 import {useRef, useState} from "react";
-import {ImageElement} from "../../../../../../app/store/types.ts";
 import styles from "./InsertImagePanel.module.css";
-import CustomButton from "../../../../../../shared/ui/CustomButton/CustomButton.tsx";
+import {CustomButton} from "@/shared/ui";
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {addElement, selectElement, updateElement} from "@/app/store/actions.ts";
+import {ImageElement} from "@/app/store/types.ts";
 
 const InsertImagePanel = () => {
     const dispatch: AppDispatch = useDispatch();

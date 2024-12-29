@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, appState} from "../../../../../../app/store/store.ts";
-import {updateElement} from "../../../../../../app/store/actions.ts";
 import {useState} from "react";
 import styles from './TextColorEditPanel.module.css'
+import {AppDispatch, appState} from "@/app/store/store.ts";
+import {updateElement} from "@/app/store/actions.ts";
 
 const TextColorEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -23,7 +23,7 @@ const TextColorEditPanel = () => {
             dispatch(updateElement(selectedElement.id, { color }));
         }
     };
-    const [myTimeout, setMyTimeout] = useState(0);
+    const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout | null>(null);
 
     const popularColors = [
 
@@ -42,12 +42,13 @@ const TextColorEditPanel = () => {
                     <input
                         type="color"
                         onChange={e => {
-                            clearTimeout(myTimeout);
-                            setMyTimeout(
-                                setTimeout(() => {
-                                    updateColor(e.target.value);
-                                }, 500) // <-- Delay api call by 300 milliseconds. Set to what you prefer
-                            );
+                            if (myTimeout) {
+                                clearTimeout(myTimeout);
+                            }
+                            const timeout = setTimeout(() => {
+                                updateColor(e.target.value);
+                            }, 500); // <-- Delay api call by 500 milliseconds
+                            setMyTimeout(timeout);
                         }}
                     />
                 </div>
