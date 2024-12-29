@@ -6,7 +6,7 @@ import TextElement from "./elements/TextElement.tsx";
 import {useRef} from "react";
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {addElement, deselectElement} from "@/app/store/actions.ts";
-import {ImageElement as ImageElementProps} from '@/app/store/types.ts'
+import {ImageElement as ImageElementProps} from '@/shared/types/types.ts'
 
 const SlideEditor = () => {
     const dispatch: AppDispatch = useDispatch();

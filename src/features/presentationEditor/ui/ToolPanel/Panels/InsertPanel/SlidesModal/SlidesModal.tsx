@@ -1,4 +1,4 @@
-import {Slide} from "../../../../../../../app/store/types.ts";
+import {Slide} from "../../../../../../../shared/types/types.ts";
 import styles from './SlidesModal.module.css'
 import RenderSlideItemElements from "../../../../SlidesList/RenderSlideItemElements.tsx";
 import React from "react";

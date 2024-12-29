@@ -3,6 +3,7 @@ import {useState} from "react";
 import styles from "./SlideEditBackground.module.css";
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {updateSlide} from "@/app/store/actions.ts";
+import {ColorPicker} from "@/shared/ui";
 
 const SlideEditBackground = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -20,8 +21,6 @@ const SlideEditBackground = () => {
         }
     };
 
-    const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout | null>(null);
-
     const popularColors = [
         '#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD',
         '#E74C3C', '#3498DB', '#2ECC71', '#1ABC9C', '#F39C12',
@@ -32,21 +31,13 @@ const SlideEditBackground = () => {
     return (
         <div className={styles.backgroundEditWrapper}>
             <p className={styles.backgroundEditTitle}>Задний фон слайда</p>
-            <div className={styles.colorPickerWrapper}>
-                <p>Цвет фона:</p>
-                <input
-                    type="color"
-                    onChange={e => {
-                        if (myTimeout) {
-                            clearTimeout(myTimeout);
-                        }
-                        const timeout = setTimeout(() => {
-                            updateBackgroundColor(e.target.value);
-                        }, 500); // <-- Delay api call by 500 milliseconds
-                        setMyTimeout(timeout);
-                    }}
-                />
-            </div>
+            <ColorPicker
+                initialColor={localColor}
+                onColorChange={(color) => {
+                    updateBackgroundColor(color);
+                    setLocalColor(color);
+                }}
+            />
             <div className={styles.colorsScrollWrapper}>
                 {popularColors.map((color, index) => (
                     <div

@@ -3,6 +3,7 @@ import {useState} from "react";
 import styles from './BorderEditPanel.module.css'
 import {AppDispatch, appState } from "@/app/store/store.ts";
 import { updateElement } from "@/app/store/actions.ts";
+import {ColorPicker} from "@/shared/ui";
 
 const BorderEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -27,8 +28,6 @@ const BorderEditPanel = () => {
             dispatch(updateElement(selectedElement.id, { borderColor: color }));
         }
     };
-    const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout | null>(null);
-
     const popularColors = [
         '#FFCDD2', '#F8BBD0', '#E1BEE7', '#D1C4E9', '#C5CAE9',
         '#BBDEFB', '#B3E5FC', '#B2EBF2', '#B2DFDB', '#C8E6C9',
@@ -52,21 +51,13 @@ const BorderEditPanel = () => {
         <>
             {isShapeImageElement && <div className={styles.colorEditWrapper}>
                 <p className={styles.colorEditTitle}>Цвет границы</p>
-                <div className={styles.colorPickerWrapper}>
-                    <p>Цвет:</p>
-                    <input
-                        type="color"
-                        onChange={e => {
-                            if (myTimeout) {
-                                clearTimeout(myTimeout);
-                            }
-                            const timeout = setTimeout(() => {
-                                updateBorderColor(e.target.value);
-                            }, 500); // <-- Delay api call by 500 milliseconds
-                            setMyTimeout(timeout);
-                        }}
-                    />
-                </div>
+                <ColorPicker
+                    initialColor={localColor}
+                    onColorChange={(color) => {
+                        updateBorderColor(color);
+                        setLocalColor(color);
+                    }}
+                />
                 <div className={styles.colorsScrollWrapper}>
                     {popularColors.map((color, index) => (
                         <div

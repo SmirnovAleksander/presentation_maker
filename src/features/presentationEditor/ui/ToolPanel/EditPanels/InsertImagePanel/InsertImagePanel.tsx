@@ -4,7 +4,7 @@ import styles from "./InsertImagePanel.module.css";
 import {CustomButton} from "@/shared/ui";
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {addElement, selectElement, updateElement} from "@/app/store/actions.ts";
-import {ImageElement} from "@/app/store/types.ts";
+import {ImageElement} from "@/shared/types/types.ts";
 
 const InsertImagePanel = () => {
     const dispatch: AppDispatch = useDispatch();

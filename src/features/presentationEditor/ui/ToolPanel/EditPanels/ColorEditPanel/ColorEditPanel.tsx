@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {AppDispatch, appState} from '@/app/store/store.ts';
 import { updateElement } from '@/app/store/actions.ts';
+import {ColorPicker} from "@/shared/ui";
 
 const ColorEditPanel = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -33,7 +34,6 @@ const ColorEditPanel = () => {
             dispatch(updateElement(selectedElement.id, { backgroundColor: backgroundColor }));
         }
     };
-    const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout | null>(null);
 
     const popularColors = [
         '#FFCDD2', '#F8BBD0', '#E1BEE7', '#D1C4E9', '#C5CAE9',
@@ -58,21 +58,13 @@ const ColorEditPanel = () => {
         <>
             {(isShapeElement || isTextElement) && <div className={styles.colorEditWrapper}>
                 <p className={styles.colorEditTitle}>Цвет фона элемента</p>
-                <div className={styles.colorPickerWrapper}>
-                    <p>Цвет:</p>
-                    <input
-                        type="color"
-                        onChange={e => {
-                            if (myTimeout) {
-                                clearTimeout(myTimeout);
-                            }
-                            const timeout = setTimeout(() => {
-                                updateBackgroundColor(e.target.value);
-                            }, 500); // <-- Delay api call by 500 milliseconds
-                            setMyTimeout(timeout);
-                        }}
-                    />
-                </div>
+                <ColorPicker
+                    initialColor={localColor}
+                    onColorChange={(color) => {
+                        updateBackgroundColor(color);
+                        setLocalColor(color);
+                    }}
+                />
                 <div className={styles.colorsScrollWrapper}>
                     {popularColors.map((color, index) => (
                         <div

@@ -1,6 +1,6 @@
 import React from 'react';
 import ResizeHandles from "./ResizeHandles.tsx";
-import type {ShapeElement} from "@/app/store/types.ts";
+import type {ShapeElement} from "@/shared/types/types.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
 
 interface ShapeElementProps {

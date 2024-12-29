@@ -1,6 +1,6 @@
 import React from 'react';
 import ResizeHandles from "./ResizeHandles.tsx";
-import type {ImageElement} from "@/app/store/types.ts";
+import type {ImageElement} from "@/shared/types/types.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
 
 interface ImageProps {

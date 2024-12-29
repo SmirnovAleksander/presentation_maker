@@ -3,7 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 import arrowIconRight from '../../../../../../../assets/arrow_icon_right.png'
 import arrowIconLeft from '../../../../../../../assets/arrow_icon_left.png'
-import {ImageElement} from "../../../../../../../app/store/types.ts";
+import {ImageElement} from "../../../../../../../shared/types/types.ts";
 import {addElement, selectElement} from "../../../../../../../app/store/actions.ts";
 import {AppDispatch, appState} from "../../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";

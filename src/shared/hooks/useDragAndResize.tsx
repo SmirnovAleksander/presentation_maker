@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {ElementProps} from "@/app/store/types.ts";
+import {ElementProps} from "@/shared/types/types.ts";
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {deleteElement, selectElement, updateElement} from "@/app/store/actions.ts";
 

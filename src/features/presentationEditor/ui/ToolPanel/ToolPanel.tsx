@@ -13,7 +13,7 @@ import interfaceIcon from '@/assets/interface.png'
 import slideShowIcon from '@/assets/slideshow.png'
 import plusIcon from '@/assets/add.png'
 import {AppDispatch, appState} from "@/app/store/store.ts";
-import {Slide} from "@/app/store/types.ts";
+import {Slide} from "@/shared/types/types.ts";
 import {addSlide, redo, undo} from "@/app/store/actions.ts";
 import { CustomButton } from '@/shared/ui';
 

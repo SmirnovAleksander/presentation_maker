@@ -3,7 +3,7 @@ import React, {DragEvent} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import deleteIcon from "@/assets/delete.svg";
 import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
-import {Slide} from "@/app/store/types.ts";
+import {Slide} from "@/shared/types/types.ts";
 import {AppDispatch, appState} from "@/app/store/store.ts";
 import {deleteSlide, moveSlideDown, moveSlideUp, selectSlide} from "@/app/store/actions.ts";
 import {CustomButton} from "@/shared/ui";

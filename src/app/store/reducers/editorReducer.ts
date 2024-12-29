@@ -1,4 +1,4 @@
-import {ImageElement, Presentation, ShapeElement, TextElement} from "../types.ts";
+import {ImageElement, Presentation, ShapeElement, TextElement} from "../../../shared/types/types.ts";
 import {ElementActions} from "../actions.ts";
 
 export interface EditorState {

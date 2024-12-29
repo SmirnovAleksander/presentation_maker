@@ -1,4 +1,4 @@
-import {ElementProps, Slide} from "@/app/store/types.ts";
+import {ElementProps, Slide} from "@/shared/types/types.ts";
 import React from "react";
 
 interface RenderSlideItemElementsProps {

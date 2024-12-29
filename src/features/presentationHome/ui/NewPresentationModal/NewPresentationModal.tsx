@@ -4,10 +4,10 @@ import styles from './NewPresentationModal.module.css'
 import plusIcon from '@/assets/Plus.svg'
 import {ChangeEvent, useRef} from "react";
 import Ajv from "ajv";
-import presentationSchema from "@/app/store/presentationSchema.ts";
+import presentationSchema from "@/entities/presentation/presentationSchema.ts";
 import {AppDispatch} from "@/app/store/store.ts";
 import {addPresentation} from "@/app/store/actions.ts";
-import {Presentation} from "@/app/store/types.ts";
+import {Presentation} from "@/shared/types/types.ts";
 
 const ajv = new Ajv();
 const validate = ajv.compile(presentationSchema);

@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './CreateElementButtons.module.css'
 import {CustomButton} from "@/shared/ui";
 import {AppDispatch, appState} from "@/app/store/store.ts";
-import {ImageElement, ShapeElement, TextElement} from "@/app/store/types.ts";
+import {ImageElement, ShapeElement, TextElement} from "@/shared/types/types.ts";
 import {addElement, selectElement} from "@/app/store/actions.ts";
 
 const CreateElementButtons = () => {

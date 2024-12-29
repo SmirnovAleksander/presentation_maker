@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch} from "react-redux";
 import ResizeHandles from "./ResizeHandles.tsx";
-import type {TextElement} from "@/app/store/types.ts";
+import type {TextElement} from "@/shared/types/types.ts";
 import {AppDispatch} from "@/app/store/store.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
 import {updateElement} from "@/app/store/actions.ts";

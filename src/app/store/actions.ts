@@ -1,4 +1,4 @@
-import {ElementProps, ImageElement, Presentation, ShapeElement, Slide, TextElement} from "./types.ts";
+import {ElementProps, ImageElement, Presentation, ShapeElement, Slide, TextElement} from "@/shared/types/types.ts";
 
 export const UNDO = 'UNDO';
 export const REDO = 'REDO';
