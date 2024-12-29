@@ -1,27 +1,24 @@
 import styles from './SlideEditor.module.css'
-import {useDispatch, useSelector} from "react-redux";
 import ShapeElement from "./elements/ShapeElement.tsx";
 import ImageElement from "./elements/ImageElement.tsx";
 import TextElement from "./elements/TextElement.tsx";
 import {useRef} from "react";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {addElement, deselectElement} from "@/app/store/actions.ts";
 import {ImageElement as ImageElementProps} from '@/shared/types/types.ts'
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const SlideEditor = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedPresentation = useSelector((state: appState) =>
-        state.present.presentations.find(p => p.id === selectedPresentationId)
-    );
-    const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
+    const {
+        selectedElementId,
+        selectedSlide,
+        selectedSlideId,
+        deselectElementAction,
+        addNewElement
+    } = useStoreSelector();
 
     const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const clickedOnElement = (e.target as HTMLElement).closest('.element');
         if (!clickedOnElement && selectedElementId) {
-            dispatch(deselectElement());
+            deselectElementAction()
         }
     };
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -46,7 +43,7 @@ const SlideEditor = () => {
                         boxShadow: 'none',
                         opacity: 1,
                     };
-                    dispatch(addElement(newImageElement));
+                    addNewElement(newImageElement);
                 }
             };
             reader.readAsDataURL(file);

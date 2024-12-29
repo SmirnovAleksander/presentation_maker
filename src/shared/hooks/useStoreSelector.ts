@@ -1,7 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, appState } from "@/app/store/store.ts";
-import {updateElement, addElement, selectElement, updateSlide, updateAllSlidesBackground} from "@/app/store/actions.ts";
-import {ElementProps, ImageElement, ShapeElement, TextElement} from "@/shared/types/types.ts";
+import {
+    updateElement,
+    addElement,
+    selectElement,
+    updateSlide,
+    updateAllSlidesBackground,
+    undo,
+    redo,
+    addSlide,
+    moveSlide,
+    selectSlide,
+    deleteSlide,
+    moveSlideUp,
+    moveSlideDown,
+    deselectElement, updatePresentationTitle, deleteElement,
+} from "@/app/store/actions.ts";
+import {ElementProps, ImageElement, ShapeElement, Slide, TextElement} from "@/shared/types/types.ts";
 
 const useStoreSelector = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -15,6 +30,15 @@ const useStoreSelector = () => {
     const selectedSlide = selectedPresentation?.slides.find(slide => slide.id === selectedSlideId);
     const selectedElement = selectedSlide?.elements.find(el => el.id === selectedElementId);
 
+    const pastLength = useSelector((state: appState) => state.past.length)
+    const futureLength = useSelector((state: appState) => state.future.length)
+
+    const updatePresentationTitleAction = (newTitle: string) => {
+        if (selectedPresentation) {
+            dispatch(updatePresentationTitle(selectedPresentation.id, newTitle));
+        }
+    }
+
     const updateSelectedElement = (updates: Partial<TextElement | ImageElement | ShapeElement>) => {
         if (selectedElement) {
             dispatch(updateElement(selectedElement.id, updates));
@@ -26,10 +50,17 @@ const useStoreSelector = () => {
             dispatch(addElement(element));
         }
     };
-
+    const deselectElementAction = () => {
+        dispatch(deselectElement());
+    }
     const selectElementAction = (elementId: number) => {
         if (selectedSlide) {
             dispatch(selectElement(elementId));
+        }
+    };
+    const deleteElementAction = (elementId: number) => {
+        if (selectedSlide) {
+            dispatch(deleteElement(elementId));
         }
     };
 
@@ -45,6 +76,36 @@ const useStoreSelector = () => {
         }
     }
 
+    const undoAction = () => {
+        dispatch(undo());
+    }
+    const redoAction = () => {
+        dispatch(redo());
+    }
+
+    const addSlideAction = (newSlide: Slide) => {
+        dispatch(addSlide(newSlide));
+    }
+    const moveSlideAction = (slideId: number, newIndex: number) => {
+        dispatch(moveSlide(slideId, newIndex));
+    }
+    const selectSlideAction = (slideId: number) => {
+        dispatch(selectSlide(slideId));
+    }
+    const deleteSlideAction = (slideId: number) => {
+        dispatch(deleteSlide(slideId));
+    }
+    const moveSlideUpAction = (slideId: number) => {
+        if (selectedSlide) {
+            dispatch(moveSlideUp(slideId))
+        }
+    }
+    const moveSlideDownAction = (slideId: number) => {
+        if (selectedSlide) {
+            dispatch(moveSlideDown(slideId))
+        }
+    }
+
     return {
         selectedElement,
         presentations,
@@ -57,7 +118,20 @@ const useStoreSelector = () => {
         addNewElement,
         selectElementAction,
         updateSelectedSlide,
-        updateAllSlidesBackgroundAction
+        updateAllSlidesBackgroundAction,
+        pastLength,
+        futureLength,
+        undoAction,
+        redoAction,
+        addSlideAction,
+        moveSlideAction,
+        selectSlideAction,
+        deleteSlideAction,
+        moveSlideUpAction,
+        moveSlideDownAction,
+        deselectElementAction,
+        updatePresentationTitleAction,
+        deleteElementAction
     };
 };
 

@@ -1,16 +1,14 @@
 import styles from './SlideList.module.css'
-import {useDispatch, useSelector} from "react-redux";
 import SlideItem from "./SlideItem/SlideItem.tsx";
 import {DragEvent, useState} from "react";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {moveSlide} from "@/app/store/actions.ts";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const SlideList = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedPresentation = useSelector((state: appState) =>
-        state.present.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {
+        selectedPresentation,
+        moveSlideAction
+    } = useStoreSelector();
+
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
     const [draggingSlideId, setDraggingSlideId] = useState<number | null>(null);
 
@@ -47,7 +45,7 @@ const SlideList = () => {
             const currentIndex = selectedPresentation?.slides.findIndex(slide => slide.id === draggingSlideId);
             if (currentIndex !== undefined && currentIndex !== -1) {
                 const finalIndex = currentIndex < dragOverIndex ? dragOverIndex - 1 : dragOverIndex;
-                dispatch(moveSlide(draggingSlideId, finalIndex));
+                moveSlideAction(draggingSlideId, finalIndex);
             }
         }
         setDragOverIndex(null);

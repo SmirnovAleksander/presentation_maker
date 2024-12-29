@@ -1,19 +1,17 @@
-import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import styles from './PresentationEditorHeader.module.css'
 import {useNavigate} from "react-router-dom";
-import {AppDispatch, appState} from "@/app/store/store.ts";
-import {updatePresentationTitle} from "@/app/store/actions.ts";
 import PresentationIcon from '@/assets/PresentationsLogo.svg'
 import editIcon from '@/assets/Edit.svg'
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 
 const PresentationEditorHeader = () => {
-    const dispatch: AppDispatch = useDispatch();
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedPresentation  = useSelector((state: appState) =>
-        state.present.presentations.find(p => p.id === selectedPresentationId)
-    );
+    const {
+        selectedPresentation,
+        updatePresentationTitleAction
+    } = useStoreSelector();
+
     const navigate = useNavigate()
     const [isEditing, setIsEditing] = useState(true);
     const [newTitle, setNewTitle] = useState(selectedPresentation?.title || '');
@@ -46,13 +44,13 @@ const PresentationEditorHeader = () => {
             if (newTitle.trim() === '') {
                 return;
             }
-            dispatch(updatePresentationTitle(selectedPresentation.id, newTitle));
+            updatePresentationTitleAction( newTitle);
             setIsEditing(false);
         }
     };
     const handleBlur = () => {
         if (selectedPresentation && newTitle.trim() !== '') {
-            dispatch(updatePresentationTitle(selectedPresentation.id, newTitle));
+            updatePresentationTitleAction( newTitle);
             setIsEditing(false)
         }
     };

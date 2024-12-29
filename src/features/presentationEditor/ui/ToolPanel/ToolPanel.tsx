@@ -1,5 +1,4 @@
 import styles from './ToolPanel.module.css'
-import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import HomePanel from "./Panels/HomePanel/HomePanel.tsx";
@@ -12,22 +11,23 @@ import arrowBackIcon from '@/assets/arrow.png'
 import interfaceIcon from '@/assets/interface.png'
 import slideShowIcon from '@/assets/slideshow.png'
 import plusIcon from '@/assets/add.png'
-import {AppDispatch, appState} from "@/app/store/store.ts";
 import {Slide} from "@/shared/types/types.ts";
-import {addSlide, redo, undo} from "@/app/store/actions.ts";
 import { CustomButton } from '@/shared/ui';
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const ToolPanel = () => {
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
-    const pastLength = useSelector((state: appState) => state.past.length)
-    const futureLength = useSelector((state: appState) => state.future.length)
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
+    const {
+        selectedPresentation,
+        selectedPresentationId,
+        selectedSlideId,
+        pastLength,
+        futureLength,
+        addSlideAction,
+        undoAction,
+        redoAction,
+        selectedElementId
+    } = useStoreSelector();
 
     const addNewSlide = () => {
         const newSlide: Slide = {
@@ -37,7 +37,7 @@ const ToolPanel = () => {
             backgroundImage: selectedPresentation?.slides[0]?.backgroundImage,
         };
         if (selectedPresentation) {
-            dispatch(addSlide(newSlide));
+            addSlideAction(newSlide);
             setActivePanel('slideDesign')
         }
     };
@@ -73,13 +73,13 @@ const ToolPanel = () => {
     }
     const handleUndo = () => {
         if (selectedPresentation!.title !== '' && pastLength > 0) {
-            dispatch(undo());
+            undoAction()
         }
     };
 
     const handleRedo = () => {
         if (futureLength > 0) {
-            dispatch(redo());
+            redoAction()
         }
     };
     const isDisableUndo = pastLength === 0 || selectedPresentation!.slides.length === 0
