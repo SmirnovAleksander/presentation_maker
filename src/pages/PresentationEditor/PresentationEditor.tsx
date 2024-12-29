@@ -1,14 +1,14 @@
 import styles from './PresentationEditor.module.css'
-import ToolPanel from "../../components/PresentationEditor/ToolPanel/ToolPanel.tsx";
-import SlideEditor from "../../components/PresentationEditor/SlideEditor/SlideEditor.tsx";
-import SlideList from "../../components/PresentationEditor/SlidesList/SlideList.tsx";
 import {useSelector} from "react-redux";
-import {appState} from "../../store/store.ts";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
-import ElementsList from "../../components/PresentationEditor/ElementsList/ElementsList.tsx";
+import {appState} from "@/app/store/store.ts";
 import PresentationEditorHeader
-    from "../../components/PresentationEditor/PresentationEditorHeader/PresentationEditorHeader.tsx";
+    from "@/features/presentationEditor/ui/PresentationEditorHeader/PresentationEditorHeader.tsx";
+import ToolPanel from "@/features/presentationEditor/ui/ToolPanel/ToolPanel.tsx";
+import SlideList from "@/features/presentationEditor/ui/SlidesList/SlideList.tsx";
+import SlideEditor from "@/features/presentationEditor/ui/SlideEditor/SlideEditor.tsx";
+import ElementsList from "@/features/presentationEditor/ui/ElementsList/ElementsList.tsx";
 
 const PresentationEditor = () => {
     const navigate = useNavigate();

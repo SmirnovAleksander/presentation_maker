@@ -18,7 +18,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".", // Указываем базовый путь
+    "paths": {
+      "@/*": ["src/*"] // Указываем алиас для src
+    }
   },
   "include": ["src"]
 }
