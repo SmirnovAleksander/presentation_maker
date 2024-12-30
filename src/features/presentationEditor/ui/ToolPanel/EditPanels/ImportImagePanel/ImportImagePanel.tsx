@@ -1,13 +1,11 @@
 import styles from './ImportImagePanel.module.css'
 import {useState} from "react";
 import axios from "axios";
-import arrowIconRight from '../../../../../../../assets/arrow_icon_right.png'
-import arrowIconLeft from '../../../../../../../assets/arrow_icon_left.png'
-import {ImageElement} from "../../../../../../../shared/types/types.ts";
-import {addElement, selectElement} from "../../../../../../../app/store/actions.ts";
-import {AppDispatch, appState} from "../../../../../../../app/store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
+import arrowIconRight from '@/assets/arrow_icon_right.png'
+import arrowIconLeft from '@/assets/arrow_icon_left.png'
 import {CustomButton, CustomInput} from "@/shared/ui";
+import useStoreSelector from '@/shared/hooks/useStoreSelector.ts';
+import { ImageElement } from '@/shared/types/types.ts';
 
 interface ImportImagePanelInterface {
     onClose: () => void;
@@ -22,12 +20,12 @@ interface UnsplashResult {
 
 const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
 
-    const dispatch: AppDispatch = useDispatch();
-
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const selectedSlideId = useSelector((state: appState) => state.present.selectedSlideId);
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
+    const {
+        selectedSlideId,
+        selectedPresentation,
+        addNewElement,
+        selectElementAction
+    } = useStoreSelector();
 
 
     const [query, setQuery] = useState<string>('');
@@ -132,8 +130,8 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
             };
 
             if (selectedSlideId && selectedPresentation) {
-                dispatch(addElement(newImageElement));
-                dispatch(selectElement(newImageElement.id));
+                addNewElement(newImageElement);
+                selectElementAction(newImageElement.id);
             } else {
                 console.warn("Слайд или презентация не выбраны!");
             }

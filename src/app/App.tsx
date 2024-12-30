@@ -4,9 +4,9 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage.tsx";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {appState} from "./store/store.ts";
-import PresentationsHome from "../pages/PresentationsHome/PresentationsHome.tsx";
+import PresentationsHome from "@/pages/PresentationsHome/PresentationsHome.tsx";
 import FullscreenPresentationPreview
-    from "../features/presentationEditor/ui/FullscreenPresentationPreview/FullscreenPresentationPreview.tsx";
+    from "@/features/presentationEditor/ui/FullscreenPresentationPreview/FullscreenPresentationPreview.tsx";
 
 const App = () => {
     const state = useSelector((state: appState) => state);

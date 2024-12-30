@@ -1,15 +1,14 @@
-import InsertImagePanel from "../../EditPanels/InsertImagePanel/InsertImagePanel.tsx";
-import {appState} from "../../../../../../app/store/store.ts";
-import {useSelector} from "react-redux";
 import {useState} from "react";
-import SlidesModal from "./SlidesModal/SlidesModal.tsx";
-import ImportImagePanel from "./ImportImagePanel/ImportImagePanel.tsx";
 import {CustomButton} from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import InsertImagePanel from "../../EditPanels/InsertImagePanel/InsertImagePanel";
+import SlidesModal from "../../EditPanels/SlidesModal/SlidesModal";
+import ImportImagePanel from "../../EditPanels/ImportImagePanel/ImportImagePanel";
 
 const InsertPanel = () => {
-    const selectedPresentationId = useSelector((state: appState) => state.present.selectedPresentationId);
-    const presentations = useSelector((state: appState) => state.present.presentations);
-    const selectedPresentation = presentations.find(presentation => presentation.id === selectedPresentationId);
+    const {
+        selectedPresentation,
+    } = useStoreSelector();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const closeModal = () => setIsModalOpen(false);
