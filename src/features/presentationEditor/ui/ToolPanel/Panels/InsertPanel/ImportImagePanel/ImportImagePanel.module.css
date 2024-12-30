@@ -24,12 +24,6 @@
     min-height: 590px;
 }
 
-.searchInput {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 .imageSearchContainer {
     display: flex;
     flex-direction: row;

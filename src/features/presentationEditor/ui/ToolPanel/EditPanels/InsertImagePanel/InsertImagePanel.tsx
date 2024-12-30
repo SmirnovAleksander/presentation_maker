@@ -1,6 +1,6 @@
 import {useRef, useState} from "react";
 import styles from "./InsertImagePanel.module.css";
-import {CustomButton} from "@/shared/ui";
+import {CustomButton, CustomInput} from "@/shared/ui";
 import {ImageElement} from "@/shared/types/types.ts";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
@@ -65,11 +65,10 @@ const InsertImagePanel = () => {
             <div className={styles.imageWrapper}>
                 <div className={styles.itemEditWrapper}>
                     <p>Url: </p>
-                    <input
+                    <CustomInput
                         style={{width: '300px'}}
-                        type="text"
                         value={isImageElement ? selectedElement.content : defaultImageContent}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             updateContent(e.target.value)
                             setUploadedImage(e.target.value)
                         }}/>

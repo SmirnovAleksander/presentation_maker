@@ -51,26 +51,3 @@
     align-items: flex-start;
     gap: 10px;
 }
-
-input[type="text"] {
-    width: 100%;
-    padding: 4px;
-    font-size: 14px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-}
-input[type="text"]:focus {
-    border-color: #80bdff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
-}
-input[type="text"] {
-    -moz-appearance: textfield;
-}
-input[type="text"]::-webkit-outer-spin-button,
-input[type="text"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}

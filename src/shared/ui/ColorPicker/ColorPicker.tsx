@@ -4,7 +4,7 @@ import styles from "./ColorPicker.module.css";
 interface ColorPickerProps {
     onColorChange: (color: string) => void;
     initialColor?: string;
-    delay?: number; // задержка обновления цвета в миллисекундах
+    delay?: number;
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({ onColorChange, initialColor = "#D9D9D9", delay = 500 }) => {

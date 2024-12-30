@@ -5,8 +5,8 @@ import React, {useState} from "react";
 import RenderSlideItemElements from "@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements.tsx";
 import {AppDispatch} from "@/app/store/store.ts";
 import {deletePresentation, selectPresentation, selectSlide, updatePresentationTitle} from "@/app/store/actions.ts";
-import deleteIcon from '@/assets/delete.svg'
 import {Presentation} from "@/shared/types/types.ts";
+import {CustomInput, DeleteButton} from "@/shared/ui";
 
 interface PresentationItemProps {
     presentation: Presentation;
@@ -73,17 +73,15 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             </div>
             <div className={styles.presentationUnder}>
                 {editingId === presentation.id ? (
-                    <input
-                        type="text"
+                    <CustomInput
                         value={newTitle}
-                        onChange={(e) => setNewTitle(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
                         onBlur={() => handleChangeTitle(presentation.id)}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 handleChangeTitle(presentation.id);
                             }
                         }}
-                        className={styles.cardTitleInput}
                     />
                 ) : (
                     <h3
@@ -93,18 +91,10 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
                         {presentation.title}
                     </h3>
                 )}
-                <div
-                    className={styles.deleteIconContainer}
-                    onClick={() => handleDeletePresentation(presentation.id)}
-                >
-                    <img
-                        src={deleteIcon}
-                        alt="X"
-                        className={styles.deleteIcon}
-                        width={20}
-                        height={20}
-                    />
-                </div>
+                <DeleteButton
+                    handleDeleteElement={handleDeletePresentation}
+                    elementId={presentation.id}
+                />
             </div>
         </div>
     );

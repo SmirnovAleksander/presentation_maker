@@ -3,7 +3,7 @@ import styles from './PresentationsList.module.css'
 import PresentationItem from "./PresentationItem/PresentationItem.tsx";
 import {useState} from "react";
 import {appState} from "@/app/store/store.ts";
-import {CustomButton} from "@/shared/ui";
+import {CustomButton, CustomInput} from "@/shared/ui";
 
 const PresentationsList = () => {
     const presentations = useSelector((state: appState) => state.present.presentations);
@@ -21,12 +21,11 @@ const PresentationsList = () => {
                     <div className={styles.presentationListWrapper}>
                         <div className={styles.presentationsSearch}>
                             <p className={styles.presentationListTitle}>Недавние презентации:</p>
-                            <input
-                                type="text"
+                            <CustomInput
                                 placeholder="Поиск по названию..."
                                 value={searchTitle}
-                                onChange={(e) => setSearchTitle(e.target.value)}
-                                style={{width: '400px', fontSize: '18px'}}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTitle(e.target.value)}
+                                style={{ width: '400px', fontSize: '18px' }}
                             />
                             <CustomButton onClick={() => setSearchTitle('')}>
                                 Сбросить

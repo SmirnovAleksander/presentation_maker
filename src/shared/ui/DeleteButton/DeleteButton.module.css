@@ -1,0 +1,30 @@
+
+.deleteIconContainer {
+    cursor: pointer;
+}
+
+.deleteIcon {
+    z-index: 1;
+}
+.deleteIconContainer:hover {
+    transform: scale(1.04);
+}
+.deleteIconContainer:hover::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(175, 175, 175, 0.5);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    z-index: 0;
+}
+.deleteIconContainer:active::after {
+    top: -5px;
+    left: -5px;
+    background-color: rgba(140, 139, 139, 0.5);
+    transition: opacity 0.2s ease;
+}

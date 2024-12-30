@@ -1,26 +1,29 @@
-import React from "react";
+import React from 'react';
 
 interface CustomInputProps {
-    value?: string | number;
     placeholder?: string | number;
-    onChange?: () => void;
-    maxLength?: number;
+    value?: string | number;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: () => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     style?: React.CSSProperties;
+    maxLength?: number;
+    mainColor?: string;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({style ,value, maxLength, placeholder, onChange}) => {
+const CustomInput: React.FC<CustomInputProps> = ({ placeholder, value, onChange, style, maxLength, onBlur, onKeyDown}) => {
     return (
-        <>
-            <input
-                type="number"
-                style={style}
-                value={value}
-                maxLength={maxLength}
-                placeholder={placeholder?.toString()}
-                onChange={onChange}
-            />
-        </>
+        <input
+            type="text"
+            placeholder={placeholder?.toString()}
+            value={value}
+            onChange={onChange}
+            style={style}
+            maxLength={maxLength}
+            onBlur={onBlur}
+            onKeyDown={onKeyDown}
+        />
     );
 };
 
-export default CustomInput;
+export default CustomInput; 

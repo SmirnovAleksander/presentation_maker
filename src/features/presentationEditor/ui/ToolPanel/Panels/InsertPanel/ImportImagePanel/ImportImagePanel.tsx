@@ -7,7 +7,7 @@ import {ImageElement} from "../../../../../../../shared/types/types.ts";
 import {addElement, selectElement} from "../../../../../../../app/store/actions.ts";
 import {AppDispatch, appState} from "../../../../../../../app/store/store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {CustomButton} from "@/shared/ui";
+import {CustomButton, CustomInput} from "@/shared/ui";
 
 interface ImportImagePanelInterface {
     onClose: () => void;
@@ -145,12 +145,10 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
         <div className={styles.imageSearchOverlay}>
             <div className={styles.imageSearchContent}>
                 <div className={styles.imageSearchContainer}>
-                    <input
-                        type="text"
+                    <CustomInput
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
                         placeholder="Enter an image"
-                        className={styles.searchInput}
                         onKeyDown={handleKeyDown}
                     />
                     <CustomButton onClick={handleSearch} disabled={loading}>

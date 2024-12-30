@@ -1,10 +1,9 @@
 import styles from './SlideItem.module.css'
 import React, {DragEvent} from "react";
-import deleteIcon from "@/assets/delete.svg";
 import RenderSlideItemElements from "../RenderSlideItemElements.tsx";
 import {Slide} from "@/shared/types/types.ts";
-import {CustomButton} from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import {CustomButton, DeleteButton} from "@/shared/ui";
 
 interface SlideItemProps {
     slide: Slide;
@@ -77,18 +76,10 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex, onDragStart, on
         >
             <div className={styles.slideToolWrapper}>
                 <p className={styles.slideItemNumber}>{slideIndex}</p>
-                <div
-                    className={styles.deleteIconContainer}
-                    onClick={() => handleDeleteSlide(slide.id)}
-                >
-                    <img
-                        src={deleteIcon}
-                        alt="X"
-                        className={styles.deleteIcon}
-                        width={20}
-                        height={20}
-                    />
-                </div>
+                <DeleteButton
+                    handleDeleteElement={handleDeleteSlide}
+                    elementId={slide.id}
+                />
             </div>
             <div
                 className={`${styles.slideItem} ${isSelected && styles.slideItemSelected}`}

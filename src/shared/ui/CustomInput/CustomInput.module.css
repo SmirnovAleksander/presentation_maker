@@ -1,4 +1,4 @@
-input[type="number"] {
+/* input[type="number"] {
     width: 100%;
     padding: 4px;
     font-size: 14px;
@@ -12,11 +12,28 @@ input[type="number"]:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
 }
-input[type="number"] {
-    -moz-appearance: textfield;
-}
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} */
+
+input[type="text"] {
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+input[type="text"]:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+}
+input[type="text"]::-webkit-outer-spin-button,
+input[type="text"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
