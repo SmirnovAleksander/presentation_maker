@@ -1,11 +1,11 @@
 .rotationEditWrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border: 2px solid #D9D9D9;
     border-radius: 6px;
-    /*width: 200px;*/
     max-width: 260px;
     min-width: 260px;
+    justify-content: space-around;
     gap: 5px;
 }
 .rotationButtons {
@@ -35,4 +35,78 @@ input[type="range"] {
     border-radius: 4px;
     background-color: #ffffff;
     box-sizing: border-box;
+}
+
+.rotationDial {
+    margin: 15px;
+    width: 100px; /* Ширина тумблера */
+    height: 100px; /* Высота тумблера */
+    border-radius: 50%; /* Круглая форма */
+    border: 2px solid #ccc; /* Цвет границы */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.degreeMark {
+    position: absolute;
+    width: 1px; /* Ширина метки */
+    height: 40px; /* Высота метки */
+    background-color: rgb(110, 110, 110); /* Цвет метки */
+    top: 9%; /* Центрирование метки по вертикали */
+    left: 50%; /* Центрирование метки по горизонтали */
+    transform-origin: bottom; /* Точка вращения для меток */
+    transform: translate(-50%, -100%); /* Центрирование метки */
+}
+
+.degreeText {
+    position: absolute;
+    top: -10px; /* Положение текста метки */
+    left: 50%; /* Центрирование текста метки */
+    font-size: 10px; /* Размер шрифта метки */
+    transform: translate(-50%, -100%); /* Центрирование текста */
+}
+
+.hoverAngleMark {
+    position: absolute;
+    width: 2px; /* Ширина метки угла при наведении */
+    height: 40px; /* Высота метки угла при наведении */
+    background-color: blue; /* Цвет метки угла при наведении */
+    z-index: 100;
+    top: 10%; /* Центрирование метки по вертикали */
+    left: 50%; /* Центрирование метки по горизонтали */
+    transform-origin: bottom; /* Точка вращения для метки */
+    transform: translate(-50%, -100%); /* Центрирование метки */
+}
+
+.hoverAngleText {
+    position: absolute;
+    top: 5px; /* Положение текста метки угла при наведении */
+    left: 50%; /* Центрирование текста метки */
+    font-size: 12px; /* Размер шрифта метки */
+    transform: translate(-50%, -100%); /* Центрирование текста */
+    color: blue;
+}
+
+.currentAngleMark {
+    position: absolute;
+    width: 2px; /* Ширина метки текущего угла */
+    height: 40px; /* Высота метки текущего угла */
+    background-color: red; /* Цвет метки текущего угла */
+    top: 10%; /* Центрирование метки по вертикали */
+    left: 50%; /* Центрирование метки по горизонтали */
+    transform-origin: bottom; /* Точка вращения для метки */
+    transform: translate(-50%, -100%); /* Центрирование метки */
+}
+
+.currentAngleDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px; /* Отступ сверху */
+    font-size: 14px; /* Размер шрифта */
+    text-align: center; /* Центрирование текста */
+    color: #333; /* Цвет текста */
+    padding-top: 20px;
 }
