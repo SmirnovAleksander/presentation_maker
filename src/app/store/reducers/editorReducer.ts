@@ -268,6 +268,23 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                 )
             };
         }
+        case 'UPDATE_ALL_SLIDES_BACKGROUND_IMAGE': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => ({
+                                ...slide,
+                                backgroundImage: action.payload.backgroundImage,
+                            })),
+                        };
+                    }
+                    return presentation;
+                }),
+            };
+        }
         default:
             return state;
     }

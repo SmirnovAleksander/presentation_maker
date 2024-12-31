@@ -15,6 +15,7 @@ import {
     moveSlideUp,
     moveSlideDown,
     deselectElement, updatePresentationTitle, deleteElement,
+    updateAllSlidesBackgroundImage,
 } from "@/app/store/actions.ts";
 import {ElementProps, ImageElement, ShapeElement, Slide, TextElement} from "@/shared/types/types.ts";
 
@@ -76,6 +77,12 @@ const useStoreSelector = () => {
         }
     }
 
+    const updateAllSlidesBackgroundImageAction = (backgroundColor: string) => {
+        if (selectedSlide) {
+            dispatch(updateAllSlidesBackgroundImage(backgroundColor));
+        }
+    }
+
     const undoAction = () => {
         dispatch(undo());
     }
@@ -119,6 +126,7 @@ const useStoreSelector = () => {
         selectElementAction,
         updateSelectedSlide,
         updateAllSlidesBackgroundColorAction,
+        updateAllSlidesBackgroundImageAction,
         pastLength,
         futureLength,
         undoAction,

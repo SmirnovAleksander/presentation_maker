@@ -16,6 +16,7 @@ export const SELECT_SLIDE = 'SELECT_SLIDE';
 export const DELETE_SLIDE = 'DELETE_SLIDE';
 export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 export const UPDATE_ALL_SLIDES_BACKGROUND_COLOR = 'UPDATE_ALL_SLIDES_BACKGROUND_COLOR';
+export const UPDATE_ALL_SLIDES_BACKGROUND_IMAGE = 'UPDATE_ALL_SLIDES_BACKGROUND_IMAGE';
 
 export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
@@ -120,6 +121,11 @@ export interface MoveSlideAction {
     };
 }
 
+export interface UpdateAllSlidesBackgroundImageAction {
+    type: typeof UPDATE_ALL_SLIDES_BACKGROUND_IMAGE;
+    payload: { backgroundImage: string; };
+}
+
 export type ElementActions =
     | MoveSlideAction
     | AddElementAction
@@ -139,7 +145,8 @@ export type ElementActions =
     | MoveSlideUpAction
     | MoveSlideDownAction
     | UndoAction
-    | RedoAction;
+    | RedoAction
+    | UpdateAllSlidesBackgroundImageAction;
 
 //Экшены
 
@@ -230,4 +237,9 @@ export const deselectElement = (): DeselectElementAction => ({
 export const moveSlide = (slideId: number, newIndex: number): MoveSlideAction => ({
     type: MOVE_SLIDE,
     payload: { slideId, newIndex }
+});
+
+export const updateAllSlidesBackgroundImage = (backgroundImage: string): UpdateAllSlidesBackgroundImageAction => ({
+    type: UPDATE_ALL_SLIDES_BACKGROUND_IMAGE,
+    payload: { backgroundImage },
 });
