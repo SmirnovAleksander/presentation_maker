@@ -5,7 +5,7 @@ import {
     addElement,
     selectElement,
     updateSlide,
-    updateAllSlidesBackground,
+    updateAllSlidesBackgroundColor,
     undo,
     redo,
     addSlide,
@@ -70,9 +70,9 @@ const useStoreSelector = () => {
         }
     };
 
-    const updateAllSlidesBackgroundAction = (backgroundImage: string) => {
+    const updateAllSlidesBackgroundColorAction = (backgroundColor: string) => {
         if (selectedSlide) {
-            dispatch(updateAllSlidesBackground(backgroundImage));
+            dispatch(updateAllSlidesBackgroundColor(backgroundColor));
         }
     }
 
@@ -118,7 +118,7 @@ const useStoreSelector = () => {
         addNewElement,
         selectElementAction,
         updateSelectedSlide,
-        updateAllSlidesBackgroundAction,
+        updateAllSlidesBackgroundColorAction,
         pastLength,
         futureLength,
         undoAction,

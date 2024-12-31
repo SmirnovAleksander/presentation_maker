@@ -15,7 +15,7 @@ export const ADD_SLIDE = 'ADD_SLIDE';
 export const SELECT_SLIDE = 'SELECT_SLIDE';
 export const DELETE_SLIDE = 'DELETE_SLIDE';
 export const UPDATE_SLIDE = 'UPDATE_SLIDE';
-export const UPDATE_ALL_SLIDES_BACKGROUND = 'UPDATE_ALL_SLIDES_BACKGROUND';
+export const UPDATE_ALL_SLIDES_BACKGROUND_COLOR = 'UPDATE_ALL_SLIDES_BACKGROUND_COLOR';
 
 export const ADD_ELEMENT = 'ADD_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
@@ -74,9 +74,9 @@ export interface DeleteSlideAction {
     type: typeof DELETE_SLIDE;
     payload: { slideId: number };
 }
-export interface UpdateAllSlidesBackgroundAction    {
-    type: typeof UPDATE_ALL_SLIDES_BACKGROUND;
-    payload: { backgroundImage: string; };
+export interface UpdateAllSlidesBackgroundColorAction    {
+    type: typeof UPDATE_ALL_SLIDES_BACKGROUND_COLOR;
+    payload: { backgroundColor: string; };
 }
 export interface UpdateSlideAction {
     type: typeof UPDATE_SLIDE;
@@ -134,7 +134,7 @@ export type ElementActions =
     | UpdatePresentationTitleAction
     | SelectPresentationAction
     | DeleteSlideAction
-    | UpdateAllSlidesBackgroundAction
+    | UpdateAllSlidesBackgroundColorAction
     | UpdateSlideAction
     | MoveSlideUpAction
     | MoveSlideDownAction
@@ -192,9 +192,9 @@ export const deleteSlide = (slideId: number): DeleteSlideAction => ({
     type: DELETE_SLIDE,
     payload: {slideId },
 });
-export const updateAllSlidesBackground = (backgroundImage: string): UpdateAllSlidesBackgroundAction    => ({
-    type: UPDATE_ALL_SLIDES_BACKGROUND,
-    payload: { backgroundImage },
+export const updateAllSlidesBackgroundColor = (backgroundColor: string): UpdateAllSlidesBackgroundColorAction => ({
+    type: "UPDATE_ALL_SLIDES_BACKGROUND_COLOR",
+    payload: { backgroundColor },
 });
 export const updateSlide = (id: number, backgroundColor: string): UpdateSlideAction => ({
         type: UPDATE_SLIDE,

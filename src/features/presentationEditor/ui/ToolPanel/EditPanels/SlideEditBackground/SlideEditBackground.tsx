@@ -6,12 +6,19 @@ import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 const SlideEditBackground = () => {
     const {
         selectedSlide,
-        updateSelectedSlide
+        updateSelectedSlide,
+        updateAllSlidesBackgroundColorAction
     } = useStoreSelector();
+
+    const [applyToAll, setApplyToAll] = useState(false);
+    const [localColor, setLocalColor] = useState('#D9D9D9');
 
     const updateBackgroundColor = (backgroundColor: string) => {
         if (selectedSlide) {
             updateSelectedSlide(backgroundColor);
+            if (applyToAll) {
+                updateAllSlidesBackgroundColorAction(backgroundColor);
+            }
         }
     };
 
@@ -20,18 +27,31 @@ const SlideEditBackground = () => {
         '#E74C3C', '#3498DB', '#2ECC71', '#1ABC9C', '#F39C12',
         '#D35400', '#C0392B', '#9B59B6', '#2980B9', '#27AE60',
     ];
-    const [localColor, setLocalColor] = useState('#D9D9D9');
 
     return (
         <div className={styles.backgroundEditWrapper}>
             <p className={styles.backgroundEditTitle}>Задний фон слайда</p>
-            <ColorPicker
-                initialColor={localColor}
-                onColorChange={(color) => {
-                    updateBackgroundColor(color);
-                    setLocalColor(color);
-                }}
-            />
+            <div className={styles.headerPanelWrapper}>
+                <ColorPicker
+                    initialColor={localColor}
+                    onColorChange={(color) => {
+                        updateBackgroundColor(color);
+                        setLocalColor(color);
+                    }}
+                />
+                <div className={styles.applyToAllWrapper}>
+                    <label className={styles.switch}>
+                        <input
+                            type="checkbox"
+                            checked={applyToAll}
+                            onChange={() => setApplyToAll(!applyToAll)}
+                        />
+                        <span className={styles.slider}></span>
+                    </label>
+                    <span>Все слайды</span>
+                </div>
+            </div>
+            
             <div className={styles.colorsScrollWrapper}>
                 {popularColors.map((color, index) => (
                     <div

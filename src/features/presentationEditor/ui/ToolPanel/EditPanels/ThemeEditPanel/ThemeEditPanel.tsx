@@ -29,7 +29,7 @@ const ThemeEditPanel = () => {
     const {
         selectedPresentation,
         selectedPresentationId,
-        updateAllSlidesBackgroundAction
+        updateAllSlidesBackgroundColorAction
     } = useStoreSelector();
     const [themes, setThemes] = useState(initialThemes);
 
@@ -44,9 +44,9 @@ const ThemeEditPanel = () => {
         if (!selectedPresentationId) return;
         const allSlidesHaveSelectedTheme = selectedPresentation?.slides.every(slide => slide.backgroundImage === image);
         if (allSlidesHaveSelectedTheme) {
-            updateAllSlidesBackgroundAction('');
+            updateAllSlidesBackgroundColorAction('');
         } else {
-            updateAllSlidesBackgroundAction(image);
+            updateAllSlidesBackgroundColorAction(image);
         }
     };
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

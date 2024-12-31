@@ -111,7 +111,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                 selectedElementId: null
             };
         }
-        case 'UPDATE_ALL_SLIDES_BACKGROUND': {
+        case 'UPDATE_ALL_SLIDES_BACKGROUND_COLOR': {
             return {
                 ...state,
                 presentations: state.presentations.map(presentation => {
@@ -120,7 +120,7 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                             ...presentation,
                             slides: presentation.slides.map(slide => ({
                                 ...slide,
-                                backgroundImage: action.payload.backgroundImage,
+                                backgroundColor: action.payload.backgroundColor,
                             })),
                         };
                     }
