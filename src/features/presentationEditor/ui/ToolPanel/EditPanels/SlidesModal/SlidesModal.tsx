@@ -6,6 +6,7 @@ import {CustomButton} from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 import { Slide } from '@/shared/types/types.ts';
 import RenderSlideItemElements from '@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements';
+import PptxGenJS from 'pptxgenjs';
 
 interface SlidesModalInterface {
     slides: Slide[],
@@ -52,6 +53,33 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
         doc.save(`${selectedPresentation.title || 'presentation'}.pdf`);
     };
 
+    const handleExportToPPTX = async () => {
+        if (!selectedPresentation) return;
+
+        const pptx = new PptxGenJS();
+        for (let i = 0; i < selectedPresentation.slides.length; i++) {
+            const slide = selectedPresentation.slides[i];
+            const slideRef = document.querySelector(`#slide-${slide.id}`);
+
+            if (slideRef) {
+                const canvas = await html2canvas(slideRef as HTMLElement, {
+                    scale: 2,
+                    useCORS: true,
+                });
+                const imgData = canvas.toDataURL('image/png');
+
+                const pptSlide = pptx.addSlide();
+                pptSlide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
+
+                pptSlide.addText(`Slide ${i + 1} of ${selectedPresentation.slides.length}`, {
+                    x: 4.5, y: 6.5, fontSize: 18, color: '000000', align: 'center'
+                });
+            }
+        }
+
+        pptx.writeFile({ fileName: `${selectedPresentation.title || 'presentation'}.pptx` });
+    };
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.slidesContent}>
@@ -84,6 +112,9 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
                     </CustomButton>
                     <CustomButton onClick={handleExportToPDF}>
                         Экспорт в PDF
+                    </CustomButton>
+                    <CustomButton onClick={handleExportToPPTX}>
+                        Экспорт в PPTX
                     </CustomButton>
                 </div>
             </div>
