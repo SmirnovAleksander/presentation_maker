@@ -16,8 +16,11 @@ import {
     moveSlideDown,
     deselectElement, updatePresentationTitle, deleteElement,
     updateAllSlidesBackgroundImage,
+    addPresentation,
+    deletePresentation,
+    selectPresentation
 } from "@/app/store/actions.ts";
-import {ElementProps, ImageElement, ShapeElement, Slide, TextElement} from "@/shared/types/types.ts";
+import {ElementProps, ImageElement, ShapeElement, Slide, TextElement, Presentation} from "@/shared/types/types.ts";
 
 const useStoreSelector = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -39,6 +42,17 @@ const useStoreSelector = () => {
             dispatch(updatePresentationTitle(selectedPresentation.id, newTitle));
         }
     }
+    const addNewPresentation = (newPresentation: Presentation) => {
+        dispatch(addPresentation(newPresentation));
+    };
+
+    const deletePresentationAction = (presentationId: number) => {
+        dispatch(deletePresentation(presentationId));
+    };
+
+    const selectPresentationAction = (presentationId: number) => {
+        dispatch(selectPresentation(presentationId));
+    };
 
     const updateSelectedElement = (updates: Partial<TextElement | ImageElement | ShapeElement>) => {
         if (selectedElement) {
@@ -121,14 +135,14 @@ const useStoreSelector = () => {
         selectedPresentationId,
         selectedElementId,
         selectedSlideId,
+        pastLength,
+        futureLength,
         updateSelectedElement,
         addNewElement,
         selectElementAction,
         updateSelectedSlide,
         updateAllSlidesBackgroundColorAction,
         updateAllSlidesBackgroundImageAction,
-        pastLength,
-        futureLength,
         undoAction,
         redoAction,
         addSlideAction,
@@ -139,7 +153,10 @@ const useStoreSelector = () => {
         moveSlideDownAction,
         deselectElementAction,
         updatePresentationTitleAction,
-        deleteElementAction
+        deleteElementAction,
+        addNewPresentation,
+        deletePresentationAction,
+        selectPresentationAction
     };
 };
 

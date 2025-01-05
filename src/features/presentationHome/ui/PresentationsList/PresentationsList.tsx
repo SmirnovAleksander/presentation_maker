@@ -1,12 +1,11 @@
-import {useSelector} from "react-redux";
 import styles from './PresentationsList.module.css'
 import PresentationItem from "./PresentationItem/PresentationItem.tsx";
 import {useState} from "react";
-import {appState} from "@/app/store/store.ts";
 import {CustomButton, CustomInput} from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 
 const PresentationsList = () => {
-    const presentations = useSelector((state: appState) => state.present.presentations);
+    const { presentations } = useStoreSelector();
     const [searchTitle, setSearchTitle] = useState("");
     const filteredPresentations = presentations.filter((p) => p.title.toLowerCase().includes(searchTitle.toLowerCase()));
     return (

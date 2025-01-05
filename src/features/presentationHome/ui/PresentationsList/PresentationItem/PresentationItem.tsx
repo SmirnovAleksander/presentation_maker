@@ -1,12 +1,10 @@
-import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import styles from './PresentationItem.module.css'
 import React, {useState} from "react";
 import RenderSlideItemElements from "@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements.tsx";
-import {AppDispatch} from "@/app/store/store.ts";
-import {deletePresentation, selectPresentation, selectSlide, updatePresentationTitle} from "@/app/store/actions.ts";
 import {Presentation} from "@/shared/types/types.ts";
 import {CustomInput, DeleteButton} from "@/shared/ui";
+import useStoreSelector from "@/shared/hooks/useStoreSelector";
 
 interface PresentationItemProps {
     presentation: Presentation;
@@ -14,14 +12,19 @@ interface PresentationItemProps {
 
 const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
     const firstSlide = presentation.slides[0];
+    const {deletePresentationAction,
+        updatePresentationTitleAction,
+        selectSlideAction,
+        selectPresentationAction
+    } = useStoreSelector();
+    
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     const handleDeletePresentation = (id: number) => {
         setIsDeleting(true);
         setTimeout(() => {
-            dispatch(deletePresentation(id));
+            deletePresentationAction(id);
         }, 300);
     };
 
@@ -32,18 +35,18 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
         setEditingId(presentationId);
         setNewTitle(currentTitle);
     };
-    const handleChangeTitle = (presentationId: number) => {
+    const handleChangeTitle = () => {
         if (newTitle.trim() !== '') {
-            dispatch(updatePresentationTitle(presentationId, newTitle));
+            updatePresentationTitleAction(newTitle);
             setEditingId(null);
             setNewTitle('');
         }
     };
     const navigateToEditPresentation = () => {
-        dispatch(selectPresentation(presentation.id));
+        selectPresentationAction(presentation.id);
         navigate(`/presentation/${presentation.id}`);
         if (firstSlide) {
-            dispatch(selectSlide(firstSlide.id));
+            selectSlideAction(firstSlide.id);
         }
     }
     const slideStyle = firstSlide ? {
@@ -76,10 +79,10 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
                     <CustomInput
                         value={newTitle}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
-                        onBlur={() => handleChangeTitle(presentation.id)}
+                        onBlur={() => handleChangeTitle}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                handleChangeTitle(presentation.id);
+                                handleChangeTitle;
                             }
                         }}
                     />

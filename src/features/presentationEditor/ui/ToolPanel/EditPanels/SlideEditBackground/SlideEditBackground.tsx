@@ -2,6 +2,7 @@ import {useState} from "react";
 import styles from "./SlideEditBackground.module.css";
 import {ColorPicker} from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import { popularColors } from "@/shared/constants/colors.ts";
 
 const SlideEditBackground = () => {
     const {
@@ -21,12 +22,6 @@ const SlideEditBackground = () => {
             }
         }
     };
-
-    const popularColors = [
-        '#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD',
-        '#E74C3C', '#3498DB', '#2ECC71', '#1ABC9C', '#F39C12',
-        '#D35400', '#C0392B', '#9B59B6', '#2980B9', '#27AE60',
-    ];
 
     return (
         <div className={styles.backgroundEditWrapper}>

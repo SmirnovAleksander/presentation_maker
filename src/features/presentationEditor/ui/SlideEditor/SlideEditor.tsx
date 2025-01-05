@@ -3,8 +3,8 @@ import ShapeElement from "./elements/ShapeElement.tsx";
 import ImageElement from "./elements/ImageElement.tsx";
 import TextElement from "./elements/TextElement.tsx";
 import {useRef} from "react";
-import {ImageElement as ImageElementProps} from '@/shared/types/types.ts'
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import { useCreateElements } from '@/shared/hooks/useCreateElements.ts';
 
 const SlideEditor = () => {
     const {
@@ -12,9 +12,8 @@ const SlideEditor = () => {
         selectedSlide,
         selectedSlideId,
         deselectElementAction,
-        addNewElement
     } = useStoreSelector();
-
+    const {createImageElement} = useCreateElements();
     const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const clickedOnElement = (e.target as HTMLElement).closest('.element');
         if (!clickedOnElement && selectedElementId) {
@@ -29,21 +28,7 @@ const SlideEditor = () => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 if (event.target?.result) {
-                    const newImageElement: ImageElementProps = {
-                        id: Date.now(),
-                        type: 'image',
-                        content: event.target.result as string,
-                        position: { x: e.clientX - 250, y: e.clientY - 250},
-                        size: { width: 100, height: 100 },
-                        rotation: 0,
-                        borderColor: '#000000',
-                        borderStyle: 'solid',
-                        borderWidth: 0,
-                        borderRadius: 0,
-                        boxShadow: 'none',
-                        opacity: 1,
-                    };
-                    addNewElement(newImageElement);
+                    createImageElement(event.target.result as string)
                 }
             };
             reader.readAsDataURL(file);

@@ -1,19 +1,17 @@
-import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import styles from './NewPresentationModal.module.css'
 import plusIcon from '@/assets/Plus.svg'
 import {ChangeEvent, useRef} from "react";
 import Ajv from "ajv";
-import presentationSchema from "@/entities/presentation/presentationSchema.ts";
-import {AppDispatch} from "@/app/store/store.ts";
-import {addPresentation} from "@/app/store/actions.ts";
+import presentationSchema from "@/entities/presentation/presentationSchema";
 import {Presentation} from "@/shared/types/types.ts";
+import useStoreSelector from "@/shared/hooks/useStoreSelector";
 
 const ajv = new Ajv();
 const validate = ajv.compile(presentationSchema);
 
 const NewPresentationModal = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const {addNewPresentation} = useStoreSelector();
     const navigate = useNavigate();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -23,7 +21,7 @@ const NewPresentationModal = () => {
             title: '',
             slides: [],
         };
-        dispatch(addPresentation(newPresentation));
+        addNewPresentation(newPresentation);
         window.open(`/presentation/${newPresentation.id}`, '_blank');
     };
 
@@ -45,18 +43,18 @@ const NewPresentationModal = () => {
                             console.log("Загруженная презентация:", loadedPresentation);
                             const updatedPresentation: Presentation = {
                                 ...loadedPresentation,
-                                id: generateUniqueId(), // Генерируем новый ID для презентации
+                                id: generateUniqueId(),
                                 slides: loadedPresentation.slides.map(slide => ({
                                     ...slide,
-                                    id: generateUniqueId(), // Генерируем новый ID для каждого слайда
+                                    id: generateUniqueId(),
                                     elements: slide.elements.map(element => ({
                                         ...element,
-                                        id: generateUniqueId(), // Генерируем новый ID для каждого элемента
+                                        id: generateUniqueId(),
                                     })),
                                 })),
                             };
                             console.log("Обновленная презентация:", updatedPresentation);
-                            dispatch(addPresentation(updatedPresentation));
+                            addNewPresentation(updatedPresentation);
                             navigate(`/presentation/${updatedPresentation.id}`);
                         } else {
                             console.error("Ошибка валидации:", validate.errors);

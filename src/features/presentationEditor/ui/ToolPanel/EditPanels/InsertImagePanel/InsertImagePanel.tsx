@@ -1,8 +1,8 @@
 import {useRef, useState} from "react";
 import styles from "./InsertImagePanel.module.css";
 import {CustomButton, CustomInput} from "@/shared/ui";
-import {ImageElement} from "@/shared/types/types.ts";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import {useCreateElements} from "@/shared/hooks/useCreateElements";
 
 const InsertImagePanel = () => {
     const {
@@ -10,9 +10,9 @@ const InsertImagePanel = () => {
         updateSelectedElement,
         selectedPresentationId,
         selectedSlideId,
-        addNewElement,
-        selectElementAction
     } = useStoreSelector();
+
+    const {createImageElement} = useCreateElements();
 
     const updateContent = (text: string) => {
         updateSelectedElement({ content: text });
@@ -33,32 +33,11 @@ const InsertImagePanel = () => {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImage(imageUrl);
             if (selectedPresentationId && selectedSlideId) {
-                addImageElement(imageUrl)
+                createImageElement(imageUrl)
             }
         }
     };
 
-    const addImageElement = (imageUrl: string) => {
-        const newImageElement: ImageElement = {
-            id: Date.now(),
-            type: 'image',
-            content: imageUrl,
-            position: { x: 150, y: 150 },
-            size: { width: 100, height: 100 },
-            rotation: 0,
-            borderColor: '#000000',
-            borderStyle: 'solid',
-            borderWidth: 0,
-            borderRadius: 0,
-            boxShadow: 'none',
-            opacity: 1,
-        };
-
-        if (selectedSlideId && selectedPresentationId) {
-            addNewElement(newImageElement);
-            selectElementAction(newImageElement.id)
-        }
-    };
     return (
         <div className={styles.insertPanelWrapper}>
             <p className={styles.insertPanelTitle}>Импорт фото</p>

@@ -5,7 +5,7 @@ import arrowIconRight from '@/assets/arrow_icon_right.png'
 import arrowIconLeft from '@/assets/arrow_icon_left.png'
 import {CustomButton, CustomInput} from "@/shared/ui";
 import useStoreSelector from '@/shared/hooks/useStoreSelector.ts';
-import { ImageElement } from '@/shared/types/types.ts';
+import { useCreateElements } from '@/shared/hooks/useCreateElements';
 
 interface ImportImagePanelInterface {
     onClose: () => void;
@@ -19,15 +19,11 @@ interface UnsplashResult {
 }
 
 const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
-
     const {
         selectedSlideId,
         selectedPresentation,
-        addNewElement,
-        selectElementAction
     } = useStoreSelector();
-
-
+    const {createImageElement} = useCreateElements();
     const [query, setQuery] = useState<string>('');
     const [images, setImages] = useState<UnsplashResult[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -113,25 +109,8 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
     const handleAddToSlide = () => {
         if (selectedImageIndex !== null) {
             const imageUrl = images[selectedImageIndex].urls.full;
-
-            const newImageElement: ImageElement = {
-                id: Date.now(),
-                type: 'image',
-                content: imageUrl,
-                position: { x: 150, y: 150 },
-                size: { width: 100, height: 100 },
-                rotation: 0,
-                borderColor: '#000000',
-                borderStyle: 'solid',
-                borderWidth: 0,
-                borderRadius: 0,
-                boxShadow: 'none',
-                opacity: 1,
-            };
-
             if (selectedSlideId && selectedPresentation) {
-                addNewElement(newImageElement);
-                selectElementAction(newImageElement.id);
+                createImageElement(imageUrl);
             } else {
                 console.warn("Слайд или презентация не выбраны!");
             }
