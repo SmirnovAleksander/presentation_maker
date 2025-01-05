@@ -3,9 +3,9 @@
     flex-direction: row;
     border: 2px solid #D9D9D9;
     border-radius: 6px;
-    max-width: 260px;
-    min-width: 260px;
-    justify-content: space-around;
+    max-width: 380px;
+    min-width: 380px;
+    justify-content: space-between;
     gap: 5px;
 }
 .rotationButtons {
@@ -14,7 +14,17 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    width: 220px;
+    /* height: 100px; */
 }
+
+.rotationPanelMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
 .rotationEditRange {
     display: flex;
     align-items: center;
@@ -104,9 +114,8 @@ input[type="range"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px; /* Отступ сверху */
+    padding-top: 10px; /* Отступ сверху */
     font-size: 14px; /* Размер шрифта */
     text-align: center; /* Центрирование текста */
     color: #333; /* Цвет текста */
-    padding-top: 20px;
 }

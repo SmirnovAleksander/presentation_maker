@@ -12,10 +12,15 @@
 .imageWrapper {
     display: flex;
     flex-direction: column;
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-bottom: 3px;
+    padding: 0 10px 3px;
     gap: 5px;
+    align-items: flex-start;
+}
+
+.imageInputGroup {
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
 }
 
 .insertPanelTitle {

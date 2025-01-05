@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import styles from './RotationEditPanel.module.css'
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import CustomButton from '@/shared/ui/CustomButton/CustomButton';
 
 const RotationEditPanel = () => {
     const {
         selectedElement,
         updateSelectedElement,
     } = useStoreSelector();
+
+    const rotationAngles = [0, 45, 90, 135, 180, 225, 270, 315];
+    const rotation = selectedElement ? selectedElement.rotation : 0;
 
     const [currentAngle, setCurrentAngle] = useState<number>(0);
     const [hoverAngle, setHoverAngle] = useState<number | null>(null);
@@ -58,9 +62,25 @@ const RotationEditPanel = () => {
                 )}
                 <div className={styles.currentAngleMark} style={{ transform: `rotate(${currentAngle - 90}deg)` }} />
             </div>
-            <div className={styles.currentAngleDisplay}>
-                <p>Текущий угол</p>
-                <div>{currentAngle}°</div>
+            
+
+            <div className={styles.rotationPanelMain}>
+                <div className={styles.currentAngleDisplay}>
+                    <p>Текущий угол {currentAngle}°</p>
+                </div>
+                <div className={styles.rotationButtons}>
+                    {rotationAngles.map((angle) => (
+                        <CustomButton
+                            key={angle}
+                            onClick={() => updateRotation(angle)}
+                            style={{
+                                backgroundColor: rotation === angle ? 'lightblue' : 'transparent',
+                            }}
+                        >
+                            {angle}°
+                        </CustomButton>
+                    ))}
+                </div>
             </div>
         </div>
     );

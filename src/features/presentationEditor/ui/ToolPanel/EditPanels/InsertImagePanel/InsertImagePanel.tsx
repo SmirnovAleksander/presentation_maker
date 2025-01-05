@@ -1,25 +1,17 @@
-import {useRef, useState} from "react";
+import { useRef, useState } from "react";
 import styles from "./InsertImagePanel.module.css";
-import {CustomButton, CustomInput} from "@/shared/ui";
+import { CustomButton, CustomInput } from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
-import {useCreateElements} from "@/shared/hooks/useCreateElements";
+import { useCreateElements } from "@/shared/hooks/useCreateElements";
 
 const InsertImagePanel = () => {
-    const {
-        selectedElement,
-        updateSelectedElement,
-        selectedPresentationId,
-        selectedSlideId,
-    } = useStoreSelector();
+    const { selectedPresentationId, selectedSlideId } = useStoreSelector();
+    const { createImageElement } = useCreateElements();
 
-    const {createImageElement} = useCreateElements();
+    const [imageUrl, setImageUrl] = useState("");
+    const [showImageInput, setShowImageInput] = useState<boolean>(false);
 
-    const updateContent = (text: string) => {
-        updateSelectedElement({ content: text });
-    };
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-    const isImageElement = selectedElement && selectedElement.type === 'image';
-    const defaultImageContent = 'https://avatars.dzeninfra.ru/get-zen_doc/1333513/pub_5fb9552f9d2ffe38eeb21401_5fb955f29d2ffe38eeb3305f/scale_1200';
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleButtonClick = () => {
@@ -27,34 +19,61 @@ const InsertImagePanel = () => {
             fileInputRef.current.click();
         }
     };
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImage(imageUrl);
             if (selectedPresentationId && selectedSlideId) {
-                createImageElement(imageUrl)
+                createImageElement(imageUrl);
             }
+        }
+    };
+
+    const handleImageAdd = () => {
+        if (imageUrl && selectedPresentationId && selectedSlideId) {
+            createImageElement(imageUrl);
+            setImageUrl("");
         }
     };
 
     return (
         <div className={styles.insertPanelWrapper}>
-            <p className={styles.insertPanelTitle}>Импорт фото</p>
+            <p className={styles.insertPanelTitle}>Импорт картинки</p>
             <div className={styles.imageWrapper}>
-                <div className={styles.itemEditWrapper}>
-                    <p>Url: </p>
-                    <CustomInput
-                        style={{width: '300px'}}
-                        value={isImageElement ? selectedElement.content : defaultImageContent}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            updateContent(e.target.value)
-                            setUploadedImage(e.target.value)
-                        }}/>
-                </div>
+                {!showImageInput ? (
+                    <CustomButton 
+                        onClick={() => setShowImageInput(true)} 
+                    >
+                        Добавить картинку через URL
+                    </CustomButton>
+                ) : (
+                    <div className={styles.imageInputGroup}>
+                        <CustomInput
+                            style={{width: 300}}
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder={"Введите URL картинки"}
+                        />
+                        <CustomButton 
+                            onClick={handleImageAdd}
+                            disabled={!imageUrl.trim()}
+                        >
+                            Добавить
+                        </CustomButton>
+                        <CustomButton 
+                            onClick={() => {
+                                setShowImageInput(false);
+                                setImageUrl("");
+                            }}
+                        >
+                            Отмена
+                        </CustomButton>
+                    </div>
+                )}
                 <div className={styles.imageDownloadWrapper}>
                     <CustomButton
-                        style={{}}
                         onClick={handleButtonClick}
                         disabled={!selectedSlideId}
                     >
@@ -64,7 +83,7 @@ const InsertImagePanel = () => {
                         type="file"
                         accept="image/*"
                         ref={fileInputRef}
-                        style={{display: 'none'}}
+                        style={{ display: 'none' }}
                         onChange={handleFileUpload}
                     />
                     {uploadedImage && (
@@ -77,7 +96,6 @@ const InsertImagePanel = () => {
                         </div>
                     )}
                 </div>
-
             </div>
         </div>
     );
