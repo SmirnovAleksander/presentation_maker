@@ -250,6 +250,63 @@ const editorReducer = (state = initialPresentState, action: ElementActions): Edi
                 selectedElementId: state.selectedElementId === action.payload ? null : state.selectedElementId,
             };
         }
+
+        case 'MOVE_ELEMENT_TO_FRONT': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => {
+                                if (slide.id === state.selectedSlideId) {
+                                    const maxZIndex = Math.max(...slide.elements.map(el => el.zIndex));
+                                    return {
+                                        ...slide,
+                                        elements: slide.elements.map(el => 
+                                            el.id === action.payload
+                                                ? { ...el, zIndex: maxZIndex + 1 }
+                                                : el
+                                        )
+                                    };
+                                }
+                                return slide;
+                            })
+                        };
+                    }
+                    return presentation;
+                })
+            };
+        }
+
+        case 'MOVE_ELEMENT_TO_BACK': {
+            return {
+                ...state,
+                presentations: state.presentations.map(presentation => {
+                    if (presentation.id === state.selectedPresentationId) {
+                        return {
+                            ...presentation,
+                            slides: presentation.slides.map(slide => {
+                                if (slide.id === state.selectedSlideId) {
+                                    const minZIndex = Math.min(...slide.elements.map(el => el.zIndex));
+                                    return {
+                                        ...slide,
+                                        elements: slide.elements.map(el =>
+                                            el.id === action.payload
+                                                ? { ...el, zIndex: minZIndex - 1 }
+                                                : el
+                                        )
+                                    };
+                                }
+                                return slide;
+                            })
+                        };
+                    }
+                    return presentation;
+                })
+            };
+        }
+
         case 'MOVE_SLIDE': {
             const presentation = state.presentations.find(p => p.id === state.selectedPresentationId);
             if (!presentation) return state;

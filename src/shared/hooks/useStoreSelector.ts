@@ -18,7 +18,9 @@ import {
     updateAllSlidesBackgroundImage,
     addPresentation,
     deletePresentation,
-    selectPresentation
+    selectPresentation,
+    moveElementToFront,
+    moveElementToBack
 } from "@/app/store/actions.ts";
 import {ElementProps, ImageElement, ShapeElement, Slide, TextElement, Presentation} from "@/shared/types/types.ts";
 
@@ -57,6 +59,18 @@ const useStoreSelector = () => {
     const updateSelectedElement = (updates: Partial<TextElement | ImageElement | ShapeElement>) => {
         if (selectedElement) {
             dispatch(updateElement(selectedElement.id, updates));
+        }
+    };
+
+    const moveElementToFrontAction = (elementId: number) => {
+        if (selectedSlide) {
+            dispatch(moveElementToFront(elementId));
+        }
+    };
+
+    const moveElementToBackAction = (elementId: number) => {
+        if (selectedSlide) {
+            dispatch(moveElementToBack(elementId));
         }
     };
 
@@ -156,7 +170,9 @@ const useStoreSelector = () => {
         deleteElementAction,
         addNewPresentation,
         deletePresentationAction,
-        selectPresentationAction
+        selectPresentationAction,
+        moveElementToFrontAction,
+        moveElementToBackAction
     };
 };
 

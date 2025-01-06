@@ -15,6 +15,8 @@ interface UnsplashResult {
     urls: {
         small: string;
         full: string;
+        regular: string;
+        thumb: string;
     };
 }
 
@@ -108,7 +110,7 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
 
     const handleAddToSlide = () => {
         if (selectedImageIndex !== null) {
-            const imageUrl = images[selectedImageIndex].urls.full;
+            const imageUrl = images[selectedImageIndex].urls.regular;
             if (selectedSlideId && selectedPresentation) {
                 createImageElement(imageUrl);
             } else {

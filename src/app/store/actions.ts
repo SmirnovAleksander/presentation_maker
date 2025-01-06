@@ -23,6 +23,8 @@ export const DELETE_ELEMENT = 'DELETE_ELEMENT';
 export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const DESELECT_ELEMENT = 'DESELECT_ELEMENT';
+export const MOVE_ELEMENT_TO_FRONT = 'MOVE_ELEMENT_TO_FRONT'
+export const MOVE_ELEMENT_TO_BACK = 'MOVE_ELEMENT_TO_BACK'
 
 export const MOVE_SLIDE = 'MOVE_SLIDE';
 
@@ -113,6 +115,17 @@ export interface UpdateElementAction {
     };
 }
 
+export interface MoveElementToFrontAction {
+    type: typeof MOVE_ELEMENT_TO_FRONT;
+    payload: number;
+}
+
+export interface MoveElementToBackAction {
+    type: typeof MOVE_ELEMENT_TO_BACK;
+    payload: number;
+}
+
+
 export interface MoveSlideAction {
     type: typeof MOVE_SLIDE;
     payload: {
@@ -146,7 +159,9 @@ export type ElementActions =
     | MoveSlideDownAction
     | UndoAction
     | RedoAction
-    | UpdateAllSlidesBackgroundImageAction;
+    | UpdateAllSlidesBackgroundImageAction
+    | MoveElementToFrontAction
+    | MoveElementToBackAction;
 
 //Экшены
 
@@ -233,6 +248,17 @@ export const updateElement = (id: number, updates: Partial<TextElement | ImageEl
 export const deselectElement = (): DeselectElementAction => ({
     type: DESELECT_ELEMENT,
 });
+
+export const moveElementToFront = (elementId: number): MoveElementToFrontAction => ({
+    type: MOVE_ELEMENT_TO_FRONT,
+    payload: elementId,
+});
+
+export const moveElementToBack = (elementId: number): MoveElementToBackAction => ({
+    type: MOVE_ELEMENT_TO_BACK,
+    payload: elementId,
+});
+
 
 export const moveSlide = (slideId: number, newIndex: number): MoveSlideAction => ({
     type: MOVE_SLIDE,

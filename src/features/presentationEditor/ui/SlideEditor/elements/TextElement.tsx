@@ -5,6 +5,8 @@ import type {TextElement} from "@/shared/types/types.ts";
 import {AppDispatch} from "@/app/store/store.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
 import {updateElement} from "@/app/store/actions.ts";
+import { useContextMenu } from '@/shared/hooks/useContextMenu.tsx';
+import { ContextMenu } from '@/shared/ui';
 
 interface TextElementProps {
     element: TextElement
@@ -23,7 +25,13 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
         handleResizeMouseDown
     } = useDragAndResize(element, isEditing);
 
-    const { content, fontSize, fontFamily, color, rotation, backgroundColor, textTransform, bold, italic, alignment, strikethrough, underline } = element;
+    const {
+        contextMenu,
+        handleContextMenu,
+        closeContextMenu
+    } = useContextMenu();
+
+    const { content, fontSize, fontFamily, color, rotation, backgroundColor, textTransform, bold, italic, alignment, strikethrough, underline, zIndex} = element;
 
     // Логика для редактирования текста
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -86,9 +94,11 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
                 fontStyle: italic ? 'italic' : 'normal',
                 textDecoration: `${underline ? 'underline' : ''} ${strikethrough ? 'line-through' : ''}`,
                 textTransform: textTransform,
+                zIndex: zIndex
             }}
             onMouseDown={handleMouseDown}
             onDoubleClick={handleDoubleClick}
+            onContextMenu={handleContextMenu}
         >
             {isEditing ? (
                 <textarea
@@ -122,6 +132,14 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
                 <p style={{margin: 0}}>{content}</p>
             )}
             {isSelected && <ResizeHandles onResizeStart={handleResizeMouseDown} />}
+            {contextMenu && (
+                <ContextMenu
+                    x={contextMenu.x}
+                    y={contextMenu.y}
+                    onClose={closeContextMenu}
+                    element={element}
+                />
+            )}
         </div>
     );
 };

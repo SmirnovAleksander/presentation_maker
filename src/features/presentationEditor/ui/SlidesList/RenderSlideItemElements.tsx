@@ -29,6 +29,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                             textDecoration: `${element.underline ? 'underline' : ''} ${element.strikethrough ? 'line-through' : ''}`,
                             transform: `rotate(${element.rotation}deg)`,
                             color: element.color,
+                            zIndex: element.zIndex
                         }}
                     >
                         {element.content}
@@ -48,6 +49,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                             borderRadius: `${(element.borderRadius ?? 0) / multiplier}px`,
                             boxShadow: element.boxShadow,
                             transform: `rotate(${element.rotation}deg)`,
+                            zIndex: element.zIndex
                         }}
                     >
                         <img
@@ -81,6 +83,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                             transform: `rotate(${element.rotation}deg)`,
                             opacity: element.opacity,
                             borderRadius: '50%',
+                            zIndex: element.zIndex
                         }}
                     >
                         {element.type === 'rectangle' && (

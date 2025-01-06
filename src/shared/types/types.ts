@@ -28,6 +28,7 @@ export interface TextElement {
     strikethrough: boolean;
     textTransform: 'none' | 'uppercase';
     alignment: 'left' | 'center' | 'right' | 'justify';
+    zIndex: number;
 }
 
 export interface ImageElement {
@@ -43,6 +44,7 @@ export interface ImageElement {
     borderRadius?: number;
     boxShadow?: string;
     opacity?: number;
+    zIndex: number;
 }
 
 export interface ShapeElement {
@@ -61,6 +63,7 @@ export interface ShapeElement {
     borderWidth: number;
     gradient: string;
     fillType: 'solid' | 'gradient';
+    zIndex: number;
 }
 
 export type ElementProps = TextElement | ImageElement | ShapeElement;

@@ -26,6 +26,7 @@ export const useCreateElements = () => {
             strikethrough: false,
             textTransform: 'none',
             alignment: 'left',
+            zIndex: 200
         };
 
         if (selectedSlideId) {
@@ -35,25 +36,46 @@ export const useCreateElements = () => {
     };
 
     const createImageElement = (imageUrl: string) => {
-        const newImageElement: ImageElement = {
-            id: Date.now(),
-            type: 'image',
-            content: imageUrl,
-            position: { x: 150, y: 150 },
-            size: { width: 100, height: 100 },
-            rotation: 0,
-            borderColor: '#000000',
-            borderStyle: 'solid',
-            borderWidth: 0,
-            borderRadius: 0,
-            boxShadow: 'none',
-            opacity: 1,
+        const img = new Image();
+        img.src = imageUrl;
+        
+        img.onload = () => {
+            const newImageElement: ImageElement = {
+                id: Date.now(),
+                type: 'image',
+                content: imageUrl,
+                position: { x: 150, y: 150 },
+                size: (() => {
+                    const maxSize = 300;
+                    const ratio = img.naturalWidth / img.naturalHeight;
+                    
+                    if (img.naturalWidth > img.naturalHeight) {
+                        return {
+                            width: maxSize,
+                            height: maxSize / ratio
+                        };
+                    } else {
+                        return {
+                            width: maxSize * ratio,
+                            height: maxSize
+                        };
+                    }
+                })(),
+                rotation: 0,
+                borderColor: '#000000',
+                borderStyle: 'solid',
+                borderWidth: 0,
+                borderRadius: 0,
+                boxShadow: 'none',
+                opacity: 1,
+                zIndex: 200
+            };
+    
+            if (selectedSlideId) {
+                addNewElement(newImageElement);
+                selectElementAction(newImageElement.id)
+            }
         };
-
-        if (selectedSlideId) {
-            addNewElement(newImageElement);
-            selectElementAction(newImageElement.id)
-        }
     };
 
     const createShapeElement = (type: 'rectangle' | 'circle' | 'line') => {
@@ -72,7 +94,8 @@ export const useCreateElements = () => {
             borderWidth: 0,
             boxShadow: 'none',
             fillType: 'solid',
-            gradient: ''
+            gradient: '',
+            zIndex: 200
         };
 
         if (selectedSlideId) {

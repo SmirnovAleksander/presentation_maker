@@ -1,13 +1,15 @@
 import React from 'react';
 import ResizeHandles from "./ResizeHandles.tsx";
-import type {ImageElement} from "@/shared/types/types.ts";
+import type { ImageElement } from "@/shared/types/types.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
+import { ContextMenu } from '@/shared/ui';
+import { useContextMenu } from '@/shared/hooks/useContextMenu.tsx';
 
 interface ImageProps {
-    element: ImageElement
+    element: ImageElement;
 }
 
-const ImageElement: React.FC<ImageProps> = ({element}) => {
+const ImageElement: React.FC<ImageProps> = ({ element }) => {
     const {
         isDragging,
         isSelected,
@@ -17,7 +19,13 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
         handleResizeMouseDown
     } = useDragAndResize(element);
 
-    const { rotation, content, borderRadius, borderColor, borderStyle, borderWidth, opacity, boxShadow} = element;
+    const {
+        contextMenu,
+        handleContextMenu,
+        closeContextMenu
+    } = useContextMenu();
+
+    const { rotation, content, borderRadius, borderColor, borderStyle, borderWidth, opacity, boxShadow, zIndex} = element;
 
     if (!element || element.type !== 'image') return null;
 
@@ -36,8 +44,10 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
                 cursor: isDragging ? 'move' : 'move',
                 transform: `rotate(${rotation}deg)`,
                 userSelect: 'none',
+                zIndex: zIndex
             }}
             onMouseDown={handleMouseDown}
+            onContextMenu={handleContextMenu}
         >
             <img
                 src={content}
@@ -51,6 +61,14 @@ const ImageElement: React.FC<ImageProps> = ({element}) => {
                 }}
             />
             {isSelected && <ResizeHandles onResizeStart={handleResizeMouseDown} />}
+            {contextMenu && (
+                <ContextMenu
+                    x={contextMenu.x}
+                    y={contextMenu.y}
+                    onClose={closeContextMenu}
+                    element={element}
+                />
+            )}
         </div>
     );
 };
