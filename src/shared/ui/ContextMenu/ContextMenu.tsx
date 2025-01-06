@@ -2,6 +2,12 @@ import React from 'react';
 import styles from './ContextMenu.module.css';
 import { ElementProps } from '@/shared/types/types';
 import useStoreSelector from '@/shared/hooks/useStoreSelector';
+import { 
+    MdDelete, 
+    MdVerticalAlignTop, 
+    MdVerticalAlignBottom, 
+    MdSettings 
+} from 'react-icons/md';
 
 interface ContextMenuProps {
     x: number;
@@ -46,15 +52,19 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ x, y, onClose, element}) => {
             onClick={onClose}
         >
             <div className={styles.menuItem} onClick={handleDelete}>
+                <MdDelete />
                 Удалить
             </div>
             <div className={styles.menuItem} onClick={handleProperties}>
+                <MdSettings />
                 Свойства
             </div>
             <div className={styles.menuItem} onClick={handleToFront}>
+                <MdVerticalAlignTop />
                 To front
             </div>
             <div className={styles.menuItem} onClick={handleToBack}>
+                <MdVerticalAlignBottom />
                 To back
             </div>
         </div>

@@ -59,6 +59,13 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     } : {};
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleChangeTitle();
+        }
+    };
+
     return (
         <div key={presentation.id} className={styles.presentationCardWrapper} style={{transform: `${isDeleting ? 'scale(0)' : 'scale(1)'}`}}>
             <div
@@ -80,11 +87,7 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
                         value={newTitle}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
                         onBlur={() => handleChangeTitle}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                handleChangeTitle;
-                            }
-                        }}
+                        onKeyDown={handleKeyDown}
                     />
                 ) : (
                     <h3

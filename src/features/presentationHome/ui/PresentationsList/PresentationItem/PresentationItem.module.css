@@ -34,7 +34,7 @@
     color: white;
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: 3;
+    z-index: 1000;
     pointer-events: none;
 }
 .presentationCard:hover .editText {
@@ -46,6 +46,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    gap: 10px
 }
 .presentationCardWrapper {
     height: 180px;

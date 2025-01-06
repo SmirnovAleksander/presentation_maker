@@ -5,15 +5,23 @@ import HomePanel from "./Panels/HomePanel/HomePanel.tsx";
 import InsertPanel from "./Panels/InsertPanel/InsertPanel.tsx";
 import FormatPanel from "./Panels/FormatPanel/FormatPanel.tsx";
 import SlideDesignPanel from "./Panels/SlideDesignPanel/SlideDesignPanel.tsx";
-import undoIcon from '@/assets/undo.png'
-import reduIcon from '@/assets/redo.png'
-import arrowBackIcon from '@/assets/arrow.png'
-import interfaceIcon from '@/assets/interface.png'
-import slideShowIcon from '@/assets/slideshow.png'
-import plusIcon from '@/assets/add.png'
 import {Slide} from "@/shared/types/types.ts";
 import { CustomButton } from '@/shared/ui';
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import { 
+    MdUndo, 
+    MdRedo, 
+    MdArrowBack, 
+    MdHome,
+    MdImportExport,
+    MdPalette,
+    MdFormatColorFill
+} from "react-icons/md";
+import { 
+    PiPresentationLight,
+    PiSlideshowLight 
+} from "react-icons/pi";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 const ToolPanel = () => {
     const navigate = useNavigate();
@@ -99,21 +107,21 @@ const ToolPanel = () => {
                             ...(isEmptyTitle ? disabledStyle : {})
                         }}
                     >
-                        <img src={arrowBackIcon} alt={'←'} width={14} height={14}/>
+                        <MdArrowBack size={18} />
                         <p>На главную</p>
                     </CustomButton>
                     <CustomButton
                         onClick={handleUndo}
                         style={isDisableUndo ? disabledStyle : undefined}
                     >
-                        <img src={undoIcon} alt={'undo'} width={14} height={14}/>
+                        <MdUndo size={14} />
                     </CustomButton>
 
                     <CustomButton
                         onClick={handleRedo}
                         style={isDisableRedo  ? disabledStyle : undefined}
                     >
-                        <img src={reduIcon} alt={'redo'} width={14} height={14}/>
+                        <MdRedo size={14} />
                     </CustomButton>
                 </div>
                 <div style={{display: 'flex', gap: '7px'}}>
@@ -122,7 +130,7 @@ const ToolPanel = () => {
                         disabled={isDisableSlideShow}
                         style={isDisableSlideShow ? disabledStyle : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
                     >
-                        <img src={interfaceIcon} alt={'([])'} width={34} height={34}/>
+                        <PiPresentationLight  size={34} />
                         <p>Показ слайдов</p>
                     </CustomButton>
                     <CustomButton
@@ -130,7 +138,7 @@ const ToolPanel = () => {
                         disabled={isDisableSlideShow}
                         style={isDisableSlideShow ? disabledStyle : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
                     >
-                        <img src={slideShowIcon} alt={'([!])'} width={44} height={44}/>
+                        <PiSlideshowLight size={34} />
                         <p>C текущего слайда</p>
                     </CustomButton>
                 </div>
@@ -143,7 +151,7 @@ const ToolPanel = () => {
                         }}
                         disabled={isEmptyTitle}
                     >
-                        <img src={plusIcon} alt={'+'} width={18} height={18}/>
+                        <IoAddCircleOutline size={22} />
                         <p>Добавить слайд</p>
                     </CustomButton>
                 </div>
@@ -152,11 +160,11 @@ const ToolPanel = () => {
             <div className={styles.toolsElementsWrapper}>
                 <div className={styles.panelsButtonsWrapper}>
                     <CustomButton onClick={() => setActivePanel('home')}
-                                  style={{backgroundColor: activePanel === 'home' ? 'lightblue' : 'transparent'}}>Главная</CustomButton>
+                                  style={{backgroundColor: activePanel === 'home' ? 'lightblue' : 'transparent'}}><MdHome size={18} />Главная</CustomButton>
                     <CustomButton onClick={() => setActivePanel('insert')}
-                                  style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}>Импорт/Экспорт</CustomButton>
+                                  style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}><MdImportExport size={18} />Импорт/Экспор</CustomButton>
                     <CustomButton onClick={() => setActivePanel('slideDesign')}
-                                  style={{backgroundColor: activePanel === 'slideDesign' ? 'lightblue' : 'transparent'}}>Дизайн слайдов</CustomButton>
+                                  style={{backgroundColor: activePanel === 'slideDesign' ? 'lightblue' : 'transparent'}}><MdPalette size={16} />Дизайн слайдов</CustomButton>
                     <CustomButton onClick={() => setActivePanel('format')}
                                   style={{
                                       backgroundColor: activePanel === 'format'
@@ -164,7 +172,7 @@ const ToolPanel = () => {
                                           : (selectedElementId && activePanel !== 'format')
                                               ? '#fdcbcb'
                                               : 'transparent',
-                    }}>Формат</CustomButton>
+                    }}><MdFormatColorFill size={16} />Формат</CustomButton>
                 </div>
                 <div className={styles.toolsElements}>
                     {renderActivePanel()}

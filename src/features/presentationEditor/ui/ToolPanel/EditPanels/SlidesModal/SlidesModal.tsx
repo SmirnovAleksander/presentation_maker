@@ -7,6 +7,7 @@ import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 import { Slide } from '@/shared/types/types.ts';
 import RenderSlideItemElements from '@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements';
 import PptxGenJS from 'pptxgenjs';
+import { BsFiletypePdf, BsFiletypePptx } from "react-icons/bs";
 
 interface SlidesModalInterface {
     slides: Slide[],
@@ -110,10 +111,12 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
                     <CustomButton onClick={onClose}>
                         Закрыть
                     </CustomButton>
-                    <CustomButton onClick={handleExportToPDF}>
+                    <CustomButton onClick={handleExportToPDF} style={{flexDirection: "column", gap: 6}}>
+                        <BsFiletypePdf size={34}/>
                         Экспорт в PDF
                     </CustomButton>
-                    <CustomButton onClick={handleExportToPPTX}>
+                    <CustomButton onClick={handleExportToPPTX} style={{flexDirection: "column", gap: 6}}>
+                        <BsFiletypePptx  size={34}/>
                         Экспорт в PPTX
                     </CustomButton>
                 </div>

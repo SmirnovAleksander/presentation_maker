@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ResizeHandles from "./ResizeHandles.tsx";
 import type { ImageElement } from "@/shared/types/types.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
@@ -9,7 +9,7 @@ interface ImageProps {
     element: ImageElement;
 }
 
-const ImageElement: React.FC<ImageProps> = ({ element }) => {
+const ImageElement: React.FC<ImageProps> = memo(({ element }) => {
     const {
         isDragging,
         isSelected,
@@ -25,7 +25,7 @@ const ImageElement: React.FC<ImageProps> = ({ element }) => {
         closeContextMenu
     } = useContextMenu();
 
-    const { rotation, content, borderRadius, borderColor, borderStyle, borderWidth, opacity, boxShadow, zIndex} = element;
+    const { rotation, content, borderRadius, borderColor, borderStyle, borderWidth, opacity, boxShadow, zIndex } = element;
 
     if (!element || element.type !== 'image') return null;
 
@@ -71,6 +71,24 @@ const ImageElement: React.FC<ImageProps> = ({ element }) => {
             )}
         </div>
     );
-};
+}, (prevProps, nextProps) => {
+    // Сравниваем только те свойства, которые влияют на рендер
+    return (
+        prevProps.element.id === nextProps.element.id &&
+        prevProps.element.content === nextProps.element.content &&
+        prevProps.element.position.x === nextProps.element.position.x &&
+        prevProps.element.position.y === nextProps.element.position.y &&
+        prevProps.element.size.width === nextProps.element.size.width &&
+        prevProps.element.size.height === nextProps.element.size.height &&
+        prevProps.element.rotation === nextProps.element.rotation &&
+        prevProps.element.borderRadius === nextProps.element.borderRadius &&
+        prevProps.element.borderColor === nextProps.element.borderColor &&
+        prevProps.element.borderStyle === nextProps.element.borderStyle &&
+        prevProps.element.borderWidth === nextProps.element.borderWidth &&
+        prevProps.element.opacity === nextProps.element.opacity &&
+        prevProps.element.boxShadow === nextProps.element.boxShadow &&
+        prevProps.element.zIndex === nextProps.element.zIndex
+    );
+});
 
 export default ImageElement;

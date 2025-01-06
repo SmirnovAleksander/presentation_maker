@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import styles from './PresentationEditorHeader.module.css'
 import {useNavigate} from "react-router-dom";
 import PresentationIcon from '@/assets/PresentationsLogo.svg'
-import editIcon from '@/assets/Edit.svg'
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import { AiOutlineEdit } from "react-icons/ai";
 
 
 const PresentationEditorHeader = () => {
@@ -95,13 +95,7 @@ const PresentationEditorHeader = () => {
                     className={styles.editIconContainer}
                     onClick={handleEditClick}
                 >
-                    <img
-                        src={editIcon}
-                        alt="Edit"
-                        width={20}
-                        height={20}
-                        className={styles.editIcon}
-                    />
+                    <AiOutlineEdit size={20} className={styles.editIcon} />
                 </div>
             }
         </div>

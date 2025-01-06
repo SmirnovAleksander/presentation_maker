@@ -1,18 +1,37 @@
 .contextMenu {
     position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    min-width: 100px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 4px 0;
     z-index: 1000;
-    margin: 0;
-    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid #e0e0e0;
 }
 
 .menuItem {
-    padding: 8px 12px;
+    padding: 8px 16px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.2s ease;
 }
 
 .menuItem:hover {
-    background-color: #f0f0f0;
-} 
+    background-color: #f5f5f5;
+    color: #1a73e8;
+}
+
+.menuItem svg {
+    width: 16px;
+    height: 16px;
+    color: #666;
+}
+
+.menuItem:hover svg {
+    color: #1a73e8;
+}

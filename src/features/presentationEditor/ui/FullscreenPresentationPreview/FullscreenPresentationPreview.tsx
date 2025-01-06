@@ -5,6 +5,7 @@ import styles from './FullscreenPresentationPreview.module.css'
 import {appState} from "@/app/store/store.ts";
 import RenderSlideItemElements from "@/features/presentationEditor/ui/SlidesList/RenderSlideItemElements.tsx";
 import { CustomButton } from '@/shared/ui';
+import { MdArrowBack, MdArrowForward  } from "react-icons/md";
 
 const FullscreenPresentationPreview = () => {
     const navigate = useNavigate();
@@ -23,6 +24,10 @@ const FullscreenPresentationPreview = () => {
         : 0
 
     const [currentSlideIndex, setCurrentSlideIndex] = useState(initialSlideIndex);
+    const [isPanelVisible, setIsPanelVisible] = useState(true);
+    const mouseMoveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [isCursorVisible, setIsCursorVisible] = useState(true);
+    const cursorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (elementRef.current) {
@@ -57,6 +62,38 @@ const FullscreenPresentationPreview = () => {
         };
     }, [currentSlideIndex, presentation]);
 
+    useEffect(() => {
+        const handleMouseMove = () => {
+            setIsPanelVisible(true);
+            setIsCursorVisible(true);
+            if (mouseMoveTimeoutRef.current) {
+                clearTimeout(mouseMoveTimeoutRef.current);
+            }
+            mouseMoveTimeoutRef.current = setTimeout(() => {
+                setIsPanelVisible(false);
+            }, 1000);
+
+            if (cursorTimeoutRef.current) {
+                clearTimeout(cursorTimeoutRef.current);
+            }
+            cursorTimeoutRef.current = setTimeout(() => {
+                setIsCursorVisible(false);
+            }, 1000);
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            if (mouseMoveTimeoutRef.current) {
+                clearTimeout(mouseMoveTimeoutRef.current);
+            }
+            if (cursorTimeoutRef.current) {
+                clearTimeout(cursorTimeoutRef.current);
+            }
+        };
+    }, []);
+
     const handleNextSlide = () => {
         if (presentation && currentSlideIndex < presentation.slides.length - 1) {
             setCurrentSlideIndex(prevIndex => prevIndex + 1);
@@ -83,27 +120,27 @@ const FullscreenPresentationPreview = () => {
         backgroundPosition: 'center',
     };
     return (
-        <div className={styles.fullscreenPreview} ref={elementRef} style={slideStyle}>
+        <div className={`${styles.fullscreenPreview} ${isCursorVisible ? '' : styles.hiddenCursor}`} ref={elementRef} style={slideStyle}>
             {currentSlide && (
                 <RenderSlideItemElements key={currentSlide.id} slide={currentSlide} multiplier={0.62}/>
             )}
-            <div className={styles.slideControls}>
-                <CustomButton
-                    onClick={handlePreviousSlide}
-                    disabled={currentSlideIndex === 0}
-                    // style={{backgroundColor: currentSlideIndex === 0 ? 'rgba(0, 0, 0, 0.01)' : ''}}
-                >
-                    ←
-                </CustomButton>
-                <div>{`Слайд ${currentSlideIndex + 1} / ${presentation.slides.length}`}</div>
-                <CustomButton
-                    onClick={handleNextSlide}
-                    disabled={currentSlideIndex === presentation.slides.length - 1}
-                    // style={{backgroundColor: currentSlideIndex === presentation.slides.length - 1 ? 'rgba(0, 0, 0, 0.01)' : ''}}
-                >
-                    →
-                </CustomButton>
-            </div>
+            {isPanelVisible && (
+                <div className={styles.slideControls}>
+                    <CustomButton
+                        onClick={handlePreviousSlide}
+                        disabled={currentSlideIndex === 0}
+                    >
+                       <MdArrowBack size={20}/>
+                    </CustomButton>
+                    <div>{`Слайд ${currentSlideIndex + 1} / ${presentation.slides.length}`}</div>
+                    <CustomButton
+                        onClick={handleNextSlide}
+                        disabled={currentSlideIndex === presentation.slides.length - 1}
+                    >
+                        <MdArrowForward size={20}/>
+                    </CustomButton>
+                </div>
+            )}
         </div>
     );
 };

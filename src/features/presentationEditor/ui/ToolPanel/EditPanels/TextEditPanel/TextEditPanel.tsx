@@ -1,10 +1,17 @@
 import styles from './TextEditPanel.module.css'
-import alignLeftIcon from '@/assets/align-left.png'
-import alignRightIcon from '@/assets/align-right.png'
-import justifyIcon from '@/assets/justify.png'
-import alignCenterIcon from '@/assets/format.png'
 import {CustomButton} from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
+import { 
+    MdFormatBold, 
+    MdFormatItalic, 
+    MdFormatUnderlined, 
+    MdStrikethroughS, 
+    MdFormatSize,
+    MdFormatAlignLeft,
+    MdFormatAlignCenter,
+    MdFormatAlignRight,
+    MdFormatAlignJustify
+} from "react-icons/md";
 
 const TextEditPanel = () => {
     const {
@@ -117,25 +124,35 @@ const TextEditPanel = () => {
                     </select>
                 </div>
             </div>
-            <div className={styles.textFormatButtons}>
-                <CustomButton onClick={toggleBold} style={{backgroundColor: bold ? 'lightblue' : 'transparent',}}>B</CustomButton>
-                <CustomButton onClick={toggleItalic} style={{backgroundColor: italic ? 'lightblue' : 'transparent',}}><i>I</i></CustomButton>
-                <CustomButton onClick={toggleUnderline} style={{backgroundColor: underline ? 'lightblue' : 'transparent',}}><u>U</u></CustomButton>
-                <CustomButton onClick={toggleStrikethrough} style={{backgroundColor: strikethrough ? 'lightblue' : 'transparent',}}><s>S</s></CustomButton>
-                <CustomButton onClick={toggleUppercase} style={{backgroundColor: textTransform === 'uppercase' ? 'lightblue' : 'transparent',}}>Aa</CustomButton>
+            <div className={styles.textButtons}>
+                <CustomButton onClick={toggleBold} style={{backgroundColor: bold ? 'lightblue' : 'transparent',}}>
+                    <MdFormatBold size={17} />
+                </CustomButton>
+                <CustomButton onClick={toggleItalic} style={{backgroundColor: italic ? 'lightblue' : 'transparent',}}>
+                    <MdFormatItalic size={17} />
+                </CustomButton>
+                <CustomButton onClick={toggleUnderline} style={{backgroundColor: underline ? 'lightblue' : 'transparent',}}>
+                    <MdFormatUnderlined size={17} />
+                </CustomButton>
+                <CustomButton onClick={toggleStrikethrough} style={{backgroundColor: strikethrough ? 'lightblue' : 'transparent',}}>
+                    <MdStrikethroughS size={17} />
+                </CustomButton>
+                <CustomButton onClick={toggleUppercase} style={{backgroundColor: textTransform === 'uppercase' ? 'lightblue' : 'transparent',}}>
+                    <MdFormatSize size={17} />
+                </CustomButton>
             </div>
-            <div className={styles.textAlignmentButtons}>
+            <div className={styles.textButtons}>
                 <CustomButton onClick={() => changeAlignment('left')} style={{backgroundColor: alignment === 'left' ? 'lightblue' : 'transparent',}}>
-                    <img src={alignLeftIcon} alt='left' width={14} height={14}/>
+                    <MdFormatAlignLeft size={17} />
                 </CustomButton>
                 <CustomButton onClick={() => changeAlignment('center')} style={{backgroundColor: alignment === 'center' ? 'lightblue' : 'transparent',}}>
-                    <img src={alignCenterIcon} alt='center' width={14} height={14}/>
+                    <MdFormatAlignCenter size={17} />
                 </CustomButton>
                 <CustomButton onClick={() => changeAlignment('right')} style={{backgroundColor: alignment === 'right' ? 'lightblue' : 'transparent',}}>
-                    <img src={alignRightIcon} alt='right' width={14} height={14}/>
+                    <MdFormatAlignRight size={17} />
                 </CustomButton>
                 <CustomButton onClick={() => changeAlignment('justify')} style={{backgroundColor: alignment === 'justify' ? 'lightblue' : 'transparent',}}>
-                    <img src={justifyIcon} alt='justify' width={14} height={14}/>
+                    <MdFormatAlignJustify size={17} />
                 </CustomButton>
             </div>
         </div>

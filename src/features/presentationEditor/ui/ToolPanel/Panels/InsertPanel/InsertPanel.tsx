@@ -4,6 +4,9 @@ import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 import InsertImagePanel from "../../EditPanels/InsertImagePanel/InsertImagePanel";
 import SlidesModal from "../../EditPanels/SlidesModal/SlidesModal";
 import ImportImagePanel from "../../EditPanels/ImportImagePanel/ImportImagePanel";
+import { BsFiletypeJson, BsFileEarmarkPdf } from "react-icons/bs";
+import { CiImport } from "react-icons/ci";
+
 
 const InsertPanel = () => {
     const {
@@ -30,11 +33,20 @@ const InsertPanel = () => {
     };
 
     return (
-        <>
-            <CustomButton onClick={handleExportToJson}>Экспорт в JSON</CustomButton>
+        <>  
+            <CustomButton onClick={handleExportToJson} style={{flexDirection: "column", gap: 6}}>
+                <BsFiletypeJson size={24} />
+                <p>Экспорт в JSON</p>   
+            </CustomButton>
+            <CustomButton onClick={openModal} style={{flexDirection: "column", gap: 6}}>
+                <BsFileEarmarkPdf size={24} />
+                <p>Просмотр примера PDF</p>
+            </CustomButton>
+            <CustomButton onClick={openImagePanel} style={{flexDirection: "column", gap: 6, width: 200}}>
+                <CiImport size={24} />
+                <p>Импортировать картинку из Unsplash.com</p>
+            </CustomButton>
             <InsertImagePanel/>
-            <CustomButton onClick={openModal}>Просмотр примера PDF</CustomButton>
-            <CustomButton onClick={openImagePanel}>Импортировать картинку</CustomButton>
             {isModalOpen && selectedPresentation && (
                 <SlidesModal slides={selectedPresentation.slides} onClose={closeModal}/>
             )}

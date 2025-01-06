@@ -1,5 +1,5 @@
 import styles from './DeleteButton.module.css'
-import deleteIcon from "@/assets/delete.svg";
+import { MdDelete } from "react-icons/md";
 
 interface DeleteButtonProps {
     handleDeleteElement: (id: number) => void;
@@ -12,13 +12,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ handleDeleteElement, elemen
             className={styles.deleteIconContainer}
             onClick={() => handleDeleteElement(elementId)}
         >
-            <img
-                src={deleteIcon}
-                alt="X"
-                className={styles.deleteIcon}
-                width={20}
-                height={20}
-            />
+            <MdDelete size={20} className={styles.deleteIcon}/>
         </div>
     );
 };

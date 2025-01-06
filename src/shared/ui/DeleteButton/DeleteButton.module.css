@@ -1,14 +1,20 @@
-
 .deleteIconContainer {
     cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
 }
 
 .deleteIcon {
     z-index: 1;
+    color: #5f6368;
+    transition: color 0.2s ease;
 }
-.deleteIconContainer:hover {
+
+.deleteIconContainer:hover .deleteIcon {
+    color: #d93025;
     transform: scale(1.04);
 }
+
 .deleteIconContainer:hover::after {
     content: '';
     position: absolute;
@@ -17,14 +23,18 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: rgba(175, 175, 175, 0.5);
+    background-color: rgba(217, 48, 37, 0.1);
     opacity: 1;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
     z-index: 0;
 }
+
 .deleteIconContainer:active::after {
-    top: -5px;
-    left: -5px;
-    background-color: rgba(140, 139, 139, 0.5);
-    transition: opacity 0.2s ease;
+    background-color: rgba(217, 48, 37, 0.2);
+    transform: scale(0.95);
+}
+
+.deleteIconContainer:active .deleteIcon {
+    color: #b31412;
+    transform: scale(0.96);
 }
