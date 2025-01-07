@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {ShapeElement} from "@/shared/types/types.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
@@ -9,7 +9,7 @@ interface ShapeElementProps {
     element: ShapeElement
 }
 
-const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
+const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
     const {
         isDragging,
         isSelected,
@@ -94,6 +94,19 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
             )}
         </div>
     );
-};
+}, (prevProps, nextProps) => {
+    // Сравниваем только те свойства, которые влияют на рендер
+    return (
+        prevProps.element.id === nextProps.element.id &&
+        prevProps.element.position.x === nextProps.element.position.x &&
+        prevProps.element.position.y === nextProps.element.position.y &&
+        prevProps.element.size.width === nextProps.element.size.width &&
+        prevProps.element.size.height === nextProps.element.size.height &&
+        prevProps.element.rotation === nextProps.element.rotation &&
+        prevProps.element.borderRadius === nextProps.element.borderRadius &&
+        prevProps.element.opacity === nextProps.element.opacity &&
+        prevProps.element.zIndex === nextProps.element.zIndex
+    );
+});
 
 export default ShapeElement;

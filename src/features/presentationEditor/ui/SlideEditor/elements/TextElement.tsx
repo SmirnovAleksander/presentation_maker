@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, memo} from 'react';
 import {useDispatch} from "react-redux";
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {TextElement} from "@/shared/types/types.ts";
@@ -12,7 +12,7 @@ interface TextElementProps {
     element: TextElement
 }
 
-const TextElement: React.FC<TextElementProps> = ({element}) => {
+const TextElement: React.FC<TextElementProps> = memo(({element}) => {
     const dispatch: AppDispatch = useDispatch();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -142,6 +142,27 @@ const TextElement: React.FC<TextElementProps> = ({element}) => {
             )}
         </div>
     );
-};
+}, (prevProps, nextProps) => {
+    return (
+        prevProps.element.id === nextProps.element.id &&
+        prevProps.element.content === nextProps.element.content &&
+        prevProps.element.position.x === nextProps.element.position.x &&
+        prevProps.element.position.y === nextProps.element.position.y &&
+        prevProps.element.size.width === nextProps.element.size.width &&
+        prevProps.element.size.height === nextProps.element.size.height &&
+        prevProps.element.rotation === nextProps.element.rotation &&
+        prevProps.element.fontSize === nextProps.element.fontSize &&
+        prevProps.element.fontFamily === nextProps.element.fontFamily &&
+        prevProps.element.color === nextProps.element.color &&
+        prevProps.element.backgroundColor === nextProps.element.backgroundColor &&
+        prevProps.element.textTransform === nextProps.element.textTransform &&
+        prevProps.element.bold === nextProps.element.bold &&
+        prevProps.element.italic === nextProps.element.italic &&
+        prevProps.element.alignment === nextProps.element.alignment &&
+        prevProps.element.strikethrough === nextProps.element.strikethrough &&
+        prevProps.element.underline === nextProps.element.underline &&
+        prevProps.element.zIndex === nextProps.element.zIndex
+    );
+});
 
 export default TextElement;

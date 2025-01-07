@@ -1,8 +1,19 @@
 import styles from './ThemeEditPanel.module.css'
-import {useRef, useState} from "react";
-import plusIcon from "@/assets/Plus.svg";
+import {useEffect, useState} from "react";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
-import {slideThemes} from "@/shared/constants/slideThemes.ts";
+import axios from "axios";
+import { BsPlusLg } from "react-icons/bs";
+import { CustomButton } from '@/shared/ui';
+import ThemesCategoryList from './ThemesCategoryList/ThemesCategoryList';
+
+interface UnsplashResult {
+    urls: {
+        small: string;
+        full: string;
+        regular: string;
+        thumb: string;
+    };
+}
 
 const ThemeEditPanel = () => {
     
@@ -11,15 +22,13 @@ const ThemeEditPanel = () => {
         selectedPresentationId,
         updateAllSlidesBackgroundImageAction
     } = useStoreSelector();
-    const [themes, setThemes] = useState(slideThemes);
 
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const handleButtonClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click();
-        }
-    };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const closeModal = () => setIsModalOpen(false);
+    const openModal = () => setIsModalOpen(true);
 
+    const [selectedTheme, setSelectedTheme] = useState<string | null>(null)
+    
     const handleThemeSelect = (image: string) => {
         if (!selectedPresentationId) return;
         const allSlidesHaveSelectedTheme = selectedPresentation?.slides.every(slide => slide.backgroundImage === image);
@@ -28,62 +37,83 @@ const ThemeEditPanel = () => {
         } else {
             updateAllSlidesBackgroundImageAction(image);
         }
+        setSelectedTheme(image);
     };
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const newTheme = { id: themes.length + 1, image: reader.result as string };
-                setThemes([...themes, newTheme]);
-            };
-            reader.readAsDataURL(file);
+    const [imagesByCategory, setImagesByCategory] = useState<{ [key: string]: UnsplashResult[] }>({
+        background: [],
+        texture: [],
+        abstract: [],
+        landscape: []
+    });
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
+
+    const fetchImages = async () => {
+        const categories = ["background", "texture", "abstract", "landscape"];
+        const newImagesByCategory: { [key: string]: UnsplashResult[] } = {
+            background: [],
+            texture: [],
+            abstract: [],
+            landscape: []
+        };
+        for (const category of categories) {
+            try {
+                const response = await axios.get("https://api.unsplash.com/search/photos", {
+                    params: {
+                        query: category,
+                        client_id: UNSPLASH_API_KEY,
+                        per_page: 15,
+                        page: 1
+                    }
+                });
+                newImagesByCategory[category] = response.data.results as UnsplashResult[];
+            } catch (error) {
+                console.error(`Ошибка при загрузке изображений для категории ${category}:`, error);
+            }
         }
+    
+        setImagesByCategory(newImagesByCategory);
+        setLoading(false);
     };
+
+    useEffect(() => {
+        fetchImages();
+    }, []);
+
+    const currentTheme = selectedPresentation?.slides[0].backgroundImage
+
     return (
         <div className={styles.themeEditWrapper}>
             <p className={styles.themeEditTitle}>Задний фон слайда</p>
             <div className={styles.themeEditScrollWrapper}>
-                {themes.map((theme) => {
-                    const isSelected = selectedPresentation?.slides.every(slide => slide.backgroundImage === theme.image);
-                    return (
-                        <div
-                            key={theme.id}
-                            className={`${styles.themeItem} ${isSelected ? styles.selectedTheme : ''}`}
-                            onClick={() => handleThemeSelect(theme.image)}
-                        >
-                            <img src={theme.image} alt={`Тема ${theme.id}`} className={styles.themeImage} loading="lazy"/>
-                        </div>
-                    );
-                })}
-                <div className={styles.themeAddButtonWrapper}>
-                    <div className={styles.themeAddButton} onClick={handleButtonClick}>
-                        <img src={plusIcon} alt="+" width={30} height={30}/>
+                {currentTheme !== '' && (
+                    <div 
+                        className={`${styles.themeItem} ${currentTheme !== '' ? styles.selectedTheme : ''}`} 
+                        onClick={() => handleThemeSelect(selectedTheme!)}
+                    >
+                        <img src={selectedTheme!} className={styles.themeImage} loading="lazy"/>
                     </div>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className={styles.fileInput}
-                        style={{display: 'none'}}
-                        ref={fileInputRef}
-                    />
-                </div>
-                {/*<CustomButton*/}
-                {/*    style={{}}*/}
-                {/*    onClick={handleButtonClick}*/}
-                {/*>*/}
-                {/*    Загрузить изображение*/}
-                {/*</CustomButton>*/}
-                {/*<input*/}
-                {/*    type="file"*/}
-                {/*    accept="image/*"*/}
-                {/*    onChange={handleFileChange}*/}
-                {/*    className={styles.fileInput}*/}
-                {/*    style={{display: 'none'}}*/}
-                {/*    ref={fileInputRef}*/}
-                {/*/>*/}
+                )}
+                {imagesByCategory.background
+                    .filter(image => currentTheme !== image.urls.regular || currentTheme === null)
+                    .map((image, index) => {
+                    const isSelected = selectedPresentation?.slides.every(slide => slide.backgroundImage === image.urls.regular);
+                    return (
+                        <div 
+                            key={index} 
+                            className={`${styles.themeItem} ${isSelected ? styles.selectedTheme : ''}`} 
+                            onClick={() => handleThemeSelect(image.urls.regular)}
+                        >
+                            <img src={image.urls.thumb} alt={`Тема ${index + 1}`} className={styles.themeImage} loading="lazy"/>
+                        </div>
+                    )
+                })}
             </div>
+            <CustomButton onClick={openModal}>Показать все категории для выбора фона</CustomButton>
+            {isModalOpen && selectedPresentation && (
+                <ThemesCategoryList onClose={closeModal} imagesByCategory={imagesByCategory} handleThemeSelect={handleThemeSelect} selectedPresentation={selectedPresentation}/>
+            )}
         </div>
     );
 };
