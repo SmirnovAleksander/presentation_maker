@@ -47,6 +47,7 @@ const ImageEditPanel = () => {
                                 type="range"
                                 min={0}
                                 max={20}
+                                step={2}
                                 value={selectedElement.borderWidth}
                                 onChange={(e) => updateBorderWidth(parseFloat(e.target.value))}
                             />
@@ -66,6 +67,7 @@ const ImageEditPanel = () => {
                                 type="range"
                                 min={0}
                                 max={100}
+                                step={5}
                                 value={selectedElement.borderRadius}
                                 onChange={(e) => updateBorderRadius(parseFloat(e.target.value))}
                             />
@@ -96,7 +98,7 @@ const ImageEditPanel = () => {
                                 type="range"
                                 min={0}
                                 max={1}
-                                step={0.01}
+                                step={0.1}
                                 value={selectedElement!.opacity}
                                 onChange={(e) => updateOpacity(parseFloat(e.target.value))}
                             />

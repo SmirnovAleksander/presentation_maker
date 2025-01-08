@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './ThemesCategoryList.module.css';
 import { CustomButton } from '@/shared/ui';
 import { Presentation } from '@/shared/types/types';
@@ -37,8 +37,8 @@ const ThemesCategoryList: React.FC<ThemesCategoryListProps> = ({ imagesByCategor
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                const newTheme = { id: uploadedImages.length + 1, image: reader.result as string }; // Используем uploadedImages.length для уникального ID
-                setUploadedImages([...uploadedImages, newTheme]); // Обновляем состояние загруженных изображений
+                const newTheme = { id: uploadedImages.length + 1, image: reader.result as string };
+                setUploadedImages([...uploadedImages, newTheme]);
             };
             reader.readAsDataURL(file);
         }

@@ -1,6 +1,6 @@
 import styles from './ToolPanel.module.css'
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import HomePanel from "./Panels/HomePanel/HomePanel.tsx";
 import InsertPanel from "./Panels/InsertPanel/InsertPanel.tsx";
 import FormatPanel from "./Panels/FormatPanel/FormatPanel.tsx";
@@ -90,6 +90,23 @@ const ToolPanel = () => {
             redoAction()
         }
     };
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey) {
+                if (event.key === 'z' || event.key === 'я') {
+                    handleUndo();
+                } else if (event.key === 'y' || event.key === 'ч') {
+                    handleRedo();
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [handleUndo, handleRedo]);
 
     const isDisabledButtons: boolean = selectedPresentation?.slides.length === 0
 

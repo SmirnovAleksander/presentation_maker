@@ -59,6 +59,7 @@ const ShapeEditPanel = () => {
                                     type="range"
                                     min={0}
                                     max={20}
+                                    step={2}
                                     value={selectedElement.borderWidth}
                                     onChange={(e) => updateBorderWidth(parseFloat(e.target.value))}
                                 />
@@ -141,7 +142,7 @@ const ShapeEditPanel = () => {
                                     type="range"
                                     min={0}
                                     max={20}
-                                    step={1}
+                                    step={2}
                                     value={selectedElement.lineWidth}
                                     onChange={(e) => updateLineWidth(parseFloat(e.target.value))}
                                 />
@@ -163,6 +164,7 @@ const ShapeEditPanel = () => {
                                     type="range"
                                     min={0}
                                     max={100}
+                                    step={5}
                                     value={selectedElement.borderRadius}
                                     onChange={(e) => updateBorderRadius(parseFloat(e.target.value))}
                                 />

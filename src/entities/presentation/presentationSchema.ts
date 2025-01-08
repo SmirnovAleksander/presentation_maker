@@ -46,7 +46,8 @@ const presentationSchema = {
                                         underline: { type: "boolean" },
                                         strikethrough: { type: "boolean" },
                                         textTransform: { type: "string", enum: ["none", "uppercase"] },
-                                        alignment: { type: "string", enum: ["left", "center", "right", "justify"] }
+                                        alignment: { type: "string", enum: ["left", "center", "right", "justify"] },
+                                        zIndex: { type: "number" }
                                     },
                                     required: ["id", "type", "content", "position", "size", "fontSize", "fontFamily", "color", "rotation"]
                                 },
@@ -78,7 +79,8 @@ const presentationSchema = {
                                         borderWidth: { type: "number" },
                                         borderRadius: { type: "number" },
                                         boxShadow: { type: "string" },
-                                        opacity: { type: "number" }
+                                        opacity: { type: "number" },
+                                        zIndex: { type: "number" }
                                     },
                                     required: ["id", "type", "content", "position", "size", "rotation"]
                                 },
@@ -113,7 +115,8 @@ const presentationSchema = {
                                         borderStyle: { type: "string", enum: ["solid", "dashed", "dotted"] },
                                         borderWidth: { type: "number" },
                                         gradient: { type: "string" },
-                                        fillType: { type: "string", enum: ["solid", "gradient"] }
+                                        fillType: { type: "string", enum: ["solid", "gradient"] },
+                                        zIndex: { type: "number" }
                                     },
                                     required: ["id", "type", "position", "size", "color", "rotation"]
                                 }

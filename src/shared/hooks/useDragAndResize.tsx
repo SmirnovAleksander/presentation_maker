@@ -17,14 +17,35 @@ const useDragAndResize = (element: ElementProps, isEditing?: boolean) => {
     const [localPosition, setLocalPosition] = useState(element.position);
     const [localSize, setLocalSize] = useState(element.size);
 
+    const [previousStates, setPreviousStates] = useState<Array<{ position: { x: number; y: number }; size: { width: number; height: number } }>>([]); // Используем useState
+    
     const slideWidth = 1200;
     const slideHeight = 672;
 
     useEffect(() => {
-        if (!isSelected) {
-            dispatch(updateElement(element.id, { position: localPosition, size: localSize }));
-        }
-    }, [isSelected]);
+        const updateElementIfChanged = () => {
+            const currentState = { position: localPosition, size: localSize };
+
+            const isAlreadyUpdated = previousStates.some(state =>
+                state.position.x === currentState.position.x &&
+                state.position.y === currentState.position.y &&
+                state.size.width === currentState.size.width &&
+                state.size.height === currentState.size.height
+            );
+
+            if (!isAlreadyUpdated) {
+                console.log('previousStates:', previousStates)
+                dispatch(updateElement(element.id, currentState));
+                setPreviousStates(prevStates => [...prevStates, currentState]); // Сохраняем текущее состояние
+            }
+        };
+
+        const updateTimer = setTimeout(updateElementIfChanged, 1000);
+
+        return () => {
+            clearTimeout(updateTimer);
+        };
+    }, [localPosition, localSize]);
 
     useEffect(() => {
         if (!isEditing) {
@@ -63,16 +84,30 @@ const useDragAndResize = (element: ElementProps, isEditing?: boolean) => {
         if (isResizing) {
             let newWidth = localSize.width;
             let newHeight = localSize.height;
+
             if (resizeStart.direction.includes('left')) {
                 newWidth = Math.max(50, resizeStart.width - (e.clientX - dragStart.x));
+                if (e.shiftKey) {
+                    newHeight = newWidth * (localSize.height / localSize.width);
+                }
             } else if (resizeStart.direction.includes('right')) {
                 newWidth = Math.max(50, resizeStart.width + (e.clientX - dragStart.x));
+                if (e.shiftKey) {
+                    newHeight = newWidth * (localSize.height / localSize.width);
+                }
             }
             if (resizeStart.direction.includes('top')) {
                 newHeight = Math.max(20, resizeStart.height - (e.clientY - dragStart.y));
+                if (e.shiftKey) {
+                    newWidth = newHeight * (localSize.width / localSize.height);
+                }
             } else if (resizeStart.direction.includes('bottom')) {
                 newHeight = Math.max(20, resizeStart.height + (e.clientY - dragStart.y));
+                if (e.shiftKey) {
+                    newWidth = newHeight * (localSize.width / localSize.height);
+                }
             }
+
             updateSize(newWidth, newHeight);
         }
     };

@@ -70,9 +70,9 @@ const SlideEditor = () => {
 
     return (
         <div className={styles.slideEditorWrapper}>
-            <button onClick={handleDownload} className={styles.downloadButton}>
+            {/* <button onClick={handleDownload} className={styles.downloadButton}>
                 Download as SVG
-            </button>
+            </button> */}
             <div
                 className={styles.slideEditor}
                 onMouseDown={handleEditorClick}
