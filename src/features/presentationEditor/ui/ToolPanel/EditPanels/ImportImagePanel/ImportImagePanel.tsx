@@ -1,5 +1,5 @@
 import styles from './ImportImagePanel.module.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import arrowIconRight from '@/assets/arrow_icon_right.png'
 import arrowIconLeft from '@/assets/arrow_icon_left.png'
@@ -25,15 +25,30 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
         selectedSlideId,
         selectedPresentation,
     } = useStoreSelector();
+
+    useEffect(() => {
+        localStorage.removeItem('imageSearchQuery'); // Очищаем сохраненный запрос
+    }, []);
+
+    const listOfQueries = ['nature', 'city', 'animals', 'technology', 'people', 'car'];
+    const randomQuery = listOfQueries[Math.floor(Math.random() * listOfQueries.length)];
+
+    // const localStorageQuery = localStorage.getItem('imageSearchQuery');
+    // const initialQuery = localStorageQuery ? localStorageQuery : randomQuery;
+
     const {createImageElement} = useCreateElements();
-    const [query, setQuery] = useState<string>('');
+    const [query, setQuery] = useState<string>(randomQuery);
     const [images, setImages] = useState<UnsplashResult[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(1);
 
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-    const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
+    const UNSPLASH_API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
 
+    // useEffect(() => {
+    //     localStorage.setItem('imageSearchQuery', query)
+    // },[query])
+    
     const fetchImages = async (pageNumber: number) => {
         if (!query) return;
 
@@ -60,6 +75,11 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
         setPage(1);
         fetchImages(1);
     };
+
+    
+    useEffect(() => {
+        fetchImages(1);
+    },[])
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -137,8 +157,8 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
                 <div className={styles.imageGrid}>
                     {images.map((image, index) => (
                         <img
-                            key={image.urls.small}
-                            src={image.urls.small}
+                            key={image.urls.thumb}
+                            src={image.urls.thumb}
                             alt="Unsplash"
                             className={styles.imageItem}
                             onClick={() => handleSelectImage(index)}

@@ -13,7 +13,7 @@
     flex-direction: column;
     /*justify-content: space-between;*/
     gap: 5px;
-    width: 210px;
+    max-width: 210px;
     padding: 5px;
 }
 

@@ -47,7 +47,7 @@ const ThemeEditPanel = () => {
     });
 
     const [loading, setLoading] = useState<boolean>(false);
-    const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
+    const UNSPLASH_API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
 
     const fetchImages = async () => {
         const categories = ["background", "texture", "abstract", "landscape"];
@@ -87,12 +87,12 @@ const ThemeEditPanel = () => {
         <div className={styles.themeEditWrapper}>
             <p className={styles.themeEditTitle}>Задний фон слайда</p>
             <div className={styles.themeEditScrollWrapper}>
-                {currentTheme !== '' && (
+                {currentTheme !== '' && currentTheme !== undefined  && (
                     <div 
                         className={`${styles.themeItem} ${currentTheme !== '' ? styles.selectedTheme : ''}`} 
                         onClick={() => handleThemeSelect(selectedTheme!)}
                     >
-                        <img src={selectedTheme!} className={styles.themeImage} loading="lazy"/>
+                        <img src={currentTheme!} className={styles.themeImage} loading="lazy"/>
                     </div>
                 )}
                 {imagesByCategory.background

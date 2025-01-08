@@ -90,11 +90,15 @@ const ToolPanel = () => {
             redoAction()
         }
     };
-    const isDisableUndo = pastLength === 0 || selectedPresentation!.slides.length === 0
+
+    const isDisabledButtons: boolean = selectedPresentation?.slides.length === 0
+
+    const isDisableUndo = pastLength === 0 || isDisabledButtons
     const isDisableRedo = futureLength === 0
-    const isDisableSlideShow = selectedPresentation && selectedPresentation.slides.length === 0
+    const isDisableSlideShow = selectedPresentation && isDisabledButtons
     const isEmptyTitle = selectedPresentation && selectedPresentation.title === ''
-    const disabledStyle = { backgroundColor: 'rgba(0, 0, 0, 0.1)'};
+    const disabledStyle: React.CSSProperties = { backgroundColor: 'rgba(0, 0, 0, 0.1)'};
+    const disabledStyleSlideShow: React.CSSProperties = { backgroundColor: 'rgba(0, 0, 0, 0.1)', flexDirection: 'column', display: 'flex'};
     return (
         <div className={styles.toolPanelWrapper}>
             <div className={styles.panelMain}>
@@ -128,7 +132,7 @@ const ToolPanel = () => {
                     <CustomButton
                         onClick={handleFullscreenPreviewFromFirstSlide}
                         disabled={isDisableSlideShow}
-                        style={isDisableSlideShow ? disabledStyle : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+                        style={isDisableSlideShow ? disabledStyleSlideShow : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
                     >
                         <PiPresentationLight  size={34} />
                         <p>Показ слайдов</p>
@@ -136,7 +140,7 @@ const ToolPanel = () => {
                     <CustomButton
                         onClick={handleFullscreenPreviewFromCurrentSlide}
                         disabled={isDisableSlideShow}
-                        style={isDisableSlideShow ? disabledStyle : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+                        style={isDisableSlideShow ? disabledStyleSlideShow : { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
                     >
                         <PiSlideshowLight size={34} />
                         <p>C текущего слайда</p>
@@ -159,20 +163,42 @@ const ToolPanel = () => {
             </div>
             <div className={styles.toolsElementsWrapper}>
                 <div className={styles.panelsButtonsWrapper}>
-                    <CustomButton onClick={() => setActivePanel('home')}
-                                  style={{backgroundColor: activePanel === 'home' ? 'lightblue' : 'transparent'}}><MdHome size={18} />Главная</CustomButton>
-                    <CustomButton onClick={() => setActivePanel('insert')}
-                                  style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}><MdImportExport size={18} />Импорт/Экспор</CustomButton>
-                    <CustomButton onClick={() => setActivePanel('slideDesign')}
-                                  style={{backgroundColor: activePanel === 'slideDesign' ? 'lightblue' : 'transparent'}}><MdPalette size={16} />Дизайн слайдов</CustomButton>
-                    <CustomButton onClick={() => setActivePanel('format')}
-                                  style={{
-                                      backgroundColor: activePanel === 'format'
-                                          ? 'lightblue'
-                                          : (selectedElementId && activePanel !== 'format')
-                                              ? '#fdcbcb'
-                                              : 'transparent',
-                    }}><MdFormatColorFill size={16} />Формат</CustomButton>
+                    <CustomButton 
+                        onClick={() => setActivePanel('home')}
+                        style={{backgroundColor: activePanel === 'home' ? 'lightblue' : 'transparent'}}
+                    >
+                        <MdHome size={18}/>
+                        Главная
+                    </CustomButton>
+                    <CustomButton 
+                        onClick={() => setActivePanel('insert')}
+                        style={{backgroundColor: activePanel === 'insert' ? 'lightblue' : 'transparent'}}
+                        disabled={isDisabledButtons}
+                    >
+                        <MdImportExport size={18}/>
+                        Импорт/Экспор
+                    </CustomButton>
+                    <CustomButton 
+                        onClick={() => setActivePanel('slideDesign')}
+                        style={{backgroundColor: activePanel === 'slideDesign' ? 'lightblue' : 'transparent'}}
+                        disabled={isDisabledButtons}
+                    >
+                        <MdPalette size={16}/>
+                        Дизайн слайдов
+                    </CustomButton>
+                    <CustomButton 
+                        onClick={() => setActivePanel('format')}
+                        style={{
+                            backgroundColor: activePanel === 'format'
+                                ? 'lightblue'
+                                : (selectedElementId && activePanel !== 'format')
+                                    ? '#fdcbcb'
+                                    : 'transparent',
+                        }}
+                        disabled={isDisabledButtons}
+                    >
+                        <MdFormatColorFill size={16}/>Формат
+                    </CustomButton>
                 </div>
                 <div className={styles.toolsElements}>
                     {renderActivePanel()}
