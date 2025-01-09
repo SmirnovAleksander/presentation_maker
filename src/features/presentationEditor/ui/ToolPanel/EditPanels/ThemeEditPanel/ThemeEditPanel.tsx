@@ -47,7 +47,7 @@ const ThemeEditPanel = () => {
     });
 
     const [loading, setLoading] = useState<boolean>(false);
-    const UNSPLASH_API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
+    const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
 
     const fetchImages = async () => {
         const categories = ["background", "texture", "abstract", "landscape"];

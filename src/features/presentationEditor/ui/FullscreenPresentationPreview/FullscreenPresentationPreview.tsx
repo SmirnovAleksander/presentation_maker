@@ -110,12 +110,11 @@ const FullscreenPresentationPreview = () => {
 
     const currentSlide = presentation.slides[currentSlideIndex];
     const slideStyle = {
-        backgroundColor: currentSlide?.backgroundImage
-            ? 'transparent'
-            : currentSlide?.backgroundColor || '#ffffff',
-        backgroundImage: currentSlide?.backgroundImage
+        background: currentSlide?.backgroundImage
             ? `url(${currentSlide.backgroundImage})`
-            : 'none',
+            : currentSlide?.backgroundColor && currentSlide.backgroundColor.includes('gradient')
+                ? currentSlide.backgroundColor
+                : currentSlide?.backgroundColor || '#ffffff',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };

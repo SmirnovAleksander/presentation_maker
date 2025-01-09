@@ -43,7 +43,7 @@ const ImportImagePanel: React.FC<ImportImagePanelInterface> = ({ onClose }) => {
     const [page, setPage] = useState<number>(1);
 
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-    const UNSPLASH_API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
+    const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
 
     // useEffect(() => {
     //     localStorage.setItem('imageSearchQuery', query)

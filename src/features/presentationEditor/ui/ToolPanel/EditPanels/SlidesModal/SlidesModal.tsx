@@ -92,12 +92,11 @@ const SlidesModal: React.FC<SlidesModalInterface> = ({ slides, onClose }) => {
                                 id={`slide-${slide.id}`}
                                 className={styles.slideWrapper}
                                 style={{
-                                    backgroundColor: slide?.backgroundImage
-                                        ? 'transparent'
-                                        : slide?.backgroundColor || '#ffffff',
-                                    backgroundImage: slide?.backgroundImage
+                                    background: slide?.backgroundImage
                                         ? `url(${slide.backgroundImage})`
-                                        : 'none',
+                                        : slide?.backgroundColor && slide.backgroundColor.includes('gradient')
+                                            ? slide.backgroundColor
+                                            : slide?.backgroundColor || '#ffffff',
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                 }}

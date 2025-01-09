@@ -58,16 +58,14 @@ const SlideEditor = () => {
     };
 
     const slideStyle = {
-        backgroundColor: selectedSlide?.backgroundImage
-            ? 'transparent'
-            : selectedSlide?.backgroundColor || '#ffffff',
-        backgroundImage: selectedSlide?.backgroundImage
+        background: selectedSlide?.backgroundImage
             ? `url(${selectedSlide.backgroundImage})`
-            : 'none',
+            : selectedSlide?.backgroundColor && selectedSlide.backgroundColor.includes('gradient')
+                ? selectedSlide.backgroundColor
+                : selectedSlide?.backgroundColor || '#ffffff',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
-
     return (
         <div className={styles.slideEditorWrapper}>
             {/* <button onClick={handleDownload} className={styles.downloadButton}>

@@ -49,16 +49,15 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
             selectSlideAction(firstSlide.id);
         }
     }
-    const slideStyle = firstSlide ? {
-        backgroundColor: firstSlide.backgroundImage
-            ? 'transparent'
-            : firstSlide.backgroundColor || '#ffffff',
-        backgroundImage: firstSlide.backgroundImage
+    const slideStyle = {
+        background: firstSlide?.backgroundImage
             ? `url(${firstSlide.backgroundImage})`
-            : 'none',
+            : firstSlide?.backgroundColor && firstSlide.backgroundColor.includes('gradient')
+                ? firstSlide.backgroundColor
+                : firstSlide?.backgroundColor || '#ffffff',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-    } : {};
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {

@@ -46,12 +46,11 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex, onDragStart, on
         }
     };
     const slideStyle = {
-        backgroundColor: slide?.backgroundImage
-            ? 'transparent'
-            : slide?.backgroundColor || '#ffffff',
-        backgroundImage: slide?.backgroundImage
+        background: slide?.backgroundImage
             ? `url(${slide.backgroundImage})`
-            : 'none',
+            : slide?.backgroundColor && slide.backgroundColor.includes('gradient')
+                ? slide.backgroundColor
+                : slide?.backgroundColor || '#ffffff',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
