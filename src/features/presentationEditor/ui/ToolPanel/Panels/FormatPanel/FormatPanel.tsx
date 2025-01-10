@@ -7,6 +7,7 @@ import TextColorEditPanel
 import ImageEditPanel from "@/features/presentationEditor/ui/ToolPanel/EditPanels/ImageEditPanel/ImageEditPanel.tsx";
 import BorderEditPanel from "@/features/presentationEditor/ui/ToolPanel/EditPanels/BorderEditPanel/BorderEditPanel.tsx";
 import {appState} from "@/app/store/store.ts";
+import GradientShapeEditPanel from "../../EditPanels/GradientShapeEditPanel/GradientShapeEditPanel";
 
 const FormatPanel = () => {
     const selectedElementId = useSelector((state: appState) => state.present.selectedElementId);
@@ -19,6 +20,7 @@ const FormatPanel = () => {
                     <TextColorEditPanel/>
                     <ImageEditPanel/>
                     <BorderEditPanel/>
+                    <GradientShapeEditPanel/>
                 </>
             ) : (
                 <div className={styles.errorContainer}>

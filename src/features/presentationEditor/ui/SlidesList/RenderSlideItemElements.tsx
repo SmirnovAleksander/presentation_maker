@@ -1,4 +1,4 @@
-import {ElementProps, Slide} from "@/shared/types/types.ts";
+import {ElementProps, ShapeElement, Slide} from "@/shared/types/types.ts";
 import React from "react";
 
 interface RenderSlideItemElementsProps {
@@ -8,6 +8,14 @@ interface RenderSlideItemElementsProps {
 
 const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide, multiplier}) => {
     const renderElement = (element: ElementProps) => {
+
+        const isShape = ['rectangle', 'circle', 'line'].includes(element.type);
+
+        const colorStyle = isShape && (element as ShapeElement).color?.includes('gradient')
+            ? { backgroundImage: (element as ShapeElement).color }
+            : { backgroundColor: (element as ShapeElement).color || '#D9D9D9' };
+
+
         switch (element.type) {
             case 'text':
                 return (
@@ -91,7 +99,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                                 style={{
                                     width: '100%',
                                     height: '100%',
-                                    backgroundColor: element.color,
+                                    ...colorStyle,
                                     borderRadius: `${(element.borderRadius ?? 0) / multiplier}px`,
                                     opacity: element.opacity,
                                 }}
@@ -102,7 +110,7 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                                 style={{
                                     width: '100%',
                                     height: '100%',
-                                    backgroundColor: element.color,
+                                    ...colorStyle,
                                     borderRadius: '50%',
                                     opacity: element.opacity,
                                 }}

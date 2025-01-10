@@ -65,9 +65,3 @@
     align-items: center;
     padding: 2px;
 }
-
-.applyToAllWrapper {
-    display: flex;
-    align-items: center;
-    padding-top: 5px;
-}

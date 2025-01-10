@@ -9,7 +9,7 @@ interface ShapeElementProps {
     element: ShapeElement
 }
 
-const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
+const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
     const {
         isDragging,
         isSelected,
@@ -26,13 +26,20 @@ const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
     } = useContextMenu();
 
     const { color, rotation, lineWidth, borderRadius, opacity, borderWidth, borderStyle, borderColor, zIndex} = element;
+    console.log('Element color:', element.color);
 
     if (!element || !['rectangle', 'circle', 'line'].includes(element.type)) return null;
+
+    const colorStyle = color?.includes('gradient')
+        ? { backgroundImage: color }
+        : { backgroundColor: color || '#D9D9D9' };
+
 
     return (
         <div
             onMouseDown={handleMouseDown}
             onContextMenu={handleContextMenu}
+            key={color}
             style={{
                 position: 'absolute',
                 top: localPosition.y,
@@ -46,7 +53,7 @@ const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
                 transform: `rotate(${rotation}deg)`,
                 opacity: opacity,
                 borderRadius: '50%',
-                zIndex: zIndex
+                zIndex: zIndex,
             }}
         >
             {element.type === 'rectangle' && (
@@ -54,8 +61,8 @@ const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
                     style={{
                         width: '100%',
                         height: '100%',
-                        backgroundColor: color,
                         borderRadius: `${borderRadius}px`,
+                        ...colorStyle,
                         opacity: opacity,
                     }}
                 />
@@ -65,8 +72,8 @@ const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
                     style={{
                         width: '100%',
                         height: '100%',
-                        backgroundColor: color,
                         borderRadius: '50%',
+                        ...colorStyle,
                         opacity: opacity,
                     }}
                 />
@@ -94,19 +101,6 @@ const ShapeElement: React.FC<ShapeElementProps> = memo(({element}) => {
             )}
         </div>
     );
-}, (prevProps, nextProps) => {
-    // Сравниваем только те свойства, которые влияют на рендер
-    return (
-        prevProps.element.id === nextProps.element.id &&
-        prevProps.element.position.x === nextProps.element.position.x &&
-        prevProps.element.position.y === nextProps.element.position.y &&
-        prevProps.element.size.width === nextProps.element.size.width &&
-        prevProps.element.size.height === nextProps.element.size.height &&
-        prevProps.element.rotation === nextProps.element.rotation &&
-        prevProps.element.borderRadius === nextProps.element.borderRadius &&
-        prevProps.element.opacity === nextProps.element.opacity &&
-        prevProps.element.zIndex === nextProps.element.zIndex
-    );
-});
+};
 
 export default ShapeElement;

@@ -2,18 +2,22 @@ import { useState } from "react";
 import styles from './GradientEditPanel.module.css';
 import { ColorPicker, CustomButton } from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
-import { popularColors } from "@/shared/constants/colors.ts";
+import SwitchToggle from "@/shared/ui/SwitchToggle/SwitchToggle";
 
 const GradientEditPanel = () => {
-    const { selectedSlide, updateSelectedSlide } = useStoreSelector();
+    const { selectedSlide, updateSelectedSlide, updateAllSlidesBackgroundColorAction} = useStoreSelector();
     const [color1, setColor1] = useState<string>('#ff0000');
     const [color2, setColor2] = useState<string>('#0000ff');
     const [direction, setDirection] = useState<string>('to right');
     const [gradientType, setGradientType] = useState<string>('linear');
+    const [applyToAll, setApplyToAll] = useState(false);
 
     const updateBackgroundColor = (backgroundColor: string) => {
         if (selectedSlide) {
             updateSelectedSlide(backgroundColor);
+            if (applyToAll) {
+                updateAllSlidesBackgroundColorAction(backgroundColor);
+            }
         }
     };
 
@@ -81,6 +85,13 @@ const GradientEditPanel = () => {
                             </select>
                         </div>
                     </div>
+                </div>
+                <div className={styles.applyToAllWrapper}>
+                    <SwitchToggle
+                        checked={applyToAll}
+                        onChange={setApplyToAll}
+                    />
+                    <span>Все слайды</span>
                 </div>
                 <CustomButton 
                     onClick={isGradientApplied ? removeGradient : applyGradient} 

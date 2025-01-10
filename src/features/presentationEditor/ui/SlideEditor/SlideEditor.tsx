@@ -58,13 +58,16 @@ const SlideEditor = () => {
     };
 
     const slideStyle = {
-        background: selectedSlide?.backgroundImage
+        backgroundImage: selectedSlide?.backgroundImage
             ? `url(${selectedSlide.backgroundImage})`
             : selectedSlide?.backgroundColor && selectedSlide.backgroundColor.includes('gradient')
                 ? selectedSlide.backgroundColor
-                : selectedSlide?.backgroundColor || '#ffffff',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+                : undefined,
+        backgroundColor: !selectedSlide?.backgroundImage && (!selectedSlide?.backgroundColor || !selectedSlide.backgroundColor.includes('gradient'))
+            ? selectedSlide?.backgroundColor || '#D9D9D9' 
+            : undefined,
+        backgroundSize: selectedSlide?.backgroundImage ? 'cover' : undefined,
+        backgroundPosition: selectedSlide?.backgroundImage ? 'center' : undefined,
     };
     return (
         <div className={styles.slideEditorWrapper}>

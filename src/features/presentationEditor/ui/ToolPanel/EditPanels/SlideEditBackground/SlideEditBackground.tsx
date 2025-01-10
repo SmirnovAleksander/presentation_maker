@@ -3,6 +3,7 @@ import styles from "./SlideEditBackground.module.css";
 import {ColorPicker} from "@/shared/ui";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 import { popularColors } from "@/shared/constants/colors.ts";
+import SwitchToggle from "@/shared/ui/SwitchToggle/SwitchToggle";
 
 const SlideEditBackground = () => {
     const {
@@ -35,14 +36,10 @@ const SlideEditBackground = () => {
                     }}
                 />
                 <div className={styles.applyToAllWrapper}>
-                    <label className={styles.switch}>
-                        <input
-                            type="checkbox"
-                            checked={applyToAll}
-                            onChange={() => setApplyToAll(!applyToAll)}
-                        />
-                        <span className={styles.slider}></span>
-                    </label>
+                    <SwitchToggle
+                        checked={applyToAll}
+                        onChange={setApplyToAll}
+                    />
                     <span>Все слайды</span>
                 </div>
             </div>

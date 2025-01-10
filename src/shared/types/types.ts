@@ -61,8 +61,6 @@ export interface ShapeElement {
     borderColor: string;
     borderStyle: 'solid' | 'dashed' | 'dotted';
     borderWidth: number;
-    gradient: string;
-    fillType: 'solid' | 'gradient';
     zIndex: number;
 }
 

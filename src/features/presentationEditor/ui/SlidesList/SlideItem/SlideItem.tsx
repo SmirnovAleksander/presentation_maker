@@ -46,14 +46,18 @@ const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex, onDragStart, on
         }
     };
     const slideStyle = {
-        background: slide?.backgroundImage
+        backgroundImage: slide?.backgroundImage
             ? `url(${slide.backgroundImage})`
             : slide?.backgroundColor && slide.backgroundColor.includes('gradient')
-                ? slide.backgroundColor
-                : slide?.backgroundColor || '#ffffff',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+                ? slide.backgroundColor // Используем градиент как фон
+                : undefined,
+        backgroundColor: !slide?.backgroundImage && (!slide?.backgroundColor || !slide.backgroundColor.includes('gradient'))
+            ? slide?.backgroundColor || '#D9D9D9' // Используем цвет фона, если нет градиента или изображения
+            : undefined,
+        backgroundSize: slide?.backgroundImage ? 'cover' : undefined,
+        backgroundPosition: slide?.backgroundImage ? 'center' : undefined,
     };
+    
 
     const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
         e.stopPropagation();

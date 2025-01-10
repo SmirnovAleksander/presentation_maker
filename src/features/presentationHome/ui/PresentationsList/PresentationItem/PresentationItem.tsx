@@ -50,13 +50,16 @@ const PresentationItem: React.FC<PresentationItemProps> = ({presentation}) => {
         }
     }
     const slideStyle = {
-        background: firstSlide?.backgroundImage
+        backgroundImage: firstSlide?.backgroundImage
             ? `url(${firstSlide.backgroundImage})`
             : firstSlide?.backgroundColor && firstSlide.backgroundColor.includes('gradient')
                 ? firstSlide.backgroundColor
-                : firstSlide?.backgroundColor || '#ffffff',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+                : undefined,
+        backgroundColor: !firstSlide?.backgroundImage && (!firstSlide?.backgroundColor || !firstSlide.backgroundColor.includes('gradient'))
+            ? firstSlide?.backgroundColor || '#D9D9D9' 
+            : undefined,
+        backgroundSize: firstSlide?.backgroundImage ? 'cover' : undefined,
+        backgroundPosition: firstSlide?.backgroundImage ? 'center' : undefined,
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

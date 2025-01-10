@@ -93,8 +93,6 @@ export const useCreateElements = () => {
             borderStyle: 'solid',
             borderWidth: 0,
             boxShadow: 'none',
-            fillType: 'solid',
-            gradient: '',
             zIndex: 200
         };
 

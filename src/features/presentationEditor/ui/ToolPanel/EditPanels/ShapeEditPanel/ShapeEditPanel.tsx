@@ -11,7 +11,7 @@ const ShapeEditPanel = () => {
 
     const updateLineWidth = (value: number) => {
         if (isShapeElement)
-        updateSelectedElement( { lineWidth: value });
+            updateSelectedElement( { lineWidth: value });
     };
     const updateBorderRadius = (value: number) => {
         if (isShapeElement)
