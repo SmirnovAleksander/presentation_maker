@@ -69,5 +69,6 @@
 .applyToAllWrapper {
     display: flex;
     align-items: center;
-    padding-top: 5px;
+    padding: 0 5px;
+    gap: 30px;
 }

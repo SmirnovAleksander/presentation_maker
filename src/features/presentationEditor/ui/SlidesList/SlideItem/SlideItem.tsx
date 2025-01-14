@@ -10,20 +10,19 @@ interface SlideItemProps {
     slideIndex: number;
     onDragStart: (slideId: number) => void;
     onDragEnd: () => void;
+    isSelected: boolean;
 }
 
-const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex, onDragStart, onDragEnd}) => {
+const SlideItem: React.FC<SlideItemProps> = ({slide, slideIndex, onDragStart, onDragEnd, isSelected}) => {
     const {
         selectedPresentation,
         selectedPresentationId,
-        selectedSlideId,
         selectSlideAction,
         deleteSlideAction,
         moveSlideUpAction,
         moveSlideDownAction,
     } = useStoreSelector();
 
-    const isSelected = selectedSlideId === slide.id;
 
     const handleSlideClick = () => {
         if (selectedPresentationId) {

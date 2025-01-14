@@ -56,3 +56,7 @@
     margin: 5px 0;
     cursor: default;
 }
+
+.selected {
+    background-color: #d3d3d3; /* Цвет выделения */
+}

@@ -11,6 +11,8 @@ const SlideList = () => {
 
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
     const [draggingSlideId, setDraggingSlideId] = useState<number | null>(null);
+    const [selectedSlides, setSelectedSlides] = useState<number[]>([]);
+    console.log(selectedSlides);
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -23,15 +25,14 @@ const SlideList = () => {
         const currentIndex = selectedPresentation!.slides.findIndex(slide => slide.id === draggingSlideId);
 
         slideElements.forEach((element, index) => {
-            const rect = element.getBoundingClientRect();
-            const elementMiddle = rect.top + rect.height / 2;
+            const rectElement = element.getBoundingClientRect();
+            const elementMiddle = rectElement.top + rectElement.height / 2;
             
             if (dropY < elementMiddle) {
                 newDragOverIndex = Math.min(newDragOverIndex, index);
             }
         });
 
-        // Не показываем индикатор рядом с перетаскиваемым элементом
         if (newDragOverIndex === currentIndex || newDragOverIndex === currentIndex + 1) {
             setDragOverIndex(null);
         } else {
@@ -39,26 +40,48 @@ const SlideList = () => {
         }
     };
 
-    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        if (dragOverIndex !== null && draggingSlideId) {
-            const currentIndex = selectedPresentation?.slides.findIndex(slide => slide.id === draggingSlideId);
-            if (currentIndex !== undefined && currentIndex !== -1) {
-                const finalIndex = currentIndex < dragOverIndex ? dragOverIndex - 1 : dragOverIndex;
-                moveSlideAction(draggingSlideId, finalIndex);
+    const handleSlideClick = (slideId: number, e: React.MouseEvent) => {
+        if (e.ctrlKey) {
+            if (selectedSlides.length >= selectedPresentation!.slides.length - 1) {
+                return;
             }
+            setSelectedSlides(prev => 
+                prev.includes(slideId) ? prev.filter(id => id !== slideId) : [...prev, slideId]
+            );
+        } else {
+            setSelectedSlides([slideId]);
         }
-        setDragOverIndex(null);
-        setDraggingSlideId(null);
     };
 
     const handleDragStart = (slideId: number) => {
         setDraggingSlideId(slideId);
+        setSelectedSlides(prev => prev.includes(slideId) ? prev : [slideId]);
     };
 
     const handleDragEnd = () => {
         setDraggingSlideId(null);
         setDragOverIndex(null);
+    };
+
+    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        if (dragOverIndex !== null && draggingSlideId) {
+            const finalIndices = selectedSlides.map(slideId => {
+                const currentIndex = selectedPresentation?.slides.findIndex(slide => slide.id === slideId);
+                return currentIndex !== undefined && currentIndex !== -1
+                    ? (currentIndex < dragOverIndex ? dragOverIndex - 1 : dragOverIndex)
+                    : null;
+            }).filter(index => index !== null);
+
+            finalIndices.forEach((finalIndex, index) => {
+                if (finalIndex !== null) {
+                    moveSlideAction(selectedSlides[index], finalIndex);
+                }
+            });
+        }
+        setDragOverIndex(null);
+        setDraggingSlideId(null);
+        setSelectedSlides([]);
     };
 
     return (
@@ -68,7 +91,11 @@ const SlideList = () => {
             onDrop={handleDrop}
         >
             {selectedPresentation && selectedPresentation.slides.map((slide, index) => (
-                <div key={slide.id} className={styles.slideDropZone}>
+                <div 
+                    key={slide.id} 
+                    className={styles.slideDropZone} 
+                    onClick={(e) => handleSlideClick(slide.id, e)}
+                >
                     {dragOverIndex === index && draggingSlideId !== slide.id && (
                         <div className={styles.dropIndicator} />
                     )}
@@ -77,6 +104,7 @@ const SlideList = () => {
                         slideIndex={index + 1}
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
+                        isSelected={selectedSlides.includes(slide.id)}
                     />
                 </div>
             ))}

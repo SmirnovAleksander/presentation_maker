@@ -2,7 +2,6 @@ import styles from './ThemeEditPanel.module.css'
 import {useEffect, useState} from "react";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 import axios from "axios";
-import { BsPlusLg } from "react-icons/bs";
 import { CustomButton } from '@/shared/ui';
 import ThemesCategoryList from './ThemesCategoryList/ThemesCategoryList';
 
@@ -82,12 +81,12 @@ const ThemeEditPanel = () => {
     }, []);
 
     const currentTheme = selectedPresentation?.slides[0].backgroundImage
-
+    
     return (
         <div className={styles.themeEditWrapper}>
             <p className={styles.themeEditTitle}>Задний фон слайда</p>
             <div className={styles.themeEditScrollWrapper}>
-                {currentTheme !== '' && currentTheme !== undefined  && (
+                {currentTheme !== '' && currentTheme !== undefined && currentTheme !== null && (
                     <div 
                         className={`${styles.themeItem} ${currentTheme !== '' ? styles.selectedTheme : ''}`} 
                         onClick={() => handleThemeSelect(selectedTheme!)}

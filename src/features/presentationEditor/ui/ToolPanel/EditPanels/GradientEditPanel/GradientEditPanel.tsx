@@ -87,20 +87,24 @@ const GradientEditPanel = () => {
                     </div>
                 </div>
                 <div className={styles.applyToAllWrapper}>
-                    <SwitchToggle
-                        checked={applyToAll}
-                        onChange={setApplyToAll}
-                    />
-                    <span>Все слайды</span>
+                    <div>
+                        <SwitchToggle
+                            checked={applyToAll}
+                            onChange={setApplyToAll}
+                        />
+                        <span>Все слайды</span>
+                    </div>
+                    <CustomButton 
+                        onClick={isGradientApplied ? removeGradient : applyGradient} 
+                        style={{
+                            backgroundColor: isGradientApplied ? '#fdcbcb' : undefined,
+                            minWidth: '200px'
+                        }}
+                    >
+                        {isGradientApplied ? 'Убрать градиент' : 'Применить градиент'}
+                    </CustomButton>
                 </div>
-                <CustomButton 
-                    onClick={isGradientApplied ? removeGradient : applyGradient} 
-                    style={{
-                        backgroundColor: isGradientApplied ? '#fdcbcb' : undefined,
-                    }}
-                >
-                    {isGradientApplied ? 'Убрать градиент' : 'Применить градиент'}
-                </CustomButton>
+                
             </div>
         </>
     );
