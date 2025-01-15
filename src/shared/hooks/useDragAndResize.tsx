@@ -34,7 +34,6 @@ const useDragAndResize = (element: ElementProps, isEditing?: boolean) => {
             );
 
             if (!isAlreadyUpdated) {
-                console.log('previousStates:', previousStates)
                 dispatch(updateElement(element.id, currentState));
                 setPreviousStates(prevStates => [...prevStates, currentState]); // Сохраняем текущее состояние
             }

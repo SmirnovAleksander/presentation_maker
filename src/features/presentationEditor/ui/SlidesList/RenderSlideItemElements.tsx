@@ -37,7 +37,8 @@ const RenderSlideItemElements: React.FC<RenderSlideItemElementsProps> = ({slide,
                             textDecoration: `${element.underline ? 'underline' : ''} ${element.strikethrough ? 'line-through' : ''}`,
                             transform: `rotate(${element.rotation}deg)`,
                             color: element.color,
-                            zIndex: element.zIndex
+                            zIndex: element.zIndex,
+                            lineHeight: '1.5'
                         }}
                     >
                         {element.content}

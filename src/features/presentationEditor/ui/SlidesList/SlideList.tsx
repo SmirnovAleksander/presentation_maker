@@ -12,7 +12,6 @@ const SlideList = () => {
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
     const [draggingSlideId, setDraggingSlideId] = useState<number | null>(null);
     const [selectedSlides, setSelectedSlides] = useState<number[]>([]);
-    console.log(selectedSlides);
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();

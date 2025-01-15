@@ -36,6 +36,7 @@ const TextElement: React.FC<TextElementProps> = memo(({element}) => {
     // Логика для редактирования текста
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [editableText, setEditableText] = useState(content);
+    const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const handleDoubleClick = () => {
         setIsEditing(true);
@@ -43,16 +44,24 @@ const TextElement: React.FC<TextElementProps> = memo(({element}) => {
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setEditableText(e.target.value);
-        updateElementContent(e.target.value);
+        if (updateTimeoutRef.current) {
+            clearTimeout(updateTimeoutRef.current);
+        }
+        updateTimeoutRef.current = setTimeout(() => {
+            updateElementContent(e.target.value);
+        }, 3000);
     };
 
     const handleBlur = () => {
         setIsEditing(false);
+        if (updateTimeoutRef.current) {
+            clearTimeout(updateTimeoutRef.current);
+        }
         updateElementContent(editableText);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             setIsEditing(false);
             updateElementContent(editableText);
@@ -64,6 +73,14 @@ const TextElement: React.FC<TextElementProps> = memo(({element}) => {
             inputRef.current.focus();
         }
     }, [isEditing]);
+
+    useEffect(() => {
+        return () => {
+            if (updateTimeoutRef.current) {
+                clearTimeout(updateTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const updateElementContent = (newText: string) => {
         dispatch(updateElement(element.id, { content: newText }));
@@ -94,7 +111,8 @@ const TextElement: React.FC<TextElementProps> = memo(({element}) => {
                 fontStyle: italic ? 'italic' : 'normal',
                 textDecoration: `${underline ? 'underline' : ''} ${strikethrough ? 'line-through' : ''}`,
                 textTransform: textTransform,
-                zIndex: zIndex
+                zIndex: zIndex,
+                lineHeight: '1.5'
             }}
             onMouseDown={handleMouseDown}
             onDoubleClick={handleDoubleClick}
@@ -125,7 +143,8 @@ const TextElement: React.FC<TextElementProps> = memo(({element}) => {
                         transform: `rotate(${rotation}deg)`,
                         resize: 'none',
                         overflow: 'hidden',
-                        background: "transparent"
+                        background: "transparent",
+                        lineHeight: '1.5'
                     }}
                 />
             ) : (

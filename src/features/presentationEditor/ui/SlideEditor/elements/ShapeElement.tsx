@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import ResizeHandles from "./ResizeHandles.tsx";
 import type {ShapeElement} from "@/shared/types/types.ts";
 import useDragAndResize from "@/shared/hooks/useDragAndResize.tsx";
@@ -26,7 +26,6 @@ const ShapeElement: React.FC<ShapeElementProps> = ({element}) => {
     } = useContextMenu();
 
     const { color, rotation, lineWidth, borderRadius, opacity, borderWidth, borderStyle, borderColor, zIndex} = element;
-    console.log('Element color:', element.color);
 
     if (!element || !['rectangle', 'circle', 'line'].includes(element.type)) return null;
 

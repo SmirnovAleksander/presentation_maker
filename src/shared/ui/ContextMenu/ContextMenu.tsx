@@ -31,7 +31,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ x, y, onClose, element}) => {
     };
 
     const handleProperties = () => {
-        console.log(element);
+        console.log('Текущий элемент:', element);
         onClose();
     };
 
