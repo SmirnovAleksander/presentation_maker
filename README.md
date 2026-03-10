@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+## Presentation Maker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Presentation Maker** — веб-приложение для создания и редактирования презентаций прямо в браузере: работа со слайдами, текстом и картинками, настройка оформления, история действий (undo/redo), импорт/экспорт и режим показа.
 
-Currently, two official plugins are available:
+### Демо
+Вот сам сайт, можно посмотреть: `https://presentation-maker-two.vercel.app`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### ✨ Функционал
 
-## Expanding the ESLint configuration
+- **Презентация**: редактирование названия, автосохранение состояния в `localStorage`.
+- **Слайды**: добавление, удаление, выбор и мультивыбор, drag & drop сортировка и перетаскивание группы слайдов.
+- **Фон**: цвет, градиент, свои картинки и поиск фоновых изображений через Unsplash.
+- **Объекты на слайде**: текст и изображения, перемещение, изменение размера, выделение и удаление.
+- **Текст**: редактирование прямо на слайде, выбор шрифта, размера и цвета.
+- **История действий**: Undo/Redo по кнопкам и горячим клавишам.
+- **Режим показа**: просмотр презентации в полноэкранном режиме, навигация по слайдам, цикличный показ.
+- **Импорт/экспорт**: JSON (с валидацией по схеме) и экспорт в PDF.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### ⌨️ Горячие клавиши
 
-- Configure the top-level `parserOptions` property like this:
+**В редакторе**
+- `Ctrl` / `Cmd` + `Z` — Undo
+- `Ctrl` / `Cmd` + `Y` — Redo
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+**В режиме показа**
+- `ArrowRight` — следующий слайд
+- `ArrowLeft` — предыдущий слайд
+
+### 🛠️ Локальный запуск
+
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Скриншот
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<img src="src\assets\main_page.png" alt="Главный экран Presentation Maker"/>

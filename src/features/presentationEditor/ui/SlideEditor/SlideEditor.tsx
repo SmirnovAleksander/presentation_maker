@@ -5,7 +5,6 @@ import TextElement from "./elements/TextElement.tsx";
 import { useRef } from "react";
 import useStoreSelector from "@/shared/hooks/useStoreSelector.ts";
 import { useCreateElements } from '@/shared/hooks/useCreateElements.ts';
-import { toSvg } from 'html-to-image';
 
 const SlideEditor = () => {
     const {
@@ -41,20 +40,6 @@ const SlideEditor = () => {
 
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-    };
-
-    const handleDownload = async () => {
-        if (slideRef.current) {
-            try {
-                const svgDataUrl = await toSvg(slideRef.current);
-                const link = document.createElement('a');
-                link.href = svgDataUrl;
-                link.download = 'slide.svg';
-                link.click();
-            } catch (error) {
-                console.error('Error generating SVG:', error);
-            }
-        }
     };
 
     const slideStyle = {

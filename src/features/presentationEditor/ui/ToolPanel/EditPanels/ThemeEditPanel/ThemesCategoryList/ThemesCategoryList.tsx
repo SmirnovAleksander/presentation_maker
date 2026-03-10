@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './ThemesCategoryList.module.css';
 import { CustomButton } from '@/shared/ui';
 import { Presentation } from '@/shared/types/types';

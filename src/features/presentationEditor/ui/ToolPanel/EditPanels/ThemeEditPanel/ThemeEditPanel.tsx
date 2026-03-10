@@ -44,8 +44,6 @@ const ThemeEditPanel = () => {
         abstract: [],
         landscape: []
     });
-
-    const [loading, setLoading] = useState<boolean>(false);
     const UNSPLASH_API_KEY = "iPGFpaXWv-4mrnUQ6PbNXcDj1pVd1vx0AeC3L24qdOY";
 
     const fetchImages = async () => {
@@ -73,7 +71,6 @@ const ThemeEditPanel = () => {
         }
     
         setImagesByCategory(newImagesByCategory);
-        setLoading(false);
     };
 
     useEffect(() => {
